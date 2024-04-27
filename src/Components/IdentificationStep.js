@@ -1,62 +1,130 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faRandom } from '@fortawesome/free-solid-svg-icons';
+import volcano from '../Img/volcano.png';
+import sunImage from '../Img/disqualify.png';
+import label from '../Img/label.png'
+import overgen from '../Img/overgen.png'
+import target from '../Img/target.png'
+import ruler from '../Img/ruler.png'
+import glasses from '../Img/glasses.png'
+import brain from '../Img/brain.png'
+import heart from '../Img/heart.png'
+import gavel from '../Img/gavel.png'
 
 
-
-function IdentificationStep({ userInput, onIdentify, nextStep }) {
-    // A list of common cognitive distortions
+function IdentificationStep({ isLoading, selectedDistortion, setSelectedDistortion, displayedDistortion, setDisplayedDistortion, identifiedDistortionResponse,explanation, showExplanation }) {
+    console.log('selected',selectedDistortion,typeof(displayedDistortion))
     const distortions = [
-        "All-or-nothing",
-        "Overgeneralization",
-        "Mental filter",
-        "Disqualifying the positive",
-        "Jumping to conclusions",
-        "Emotional reasoning",
-        "Should statements",
-        "Labeling",
-        "Personalization"
+        {
+            name: "All-or-nothing thinking",
+            description: "Viewing things in black-and-white categories.",
+            iconLink: brain
+        },
+        {
+            name: "Overgeneralization",
+            description: "Generalizing from a single negative experience, expecting it to hold true forever.",
+            iconLink: overgen
+        },
+        {
+            name: "Mental filter",
+            description: "Focus on the negative parts and ignore the positive ones",
+            iconLink: glasses
+        },
+        {
+            name: "Personalization",
+            description: "Blaming ourselves for things that aren't our fault.",
+            iconLink: heart
+        },
+        {
+            name: "Catastrophizing",
+            description: "Always thinking the worst case possible.",
+            iconLink: volcano
+        },
+        {
+            name: "Labeling",
+            description: "Unfairly define yourself or others.",
+            iconLink: label
+        },
+        {
+            name: "Disqualifying the positive",
+            description: "Inoring good things and only focusing on the bad.",
+            iconLink: sunImage
+        },
+
+        {
+            name: "Should statements",
+            description: "The rules in our head saying things have to be a certain way",
+            iconLink: ruler
+        },
+        {
+            name: "Jumping to conclusions",
+            description: "Deciding something is true without enough evidence",
+            iconLink: target
+        },
+        {
+            name: "Emotional reasoning",
+            description: "Believing something is true just because we feel strongly about it.",
+            iconLink: gavel
+        },
+
     ];
 
-    // State to track selected distortions
-    const [selectedDistortions, setSelectedDistortions] = useState([]);
 
-    const isDistortionSelected = (distortion) => selectedDistortions.includes(distortion);
 
-    // Handle card click
+
+    const isDistortionSelected = (distortion) => selectedDistortion.includes(distortion.name);
+
     const handleCardClick = (distortion) => {
-        if (selectedDistortions.includes(distortion)) {
-            // If distortion is already selected, remove it from the list
-            setSelectedDistortions(prev => prev.filter(d => d !== distortion));
-        } else {
-            // If distortion is not selected, add it to the list
-            setSelectedDistortions(prev => [...prev, distortion]);
-        }
+        setSelectedDistortion(prev => {
+            // Check if prev is a string
+            if (typeof prev === 'string') {
+                prev = prev.split(','); // Split into an array
+            }
+    
+            const isAlreadySelected = prev.includes(distortion);
+            if (isAlreadySelected) {
+                return prev.filter(name => name !== distortion);
+            } else {
+                return [...prev, distortion];
+            }
+        });
     };
 
-    // Handle submit
-    const handleSubmit = () => {
-        onIdentify(selectedDistortions);
-        nextStep();
-    };
+    const enrichDistortions = distortions.filter(dist => displayedDistortion.includes(dist.name))
+
 
     return (
-        <div >
-           
+        <div>
             <h1>Do any of these sound like you?</h1>
-            <div className="containerWide">
-                {distortions.map(distortion => (
-                    <div
-                        key={distortion}
-                        className={`optionBox ${isDistortionSelected(distortion) ? 'selected' : ''}`}
-                        onClick={() => handleCardClick(distortion)}
-                    >
-                        {distortion}
-                    </div>
-                ))}
+            <div className="interactionArea">
+                <div className="distortedGroup">
+                    {isLoading ? (
+                        Array.from({ length: 3 }, (_, index) => (
+                            <div key={index} className="optionBox shimmer"></div>
+                        ))
+                    ) : (
+                        enrichDistortions.map(distortion => (
+                            <div
+                                key={distortion.name}
+                                className={`optionBox ${isDistortionSelected(distortion) ? 'selected' : ''}`}
+                                onClick={() => handleCardClick(distortion.name)}
+                            >
+                                <img src={distortion.iconLink} style={{ width: 40, height: 40 }} />
+                                <div className='optionBoxText'>
+                                    {distortion.name}
+                                    <p>{distortion.description}</p>
+                                </div>
+
+                            </div>
+                        ))
+                    )}
+                </div>
+
+                {showExplanation ? (
+                        <p>{explanation}</p>
+                    ):null}
             </div>
-
-
         </div>
     );
 }

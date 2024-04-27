@@ -1,28 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-function ChallengeStep({ identifiedThoughts, onChallenge, nextStep }) {
-    // State for storing the user's response on how they challenge their thoughts
-    const [challengeText, setChallengeText] = useState('');
+function ChallengeStep({ challengeText, setChallengeText }) {
 
-    // Handle the submission of the challenge
-    const handleSubmit = () => {
-        onChallenge(challengeText);
-        nextStep();
-    };
 
     return (
         <div>
-            <h1>Challenge Your Thoughts</h1>
-           
-            <textarea
-                class="textArea"
-                value={challengeText}
-                onChange={(e) => setChallengeText(e.target.value)}
-                placeholder="Write here..."
+            <h1>Let's challenge this thought</h1>
+            <div className="interactionArea">
+                <textarea
+                    autoFocus
+                    className="textArea"
+                    value={challengeText}
+                    onChange={(e) => setChallengeText(e.target.value)}
+                    placeholder="What evidence do I have that this thought is true? What are some less extreme outcomes?"
 
-            />
-          
-            
+                />
+            </div>
+
         </div>
     );
 }
