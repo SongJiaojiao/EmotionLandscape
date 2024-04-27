@@ -69,8 +69,9 @@ function IdentificationStep({ isLoading, selectedDistortion, setSelectedDistorti
         },
 
     ];
-
-
+    
+    
+    console.log('selectedDistortion', selectedDistortion);
 
 
     const isDistortionSelected = (distortion) => selectedDistortion.includes(distortion.name);
@@ -79,6 +80,7 @@ function IdentificationStep({ isLoading, selectedDistortion, setSelectedDistorti
         setSelectedDistortion(prev => {
             // Check if prev is a string
             if (typeof prev === 'string') {
+                console.log('error')
                 prev = prev.split(','); // Split into an array
             }
     
