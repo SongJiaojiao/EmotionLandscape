@@ -42,6 +42,7 @@ function CBTFlow() {
     const helpIdentify = async () => {
         setIsLoading(true);
         try {
+            console.log('serverdoman',serverDomain)
             const response = await fetch(`${serverDomain}/api/helpIdentify`, {
                 method: 'POST',
                 headers: {
