@@ -10,12 +10,12 @@ function Footer({ step, totalSteps, onPrevious, onNext, onHelp, reset, showExpla
                 <button className="button-iconOnly prevButton" onClick={onPrevious}><FontAwesomeIcon icon={faArrowLeft} /></button>
             )}
             {(step > 1 && step < 5 && step !==2) && (
-                <button className="textButton helpButton" onClick={onHelp}>✨ Help</button>
+                <button className="button-medium-secondary helpButton" onClick={onHelp}>✨ Help</button>
 
             )}
 
             {(step === 2 && !showExplanation) && (
-                <button className="textButton helpButton" onClick={onHelp}>✨ Help</button>
+                <button className="button-medium-secondary helpButton" onClick={onHelp}>✨ Help</button>
 
             )}
 

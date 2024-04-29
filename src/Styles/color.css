@@ -16,4 +16,9 @@
     /* Background Colors */
     --background-color: #f8f9fa; /* Light Gray */
     --card-background-color: #ffffff; /* White */
+    --emotionTag-orange:#FFD9AC;
+    --emotionTag-red:#fce3e3;
+    --emotionTag-green:#D7F4D3;
+    --emotionTag-blue:#CEF0FE
+
   }

@@ -19,3 +19,10 @@ h2{
     font-style: normal;
     size: 18px;
 }
+
+h3{
+  font-family: "Averia Serif Libre", serif ;
+  font-weight: 500;
+  font-style: normal;
+  size: 16px;
+}

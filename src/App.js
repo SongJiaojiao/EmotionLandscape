@@ -1,24 +1,21 @@
 import './App.css';
-import CBTFlow from './Components/CBTFlow';
+import { AuthUser, ThemeProvider, ThemeContext} from './Contexts/ThemeContext';
+import { useState, useEffect, useContext } from 'react'
+import AnalyzeMood from './Components/Analyze/AnalyzeMood';
 
 
 export default function App() {
+  const [authUser, setAuthUser] = useState('Jiaojiao')
   return (
 
-      <div style={globalStyles}>
-        <CBTFlow />
+    <ThemeProvider>
+      <div className="App" >
+           <AnalyzeMood />  
       </div>
+
+    </ThemeProvider>
 
   );
 }
-const globalStyles = {
-  width: '100%',
-  display: 'flex',
-  direction: 'row',
-  justifyContent: 'center', // Horizontally center items
-  margin: 0,
-  padding: 0,
-  height: '100vh',
 
-};
 
