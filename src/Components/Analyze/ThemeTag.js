@@ -1,10 +1,15 @@
 import React from 'react';
 
 function ThemeTag({theme}) {
-
+  const themeTagStyle = {
+    padding: '8px 16px',
+    borderRadius: '24px',
+    backgroundColor: 'var(--brown-010)',
+    display: 'inline-block',
+  };
 
   return (
-    <div className="themeTag">{theme}
+    <div style={themeTagStyle}>{theme}
     </div>
   );
 }

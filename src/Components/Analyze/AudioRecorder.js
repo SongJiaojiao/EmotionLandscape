@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faStop } from '@fortawesome/free-solid-svg-icons';
 
-function AudioRecorder({ onTranscription }) {
+function AudioRecorder({ onTranscription}) {
     const [recording, setRecording] = useState(false);
     const [audioURL, setAudioURL] = useState('');
     const [transcript, setTranscript] = useState('');
@@ -41,9 +41,9 @@ function AudioRecorder({ onTranscription }) {
     return (
         <div>
             <button className='button-large' onClick={toggleRecording}>
-                <FontAwesomeIcon icon={recording ? faStop : faPlay} /> {recording ? 'Stop' : 'Start'}
+                <FontAwesomeIcon icon={recording ? faStop : faPlay} /> {recording ? 'Stop' : 'Speak'}
             </button>
-            {transcript && <p>Transcript: {transcript}</p>}
+            {/* {transcript && <p>Transcript: {transcript}</p>} */}
         </div>
     );
 }

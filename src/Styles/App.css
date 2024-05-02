@@ -1,5 +1,6 @@
-@import url("./Styles/font.css");
-@import url("./Styles/color.css");
+@import url("./font.css");
+@import url("./color.css");
+@import url('./Button.css');
 
 :root {
   --box-shadow-primary: 0px 0px 2px var(--brown-040);
@@ -12,31 +13,27 @@
   text-align: center;
   font-family: "Averia Serif Libre", serif;
 }
+@media (max-width: 768px) {
+  .App {
+    margin: 24px; 
+  }
+}
+
+@media (max-width: 430px) {
+  .App {
+    margin: 16px; 
+  }
+}
 
 html,
 body.main {
   height: 100%;
-  margin: 40px 24px 0 24px;
   padding: 0;
   background-color: var(--brown-010);
   font-family: "Averia Serif Libre", serif !important;
   transition: all 0.3s;
 }
 
-#light .main{
-  background-color: var(--brown-010);
-}
-
-#dark .main{
-  background-color: #0E1A39;
-}
-
-p {
-  font-size: 14px;
-  font-family: "Averia Serif Libre", serif !important;
-  font-weight: 200;
-  margin: 0;
-}
 
 .container {
   display: flex;
@@ -47,7 +44,6 @@ p {
 .interactionArea {
   width: 100%;
   display: flex;
-
   justify-content: center;
   align-items: center;
   gap: 16px;
@@ -56,63 +52,7 @@ p {
 }
 
 
-.button-medium-secondary {
-  display: flex;
-  direction: row;
-  align-items: center;
-  justify-content: center;
-  gap:6px;
-  background-color: transparent;
-  font-family: "Averia Serif Libre", serif;
-  font-size: 20px;
-  color: var(--primary-color);
-  border: none;
-  padding: 8px 12px 8px 12px;
-  cursor: pointer;
 
-}
-
-.button-medium-secondary.selected {
-  background-color: white;
-  border-radius: 8px;
-}
-
-
-
-.button-medium-secondary:hover {
-  background-color: var(--brown-030);
-  color: var(--primary-color);
-  border: none;
-  border-radius: 8px;
-
-}
-.button-medium-secondary.selected:hover {
-  background-color: var(--brown-010)
-  
-  
-}
-.button-large {
-  display: flex;
-  direction: row;
-  align-items: center;
-  background-color: var(--brown-030);
-  font-family: "Averia Serif Libre", serif;
-  font-size: 24px;
-  padding-left: 27px;
-  padding-right: 27px;
-  height: 72px;
-  border-radius: 36px;
-  color: var(--primary-color);
-  box-shadow: none;
-  border: none;
-  transition: 0.2s ease;
-  gap: 16px;
-}
-
-.button-large:hover {
-  box-shadow: var(--box-shadow-primary), var(--box-shadow-secondary);
-  cursor: pointer;
-}
 
 .button-iconOnly {
   display: flex;
@@ -323,76 +263,15 @@ p {
   width: 100%;
 }
 
-.result{
+
+
+
+
+
+
+.RecordFooter{
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap:24px;
 }
 
-.emotionTag{
-  padding:8px 12px 8px 12px;
-  border-radius: 12px;
-  background-color: var(--brown-030);
-  display: inline-block;
-
-}
-
-.themeTag{
-  padding:8px 16px 8px 16px;
-  border-radius: 24px;
-  background-color: var(--brown-020);
-  display: inline-block;
-
-}
-
-.tagList{
-  display: flex;
-  direction: row;
-  gap:8px;
-  align-items: center;
-  justify-content: center;
-}
-
-.resultSection{
-  width: 600px;
-  background-color: #FFFDF8;
-  display: flex;
-  direction: row;
-  gap:64px;
-  padding: 16px 24px 16px 24px;
-  border-radius: 24px;
-  
-}
-
-.resultSection > :first-child {
-  width: 100px;  
-}
-
-.actionBox{
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: start;
-  gap:12px;
-  background-color: var(--brown-020);
-  border-radius: 16px;
-  width:fit-content;
-
-}
-
-
-.emotionTag-orange {
-  background-color: var(--emotionTag-orange);
-}
-
-.emotionTag-red {
-  background-color: var(--emotionTag-red);
-}
-
-.emotionTag-green {
-  background-color: var(--emotionTag-green);
-}
-
-.emotionTag-blue {
-  background-color: var(--emotionTag-blue);
-}

@@ -49,5 +49,18 @@ def save_transcript():
     print(response_out)
     return jsonify(response_out)
 
+@app.route("/get_transcripts")
+def get_transcripts():
+    with open("transcripts.jsonl", "r") as file:
+        # Reading all lines and converting each line back to dictionary
+        transcripts = [json.loads(line) for line in file if line.strip()]
+        print (transcripts)
+    return jsonify(transcripts)
+
+
 if __name__ == "__main__":
     app.run()
+
+
+
+

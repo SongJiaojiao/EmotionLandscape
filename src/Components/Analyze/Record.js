@@ -6,7 +6,7 @@ import Toggle from '../Toggle';
 import AudioRecorder from './AudioRecorder';
 
 
-function Record({handleScriptsSubmit,setTranscript}) {
+function Record({ handleScriptsSubmit, setTranscript }) {
     const { theme, toggleTheme } = useTheme()
     const [userInput, setUserInput] = useState('');
 
@@ -29,7 +29,7 @@ function Record({handleScriptsSubmit,setTranscript}) {
 
     const handleTranscription = (transcription) => {
         setUserInput(transcription);
-        
+
     };
 
 
@@ -43,6 +43,7 @@ function Record({handleScriptsSubmit,setTranscript}) {
                             autoFocus
                             className="textArea"
                             placeholder="What's on your mind today?"
+                            value={userInput}
                             onChange={(e) => setUserInput(e.target.value)}
                         />
                     )
@@ -56,8 +57,11 @@ function Record({handleScriptsSubmit,setTranscript}) {
                 }
             </div>
 
-            <button className='button-large' onClick={() => handleScriptsSubmit(userInput)} >Temp Submit Btn</button>
-            <AudioRecorder onTranscription={handleTranscription}/>
+            <div className='RecordFooter' >
+                <AudioRecorder onTranscription={handleTranscription} handleScriptsSubmit={handleScriptsSubmit} />
+                <button className='button-large' onClick={() => handleScriptsSubmit(userInput)} disabled={!userInput}>Done</button>
+            </div>
+
         </div>
 
     );

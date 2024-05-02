@@ -1,4 +1,4 @@
-import './App.css';
+import './Styles/App.css';
 import { AuthUser, ThemeProvider, ThemeContext} from './Contexts/ThemeContext';
 import { useState, useEffect, useContext } from 'react'
 import AnalyzeMood from './Components/Analyze/AnalyzeMood';

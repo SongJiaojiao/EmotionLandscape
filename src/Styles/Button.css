@@ -1,0 +1,72 @@
+@import url("./font.css");
+@import url("./color.css");
+
+.button-large {
+    display: flex;
+    direction: row;
+    align-items: center;
+    background-color: var(--brown-030);
+    font-family: "Averia Serif Libre", serif;
+    font-size: 24px;
+    padding-left: 27px;
+    padding-right: 27px;
+    height: 72px;
+    border-radius: 36px;
+    color: var(--primary-color);
+    box-shadow: none;
+    border: none;
+    transition: 0.2s ease;
+    gap: 16px;
+  }
+  
+  .button-large:hover {
+    box-shadow: var(--box-shadow-primary), var(--box-shadow-secondary);
+    cursor: pointer;
+  }
+
+  .button-large:disabled {
+    background-color: transparent;
+    cursor: pointer;
+    color:var(--brown-040)
+  }
+
+  .button-large:disabled:hover {
+    box-shadow: none;
+  }
+
+
+
+.button-medium-secondary {
+    display: flex;
+    direction: row;
+    align-items: center;
+    justify-content: center;
+    gap:6px;
+    background-color: transparent;
+    font-family: "Averia Serif Libre", serif;
+    font-size: 20px;
+    color: var(--primary-color);
+    border: none;
+    padding: 8px 12px 8px 12px;
+    cursor: pointer;
+  
+  }
+  
+  .button-medium-secondary.selected {
+    background-color: white;
+    border-radius: 8px;
+  }
+  
+  
+  
+  .button-medium-secondary:hover {
+    background-color: var(--brown-030);
+    color: var(--primary-color);
+    border: none;
+    border-radius: 8px;
+  
+  }
+  .button-medium-secondary.selected:hover {
+    background-color: var(--brown-010)
+    
+  }
