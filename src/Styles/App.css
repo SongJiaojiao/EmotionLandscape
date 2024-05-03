@@ -10,18 +10,18 @@
 
 .App {
   margin: 80px;
-  text-align: center;
   font-family: "Averia Serif Libre", serif;
 }
+
 @media (max-width: 768px) {
   .App {
-    margin: 24px; 
+    margin: 24px;
   }
 }
 
 @media (max-width: 430px) {
   .App {
-    margin: 16px; 
+    margin: 16px;
   }
 }
 
@@ -247,31 +247,57 @@ body.main {
 
 .toggle-container {
   display: inline-flex;
-  gap: 8px; /* Adds 8px gap between each child element */
+  gap: 8px;
+  /* Adds 8px gap between each child element */
   padding: 8px;
   background-color: var(--brown-020);
   border-radius: 8px;
-  justify-content: center; /* Centers items horizontally */
-  align-items: center; /* Aligns items vertically */
+  justify-content: center;
+  /* Centers items horizontally */
+  align-items: center;
+  /* Aligns items vertically */
 
 }
 
-.recordPage{
+.recordPage {
   display: flex;
   flex-direction: column;
-  align-items: center; 
+  align-items: center;
   width: 100%;
 }
 
 
 
-
-
-
-
-.RecordFooter{
+.RecordFooter {
   display: flex;
   flex-direction: row;
-  gap:24px;
+  gap: 24px;
 }
 
+.resultSection {
+
+  max-width: 600px;
+  background-color: #FFFDF8;
+  display: flex;
+  flex-direction: row;
+  gap: 64px;
+  padding: 16px 24px;
+  border-radius: 24px;
+  justify-content: flex-start;
+
+}
+
+@media (max-width: 768px) {
+  .resultSection {
+    gap:0px;
+    flex-direction: column;
+  }
+}
+
+
+
+.sectionTitle{
+  width: 100px;
+  padding: 16px 0;
+  color: var(--brown-080);
+}

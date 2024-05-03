@@ -4,7 +4,7 @@ import ThemeTag from './ThemeTag';
 import Actions from './Actions';
 import { width } from '@fortawesome/free-brands-svg-icons/fa42Group';
 import '../../Styles/App.css'
-import styled from 'styled-components';
+
 
 function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousalList, timestamp, formattedTime }) {
 
@@ -33,39 +33,14 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
 
     }
 
-    const ResultSection = styled.div`
-    max-width:600px;
-    background-color: #FFFDF8;
-    display: flex;
-    flex-direction: row;
-    gap: 64px;
-    padding: 16px 24px;
-    border-radius: 24px;
-    justify-content: flex-start;
-  
-    @media (max-width: 768px) {
-        flex-direction: column; 
-        padding: 24px;
-        gap: 12px;
-    }
-  `;
 
-    const Sectiontitle = styled.div`
-    width: 100px;
-    padding: 16px 0;
-    color: var(--brown-080);
-
-    @media (max-width: 768px) {
-        padding: 0;
-    }
-    `
 
     const result = {
         display: 'flex',
         flexDirection: 'column',
         gap: '16px',
-        marginBottom: '24px'
-
+        marginBottom: '24px',
+        marginTop:'24px',
 
     }
 
@@ -76,16 +51,20 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
 
 
     }
+    const timeStampStyle ={
+        textAlign:'center'
+    } 
 
 
     return (
 
         <div style={result}>
-            {formattedTime}
-            <ResultSection>
-                <Sectiontitle>
+            <div style={timeStampStyle}>{formattedTime}</div>
+            
+            <div class="resultSection">
+                <div className="sectionTitle">
                     <h2>Emotions</h2>
-                </Sectiontitle>
+                </div>
 
                 <div style={tagListStyle}>
                     {emotionList.map((emotion, index) => (
@@ -99,12 +78,12 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
                     }
                 </div>
 
-            </ResultSection>
+            </div>
 
-            <ResultSection>
-                <Sectiontitle>
+            <div class="resultSection">
+                <div className="sectionTitle">
                     <h2>Themes</h2>
-                </Sectiontitle>
+                </div>
 
 
                 <div style={tagListStyle}>
@@ -114,25 +93,25 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
                     }
                 </div>
 
-            </ResultSection>
+            </div>
 
-            <ResultSection>
-                <Sectiontitle>
+            <div class="resultSection">
+                <div className="sectionTitle">
                     <h2>Analysis</h2>
-                </Sectiontitle>
+                </div>
 
                 <div style={analysisText}>
                     <p>{analysis}</p>
                 </div>
 
 
-            </ResultSection>
+            </div>
 
 
-            <ResultSection>
-                <Sectiontitle>
+            <div class="resultSection">
+                <div className="sectionTitle">
                     <h2>Actions</h2>
-                </Sectiontitle>
+                </div>
                 <div style={actionPairStyle}>
                     {actionList.map((action, index) => (
                         <Actions key={index} action={action.name} tag={action.tag} />
@@ -140,7 +119,7 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
                     }
                 </div>
 
-            </ResultSection>
+            </div>
 
         </div>
 

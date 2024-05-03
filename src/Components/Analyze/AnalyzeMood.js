@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react'
 import Record from './Record';
 import Result from './Result';
-import History from './History';
 
 export default function AnalyzeMood() {
 

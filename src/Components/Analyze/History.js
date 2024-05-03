@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SingleAnalysis from './SingleAnalysis';
+import Toggle from '../Toggle';
+import { width } from '@fortawesome/free-brands-svg-icons/fa42Group';
 
 function History({ history }) {
+
+    const [selectedDate, setSelectedDate] = useState(() => sessionStorage.getItem('selectedDate') || 'Today');
+
     if (!history || history.length === 0) {
         return <div>No history available.</div>; // Safeguard against undefined or empty history
     }
@@ -46,14 +51,51 @@ function History({ history }) {
             return acc;
         }, {});
 
+    const uniqueDates = Object.keys(groupedByDate);
+    const options = uniqueDates.map(date => {
+
+        return {
+            value: date,
+            text: date
+        };
+    });
+
+    const reversedOptions = [...options].reverse();
+    
+
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+        sessionStorage.setItem('selectedDate',date)
+    };
+ 
+    const dateSelector = {
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center',
+        width:'100%',
+        marginTop:'24px'
+
+    
+    }
+
+
+
+
     return (
         <div>
+            <div style={dateSelector}>
+                <Toggle
+                    options={reversedOptions}
+                    selectedValue={selectedDate}
+                    setSelectedValue={handleDateChange}
+                />
+            </div>
             <div className='analysisList'>
-            {Object.keys(groupedByDate).map((date) => (
-                    <div key={date}>
-                        <h3>{date}</h3> {/* Display the date as a section header */}
-                        {groupedByDate[date].map((singleHistory, index) => (
-                            <SingleAnalysis 
+                {groupedByDate[selectedDate] &&  (
+                    <div key={selectedDate}>
+                       {/* Display the date as a section header */}
+                        {groupedByDate[selectedDate].map((singleHistory, index) => (
+                            <SingleAnalysis
                                 key={index}
                                 emotionList={singleHistory.emotions}
                                 themeList={singleHistory.themes}
@@ -66,7 +108,7 @@ function History({ history }) {
                             />
                         ))}
                     </div>
-                ))}
+                )}
             </div>
         </div>
     );

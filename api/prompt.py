@@ -19,7 +19,7 @@ Output no other text, other than these three valid python lists.
 """
 
 fix = """
-The user will input a voice-to-text transcribed text from a weak model. You job is to output the correct transcription.
+The user will input a transcribed text from a weak model. You job is to fix the possible errors in the transcripts.
 Output NO other text, other than the fixed transcription. No "Okay, here is my attempt at correcting the transcription".
 """
 

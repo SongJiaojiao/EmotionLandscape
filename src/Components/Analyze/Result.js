@@ -11,6 +11,7 @@ function Result({updateAnalysisReady }) {
 
     const fetchData = async () => {
         try {
+            
             const response = await fetch('http://127.0.0.1:5000/get_transcripts', {
                 method: 'GET',
                 headers: {
@@ -37,7 +38,6 @@ function Result({updateAnalysisReady }) {
 
         <div>
             <div >
-               
                 <button className="button-medium-secondary" onClick={updateAnalysisReady} > <FontAwesomeIcon icon={faArrowLeft} /> </button>
             </div>
             <History history= {history} />
