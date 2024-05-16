@@ -5,6 +5,11 @@
 /.pnp
 .pnp.js
 
+
+# Cache directories
+.cache/
+**/.cache/
+
 # testing
 /coverage
 
