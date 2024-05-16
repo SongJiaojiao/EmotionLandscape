@@ -1,4 +1,4 @@
-emotion_list ={
+emotion_data ={
     "Stress": {"Valence": -6, "Arousal": 8},
     "Overwhelm": {"Valence": -7, "Arousal": 7},
     "Anxiety": {"Valence": -8, "Arousal": 8},

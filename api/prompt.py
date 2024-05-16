@@ -1,13 +1,31 @@
-from emotion_data import emotion_list
+from emotion_data import emotion_data
 
+emotion_list = [
+    "Stress", "Overwhelm", "Anxiety", "Worry", "Avoidance", "Excitement", "Dread", "Fear", 
+    "Vulnerability", "Anguish", "Hopelessness", "Despair", "Sadness", "Grief", "Joy", 
+    "Happiness", "Calm", "Contentment", "Gratitude", "Foreboding Joy", "Relief", 
+    "Tranquility", "Boredom", "Disappointment", "Expectations", "Regret", "Discouragement", 
+    "Resignation", "Frustration", "Shame", "Self-Compassion", "Perfectionism", "Guilt", 
+    "Humiliation", "Embarrassment", "Pride", "Hubris", "Humility", "Comparison", 
+    "Admiration", "Reverence", "Envy", "Jealousy", "Resentment", "Schadenfreude", 
+    "Freudenfreude", "Compassion", "Pity", "Empathy", "Sympathy", "Boundaries", 
+    "Comparative Suffering", "Anger", "Contempt", "Disgust", "Dehumanization", "Hate", 
+    "Self-Righteousness", "Awe", "Wonder", "Confusion", "Curiosity", "Interest", 
+    "Surprise", "Belonging", "Fitting In", "Connection", "Disconnection", "Insecurity", 
+    "Invisibility", "Loneliness", "Amusement", "Bittersweetness", "Nostalgia", 
+    "Cognitive Dissonance", "Paradox", "Irony", "Sarcasm", "Love", "Lovelessness", 
+    "Heartbreak", "Trust", "Self-Trust", "Betrayal", "Defensiveness", "Flooding", "Hurt"
+]
 
-preprocess = """
+themes_list = ["Family", "Career", "Friendship", "Love", "Adventure", "Conflict", "Freedom", "Identity", "Betrayal", "Justice", "Survival", "Transformation", "Power", "Ambition", "Sacrifice", "Truth", "Redemption", "Isolation", "Community", "Wisdom", "Faith"]
+
+preprocess = f"""
 <instruction>
 Given a journal entry, do the following:
-1. Output between 2-4 list of emotions using Brené Brown list of emotions. 
-2. For each emotions, output a valence between -10 to 10. -10 being extreme negative, 10 being extreme positive. 
-3. For each emotions, output an arousal between 0 to 10. 0 is low energy, 10 is high energy emotion. Positive emotions can be low energy as well. Relax would be 2.
-4. Output between 2-3 list of themes in transcripts, eg: Family,Career,Friendship,Love,Adventure,Conflict,Freedom,Identity,Betrayal,Justice,Survival,Transformation,Power,Ambition,Sacrifice,Truth,Redemption,Isolation,Community,Wisdom,Faith
+1. Select and Output between 2-4 emotions from {emotion_list}. Do not give any emotions that is not on the {emotion_list}. 
+2. For each emotions, output a valence. Search the emotion from {emotion_data} and use the predefined valence.
+3. For each emotions, output an arousal. Search the emotion from {emotion_data} and use the predefined arousal.
+4. Output between 2-3 list of themes from {themes_list}.Do not give any emotions that is not on the {themes_list}. 
 
 Output no other text, other than these three valid python lists.
 </instruction>

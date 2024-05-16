@@ -2,7 +2,7 @@ import React from 'react';
 import '../../Styles/App.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { height, width } from '@fortawesome/free-brands-svg-icons/fa42Group';
+import { height } from '@fortawesome/free-brands-svg-icons/fa42Group';
 
 function Actions({ action, tag }) {
   const getBackgroundColor = (tag) => {
@@ -45,8 +45,11 @@ function Actions({ action, tag }) {
   const actionTop = {
     display: 'flex',
     flexDirection: 'column',
-    gap: '12px',
+    // gap: '12px',
     alignItems: 'flex-start',
+    justifyContent:'space-between',
+    height:'100%'
+
 
 
   };
@@ -61,7 +64,7 @@ function Actions({ action, tag }) {
 
 
 
-      <FontAwesomeIcon icon={faArrowRight} />
+      {/* <FontAwesomeIcon icon={faArrowRight} /> */}
 
 
     </div>

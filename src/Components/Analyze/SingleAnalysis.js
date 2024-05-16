@@ -7,47 +7,6 @@ import '../../Styles/App.css'
 
 
 function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousalList, formattedTime,recommendedActions }) {
-    console.log('emotions',emotionList)
-
-   
-
-    // function getRecommendedActions(emotionList, valenceList, arousalList) {
-    //     const recommendedActions = [];
-    //     const addedActions = [];
-    
-    //     for (let i = 0; i < emotionList.length; i++) {
-    //         const emotion = emotionList[i];
-    //         const valence = valenceList[i];
-    //         const arousal = arousalList[i];
-    //         console.log(emotion, valence, arousal)
-    
-    //         if (arousal >= 7 && valence >= 7) {
-    //             addActionIfNotAdded(recommendedActions, addedActions, "Name one thing you are grateful", "Expanding");
-    //             addActionIfNotAdded(recommendedActions, addedActions, "Share with a friend", "Expanding");
-    //         } else if (arousal <= -3 && valence >= 7) {
-    //             addActionIfNotAdded(recommendedActions, addedActions, "Write a goal", "Exploring");
-    //         } else if (arousal >= 7 && valence <= -3) {
-    //             addActionIfNotAdded(recommendedActions, addedActions, "Down regulating breath work", "Grounding");
-    //             addActionIfNotAdded(recommendedActions, addedActions, "Listen to your favorite calming song", "Grounding");
-    //         } else if (arousal <= -3 && valence <= -3) {
-    //             addActionIfNotAdded(recommendedActions, addedActions, "Up regulating breath work", "Elevating");
-    //             addActionIfNotAdded(recommendedActions, addedActions, "Listen to upbeat music", "Elevating");
-    //         }
-    //     }
-    
-    //     return recommendedActions;
-    // }
-    
-    // function addActionIfNotAdded(recommendedActions, addedActions, name, tag) {
-    //     if (!addedActions.includes(name)) {
-    //         recommendedActions.push({ name, tag });
-    //         addedActions.push(name);
-    //     }
-    // }
-    // const recommendedActions = getRecommendedActions(emotionList, valenceList, arousalList);
-    // console.log('recommendedActions',recommendedActions)
-
-
     const tagListStyle = {
         display: 'flex',
         flexDirection: 'row', // Note: 'flex-direction' becomes 'flexDirection'
