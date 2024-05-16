@@ -4,6 +4,9 @@ import Result from './Result';
 
 export default function AnalyzeMood() {
 
+    const API_URL = process.env.REACT_APP_SERVERR_DOMAIN;
+    console.log(API_URL)
+
     const getArrayFromSessionStorage = (key) => {
         const storedValue = sessionStorage.getItem(key);
         return storedValue ? storedValue.split(',') : [];
@@ -27,7 +30,7 @@ export default function AnalyzeMood() {
         try {
             console.log('userTranscript in api', userInput, typeof (userInput));
 
-            const response = await fetch(`http://127.0.0.1:5000/save_transcript`, {
+            const response = await fetch(`${API_URL}/save_transcript`, {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
