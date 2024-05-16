@@ -1,10 +1,14 @@
 import React from 'react';
 import '../../Styles/App.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { height } from '@fortawesome/free-brands-svg-icons/fa42Group';
+import target from '../../Img/target.png'
+import breatheblue from '../../Img/breatheblue.png'
+import breatheorange from '../../Img/breatheorange.png'
+import musicorange from '../../Img/musicorange.png'
+import musicblue from '../../Img/musicblue.png'
+import friend from '../../Img/friend.png'
+import brightheart from '../../Img/brightheart.png'
 
-function Actions({ action, tag }) {
+function Actions({ action, tag, icon }) {
   const getBackgroundColor = (tag) => {
     switch (tag) {
       case 'Expanding':
@@ -19,6 +23,39 @@ function Actions({ action, tag }) {
         return 'var(--emotionTag-blue)'; // default background color
     }
   };
+  const actionIcons = [
+    {
+        name: "Write a goal",
+        iconLink: target
+    },
+    {
+        name: "Down regulating breath work",
+        iconLink: breatheblue
+    },
+    {
+        name: "Up regulating breath work",
+        iconLink: breatheorange
+    },
+    {
+        name: "Listen to a calming song",
+        iconLink: musicblue
+    },
+
+    {
+        name: "Share with a friend",
+        iconLink: friend
+    },
+    {
+        name: "Name one thing you are grateful",
+        iconLink: brightheart
+    },
+    {
+      name: "Listen to upbeat music",
+      iconLink: musicorange
+  },
+
+
+];
 
   const tagStyle = {
     backgroundColor: getBackgroundColor(tag),
@@ -34,11 +71,12 @@ function Actions({ action, tag }) {
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     gap: '28px',
-    backgroundColor: 'var(--brown-010)', 
+    backgroundColor: 'var(--brown-010)',
     borderRadius: '16px',
     textAlign: 'left',
     color: 'var(--brown-080)',
-    height:'140px'
+    height: '140px',
+    border:'1px solid var(--brown-030)'
 
 
   };
@@ -47,8 +85,8 @@ function Actions({ action, tag }) {
     flexDirection: 'column',
     // gap: '12px',
     alignItems: 'flex-start',
-    justifyContent:'space-between',
-    height:'100%'
+    justifyContent: 'space-between',
+    height: '100%'
 
 
 
@@ -58,14 +96,10 @@ function Actions({ action, tag }) {
   return (
     <div style={actionBox}>
       <div style={actionTop}>
-        <div style={tagStyle}>{tag}</div>
+      <img src={actionIcons.find(icon => icon.name === action).iconLink} style={{ width: 40, height: 40 }} />
         <h3>{action}</h3>
       </div>
-
-
-
       {/* <FontAwesomeIcon icon={faArrowRight} /> */}
-
 
     </div>
   );

@@ -5,14 +5,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import History from './History';
 
+
 function Result({updateAnalysisReady }) {
+    const API_URL = process.env.REACT_APP_SERVERR_DOMAIN;
 
     const [history, setHistory] = useState([]);
 
     const fetchData = async () => {
         try {
             
-            const response = await fetch('http://127.0.0.1:5000/get_transcripts', {
+            const response = await fetch(`${API_URL}/get_transcripts`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'

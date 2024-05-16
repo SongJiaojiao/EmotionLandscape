@@ -43,15 +43,15 @@ def save_transcript():
         valence = valences[i]
         arousal = arousals[i]
 
-        if arousal >= 7 and valence >= 7:
+        if arousal >= 6 and valence >= 6:
             add_action_if_not_added("Name one thing you are grateful", "Expanding")
             add_action_if_not_added("Share with a friend", "Expanding")
-        elif arousal <= -3 and valence >= 7:
+        elif arousal <= -2 and valence >= 6:
             add_action_if_not_added("Write a goal", "Exploring")
-        elif arousal >= 7 and valence <= -3:
+        elif arousal >= 6 and valence <= -2:
             add_action_if_not_added("Down regulating breath work", "Grounding")
-            add_action_if_not_added("Listen to your favorite calming song", "Grounding")
-        elif arousal <= -3 and valence <= -3:
+            add_action_if_not_added("Listen to a calming song", "Grounding")
+        elif arousal <= -2 and valence <= -2:
             add_action_if_not_added("Up regulating breath work", "Elevating")
             add_action_if_not_added("Listen to upbeat music", "Elevating")
 
