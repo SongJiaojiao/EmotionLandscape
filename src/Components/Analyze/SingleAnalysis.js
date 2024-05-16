@@ -2,20 +2,51 @@ import React, { useEffect, useState } from 'react';
 import EmotionTag from './EmotionTag';
 import ThemeTag from './ThemeTag';
 import Actions from './Actions';
-import { width } from '@fortawesome/free-brands-svg-icons/fa42Group';
+import { height, width } from '@fortawesome/free-brands-svg-icons/fa42Group';
 import '../../Styles/App.css'
 
 
-function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousalList, timestamp, formattedTime }) {
+function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousalList, formattedTime,recommendedActions }) {
+    console.log('emotions',emotionList)
 
-    const actionList = [{
-        name: 'Down regulating Breath work',
-        tag: 'Grounding'
-    }, {
-        name: 'Listen to your favorite calming song',
-        tag: 'Elevating'
+   
 
-    }]
+    // function getRecommendedActions(emotionList, valenceList, arousalList) {
+    //     const recommendedActions = [];
+    //     const addedActions = [];
+    
+    //     for (let i = 0; i < emotionList.length; i++) {
+    //         const emotion = emotionList[i];
+    //         const valence = valenceList[i];
+    //         const arousal = arousalList[i];
+    //         console.log(emotion, valence, arousal)
+    
+    //         if (arousal >= 7 && valence >= 7) {
+    //             addActionIfNotAdded(recommendedActions, addedActions, "Name one thing you are grateful", "Expanding");
+    //             addActionIfNotAdded(recommendedActions, addedActions, "Share with a friend", "Expanding");
+    //         } else if (arousal <= -3 && valence >= 7) {
+    //             addActionIfNotAdded(recommendedActions, addedActions, "Write a goal", "Exploring");
+    //         } else if (arousal >= 7 && valence <= -3) {
+    //             addActionIfNotAdded(recommendedActions, addedActions, "Down regulating breath work", "Grounding");
+    //             addActionIfNotAdded(recommendedActions, addedActions, "Listen to your favorite calming song", "Grounding");
+    //         } else if (arousal <= -3 && valence <= -3) {
+    //             addActionIfNotAdded(recommendedActions, addedActions, "Up regulating breath work", "Elevating");
+    //             addActionIfNotAdded(recommendedActions, addedActions, "Listen to upbeat music", "Elevating");
+    //         }
+    //     }
+    
+    //     return recommendedActions;
+    // }
+    
+    // function addActionIfNotAdded(recommendedActions, addedActions, name, tag) {
+    //     if (!addedActions.includes(name)) {
+    //         recommendedActions.push({ name, tag });
+    //         addedActions.push(name);
+    //     }
+    // }
+    // const recommendedActions = getRecommendedActions(emotionList, valenceList, arousalList);
+    // console.log('recommendedActions',recommendedActions)
+
 
     const tagListStyle = {
         display: 'flex',
@@ -27,11 +58,19 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
     };
 
     const actionPairStyle = {
+        width:'100%',
         display: 'flex',
         justifyContent: 'space-between',
         gap: '12px',
+        flexWrap: 'wrap',
 
     }
+    const actionCardStyle = {
+        flex: '1 0 48%', 
+        height: '100%'
+
+    };
+    
 
 
 
@@ -40,7 +79,7 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
         flexDirection: 'column',
         gap: '16px',
         marginBottom: '24px',
-        marginTop:'24px',
+        marginTop: '24px',
 
     }
 
@@ -51,16 +90,16 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
 
 
     }
-    const timeStampStyle ={
-        textAlign:'center'
-    } 
+    const timeStampStyle = {
+        textAlign: 'center'
+    }
 
 
     return (
 
         <div style={result}>
             <div style={timeStampStyle}>{formattedTime}</div>
-            
+
             <div class="resultSection">
                 <div className="sectionTitle">
                     <h2>Emotions</h2>
@@ -113,8 +152,11 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
                     <h2>Actions</h2>
                 </div>
                 <div style={actionPairStyle}>
-                    {actionList.map((action, index) => (
-                        <Actions key={index} action={action.name} tag={action.tag} />
+                    {recommendedActions.map((action, index) => (
+                        <div key={index} style={{ flex: '0 0 calc(50% - 6px)' }}> 
+                            <Actions action={action.name} tag={action.tag} />
+                        </div>
+                       
                     ))
                     }
                 </div>

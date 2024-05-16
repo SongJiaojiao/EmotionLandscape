@@ -2,6 +2,7 @@ import React from 'react';
 import '../../Styles/App.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { height, width } from '@fortawesome/free-brands-svg-icons/fa42Group';
 
 function Actions({ action, tag }) {
   const getBackgroundColor = (tag) => {
@@ -33,11 +34,12 @@ function Actions({ action, tag }) {
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     gap: '28px',
-    backgroundColor: 'var(--brown-010)', // Using CSS variable
+    backgroundColor: 'var(--brown-010)', 
     borderRadius: '16px',
-    width: 'fit-content',
     textAlign: 'left',
-    color: 'var(--brown-080)'
+    color: 'var(--brown-080)',
+    height:'140px'
+
 
   };
   const actionTop = {

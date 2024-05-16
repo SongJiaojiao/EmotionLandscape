@@ -8,13 +8,13 @@ function History({ history }) {
     const [selectedDate, setSelectedDate] = useState(() => sessionStorage.getItem('selectedDate') || 'Today');
 
     if (!history || history.length === 0) {
-        return <div>No history available.</div>; // Safeguard against undefined or empty history
+        return <div>No history available.</div>; 
     }
 
     const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());  // Today at midnight, local time
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());  
     const yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - 1); // Yesterday at midnight, local time
+    yesterday.setDate(today.getDate() - 1); 
 
     // Sort and then group history by dates
     const groupedByDate = history
@@ -23,7 +23,6 @@ function History({ history }) {
             const itemDate = new Date(item.timestamp); // Assuming item.timestamp is in UTC
             const itemLocalDate = new Date(itemDate.toLocaleString()); // Convert to local date
 
-            // Format the date for comparison (strip time for comparison)
             const itemFormattedDate = new Date(itemLocalDate.getFullYear(), itemLocalDate.getMonth(), itemLocalDate.getDate());
 
             // Determine if the local date is Today, Yesterday or another day
@@ -41,9 +40,8 @@ function History({ history }) {
                 hour: '2-digit',
                 minute: '2-digit',
                 hour12: true
-            }).toUpperCase(); // Ensure AM/PM is capitalized
+            }).toUpperCase(); 
 
-            // Group by the formatted date and include formatted time
             if (!acc[formattedDate]) {
                 acc[formattedDate] = [];
             }
@@ -84,11 +82,11 @@ function History({ history }) {
     return (
         <div>
             <div style={dateSelector}>
-                <Toggle
+                {/* <Toggle
                     options={reversedOptions}
                     selectedValue={selectedDate}
                     setSelectedValue={handleDateChange}
-                />
+                /> */}
             </div>
             <div className='analysisList'>
                 {groupedByDate[selectedDate] &&  (
@@ -99,12 +97,13 @@ function History({ history }) {
                                 key={index}
                                 emotionList={singleHistory.emotions}
                                 themeList={singleHistory.themes}
-                                analysis={singleHistory.transcript}
+                                analysis={singleHistory.analysis}
                                 actionList={singleHistory.arousal}
                                 valenceList={singleHistory.valence}
                                 arousalList={singleHistory.arousal}
                                 timestamp={singleHistory.timestamp}
                                 formattedTime={singleHistory.formattedTime} // Passing formatted time
+                                recommendedActions = {singleHistory.recommendedActions}
                             />
                         ))}
                     </div>
