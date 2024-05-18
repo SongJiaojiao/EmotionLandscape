@@ -1,5 +1,5 @@
 import React from 'react';
-import summary from '../Img/summary.png'
+import summary from '../../Img/summary.png'
 
 function Summary({ reframeText, reset }) {
 

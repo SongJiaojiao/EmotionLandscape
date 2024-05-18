@@ -3,7 +3,7 @@ import SingleAnalysis from './SingleAnalysis';
 import Toggle from '../Toggle';
 import { width } from '@fortawesome/free-brands-svg-icons/fa42Group';
 
-function History({ history }) {
+function History({ history}) {
 
     const [selectedDate, setSelectedDate] = useState(() => sessionStorage.getItem('selectedDate') || 'Today');
 
@@ -104,6 +104,7 @@ function History({ history }) {
                                 timestamp={singleHistory.timestamp}
                                 formattedTime={singleHistory.formattedTime} // Passing formatted time
                                 recommendedActions = {singleHistory.recommendedActions}
+   
                             />
                         ))}
                     </div>

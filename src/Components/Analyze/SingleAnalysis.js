@@ -6,7 +6,7 @@ import { height, width } from '@fortawesome/free-brands-svg-icons/fa42Group';
 import '../../Styles/App.css'
 
 
-function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousalList, formattedTime,recommendedActions }) {
+function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousalList, formattedTime,recommendedActions,userTranscript }) {
     const tagListStyle = {
         display: 'flex',
         flexDirection: 'row', // Note: 'flex-direction' becomes 'flexDirection'

@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react'
 import Record from './Record';
 import Result from './Result';
+import CBTFlow from '../Reframe Exercise/CBTFlow';
 
 export default function AnalyzeMood() {
 
@@ -33,7 +34,7 @@ export default function AnalyzeMood() {
             const response = await fetch(`${API_URL}/save_transcript`, {
                 method: 'POST',
                 headers: {
-                    'content-type': 'application/json'
+                    'Content-Type': 'application/json'
                 },
 
                 body: JSON.stringify({ transcript: userInput, timestamp })
@@ -60,12 +61,14 @@ export default function AnalyzeMood() {
         }
 
     };
-
+    
+    
 
     const handleScriptsSubmit = async (userInput) => {
         sessionStorage.setItem('userTranscript', userInput);
         setuserTranscript(userInput);
         await save_transcript(userInput);
+       
 
     };
 

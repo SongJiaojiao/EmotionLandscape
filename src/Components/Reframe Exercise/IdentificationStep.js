@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRandom } from '@fortawesome/free-solid-svg-icons';
-import volcano from '../Img/volcano.png';
-import sunImage from '../Img/disqualify.png';
-import label from '../Img/label.png'
-import overgen from '../Img/overgen.png'
-import target from '../Img/target.png'
-import ruler from '../Img/ruler.png'
-import glasses from '../Img/glasses.png'
-import brain from '../Img/brain.png'
-import heart from '../Img/heart.png'
-import gavel from '../Img/gavel.png'
+import volcano from '../../Img/volcano.png';
+import sunImage from '../../Img/disqualify.png';
+import label from '../../Img/label.png'
+import overgen from '../../Img/overgen.png'
+import target from '../../Img/target.png'
+import ruler from '../../Img/ruler.png'
+import glasses from '../../Img/glasses.png'
+import brain from '../../Img/brain.png'
+import heart from '../../Img/heart.png'
+import gavel from '../../Img/gavel.png'
 
 
 function IdentificationStep({ isLoading, selectedDistortion, setSelectedDistortion, displayedDistortion, setDisplayedDistortion, identifiedDistortionResponse,explanation, showExplanation }) {

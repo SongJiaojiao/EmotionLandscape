@@ -5,11 +5,14 @@ import ChallengeStep from './ChallengeStep';
 import ReframeStep from './ReframeStep';
 import Footer from './Footer';
 import Summary from './Summary';
-import { type } from '@testing-library/user-event/dist/type';
+import { useLocation } from 'react-router-dom';
+
 const serverDomain = process.env.REACT_APP_SERVER_DOMAIN;
 
 
 function CBTFlow() {
+    // const location = useLocation();
+    // const { userTranscript} = location.state || {};
 
 
     const [step, setStep] = useState(() => Number(sessionStorage.getItem('step')) || 1);
@@ -244,7 +247,8 @@ function CBTFlow() {
 
     return (
         <div className='container'>
-            {renderStep()}
+            CBT
+            {/* {renderStep()}
             <Footer
                 step={step}
                 totalSteps={totalSteps}
@@ -253,7 +257,7 @@ function CBTFlow() {
                 onHelp={loadHelp}
                 showExplanation={showExplanation}
                 reset={reset}
-            />
+            /> */}
 
         </div>
     );

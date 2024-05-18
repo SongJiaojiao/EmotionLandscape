@@ -6,10 +6,12 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import History from './History';
 
 
+
 function Result({updateAnalysisReady }) {
     const API_URL = process.env.REACT_APP_SERVERR_DOMAIN;
 
     const [history, setHistory] = useState([]);
+    console.log('history',history)
 
     const fetchData = async () => {
         try {
@@ -34,6 +36,8 @@ function Result({updateAnalysisReady }) {
     useEffect(() => {
         fetchData();
     }, []);  
+
+
 
 
     return (

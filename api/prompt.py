@@ -48,8 +48,16 @@ analysis: You had a relaxing day off, feeling centered and grounded after sleepi
 """
 
 distortedThoughts = """
-return Yes if the users's input contains distorted thoughts. Otherwise return false. 
+<instruction>
+Identify if there are any distorted thoughts in users' input. All the distored thoughts options are: All-or-nothing thinking, Overgeneralization, Mental filter, Disqualifying the positive, Jumping to conclusions, 
+Emotional reasoning, Should statements, Labeling, Personalization, Catastrophizing. Return only True/False in your response, do not include anything else.
+</instruction>
+<output-format>
+True/False
+</output-format>
 """
+
+
 
 actions = """
 recommend actions based on emotions and their arousals and valences.
