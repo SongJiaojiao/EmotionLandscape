@@ -1,12 +1,11 @@
 import { useContext, useState } from 'react'
 import Record from './Record';
 import Result from './Result';
-import CBTFlow from '../Reframe Exercise/CBTFlow';
 
 export default function AnalyzeMood() {
 
     const API_URL = process.env.REACT_APP_SERVERR_DOMAIN;
-    console.log(API_URL)
+    console.log('server url',API_URL)
 
     const getArrayFromSessionStorage = (key) => {
         const storedValue = sessionStorage.getItem(key);
@@ -26,10 +25,9 @@ export default function AnalyzeMood() {
     const [history, setHistory] = useState([])
   
 
-
     const save_transcript = async (userInput) => {
         try {
-            console.log('userTranscript in api', userInput, typeof (userInput));
+            console.log('userTranscript in api', userInput);
 
             const response = await fetch(`${API_URL}/save_transcript`, {
                 method: 'POST',

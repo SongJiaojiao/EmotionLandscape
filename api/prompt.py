@@ -57,16 +57,3 @@ True/False
 </output-format>
 """
 
-
-
-actions = """
-recommend actions based on emotions and their arousals and valences.
-If the emotion is high arousal and high valence, add "Name one thing you are grateful" and "Share with a friend" in the list.
-If the emotion is low arousal and high valence, add "Write a goal" and "Meditate" in the list.
-If the emotion is high arousal and low valence, add "Down regulating Breath work" and "Listen to a calming song" in the list.
-If the emotion is low arousal and low valence, add "Up regulating breath work" and "Listen to upbeat music" in the list.
-<output-format>
-["action1", "action2" ...]
-</output-format>
-"""
-

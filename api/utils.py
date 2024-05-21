@@ -4,6 +4,7 @@ from anthropic import Anthropic
 
 load_dotenv()
 API_KEY = os.getenv("Antropic_API_KEY")
+print ('anthropic key',API_KEY)
 client = Anthropic(api_key=API_KEY)
 
 

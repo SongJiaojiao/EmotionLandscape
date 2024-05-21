@@ -13,7 +13,6 @@ export default function App() {
     <ThemeProvider>
       <Router>
         <div className="App">
-
           <Routes>
             <Route path="/" element={<AnalyzeMood />}  />
             <Route path="/reframe" element={<CBTFlow />} />
