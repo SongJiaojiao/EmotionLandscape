@@ -1,11 +1,12 @@
 import { useContext, useState } from 'react'
 import Record from './Record';
 import Result from './Result';
+import SingleAnalysis from './SingleAnalysis';
 
 export default function AnalyzeMood() {
 
     const API_URL = process.env.REACT_APP_SERVERR_DOMAIN;
-    console.log('server url',API_URL)
+
 
     const getArrayFromSessionStorage = (key) => {
         const storedValue = sessionStorage.getItem(key);
@@ -13,17 +14,13 @@ export default function AnalyzeMood() {
     };
 
     const [userTranscript, setuserTranscript] = useState(() => sessionStorage.getItem('userTranscript') || '');
-    const actionList = ['Down regulating Breath work', 'Listen to your favorite calming song']
     const [emotions, setEmotions] = useState(() => getArrayFromSessionStorage('emotions'));
 
     const [themes, setThemes] = useState(() => getArrayFromSessionStorage('themes'));
     const [valenceList, setValenceList] = useState(() => getArrayFromSessionStorage('valenceList'));
     const [arousalList, setArousalList] = useState(() => getArrayFromSessionStorage('arousalList'));
     const timestamp = new Date().toISOString();
-    const [analysisReady, setAnalysisReady] = useState(() => sessionStorage.getItem('analysisReady') || false);
-    const [historyReady, setHistoryReady] = useState(() => sessionStorage.getItem('historyReady') || false);
-    const [history, setHistory] = useState([])
-  
+    const [showResult, setshowResult] = useState(() => sessionStorage.getItem('showResult') || false);
 
     const save_transcript = async (userInput) => {
         try {
@@ -47,8 +44,8 @@ export default function AnalyzeMood() {
             setThemes(data.themes)
             setArousalList(data.arousal)
             setValenceList(data.valence)
-            setAnalysisReady(true);
-            sessionStorage.setItem('analysisReady', true)
+            setshowResult(true);
+            sessionStorage.setItem('showResult', true)
             sessionStorage.setItem('emotions', data.emotions)
             sessionStorage.setItem('themes', data.themes)
             sessionStorage.setItem('arousalList', data.arousal)
@@ -71,10 +68,10 @@ export default function AnalyzeMood() {
     };
 
 
-    const updateAnalysisReady = () => {
-        if (analysisReady) {
-            setAnalysisReady('');
-            sessionStorage.setItem('analysisReady', '');
+    const updateshowResult = () => {
+        if (showResult) {
+            setshowResult('');
+            sessionStorage.setItem('showResult', '');
         }
 
     }
@@ -86,19 +83,15 @@ export default function AnalyzeMood() {
 
         <div className='container' >
 
-            {!analysisReady ? (
+            {!showResult ? (
 
                 <Record handleScriptsSubmit={handleScriptsSubmit} />
             ) : (
+
                 <Result
-                    emotionList={emotions}
-                    themeList={themes}
-                    analysis={userTranscript}
-                    actionList={actionList}
-                    valenceList={valenceList}
-                    arousalList={arousalList}
-                    updateAnalysisReady={updateAnalysisReady}
-                    history = {history}
+
+                    updateshowResult={updateshowResult}
+
 
                 />
             )}

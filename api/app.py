@@ -15,13 +15,13 @@ def create_app():
     web_app = Flask(__name__)
     CORS(web_app)
     
-    logging.basicConfig(level=logging.DEBUG)
-    logger = logging.getLogger(__name__)
+    # logging.basicConfig(level=logging.DEBUG)
+    # logger = logging.getLogger(__name__)
     
-    openai_api_key = os.getenv("OPENAI_API_KEY")
-    anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
-    logger.debug(f"OPENAI_API_KEY: {openai_api_key}")
-    logger.debug(f"ANTHROPIC_API_KEY: {anthropic_api_key}")
+    # openai_api_key = os.getenv("OPENAI_API_KEY")
+    # anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
+    # logger.debug(f"OPENAI_API_KEY: {openai_api_key}")
+    # logger.debug(f"ANTHROPIC_API_KEY: {anthropic_api_key}")
 
     volume_mount_path = pathlib.Path(os.getenv("VOLUME_PATH", "vol"))
 
@@ -41,6 +41,7 @@ def create_app():
         analysis = claude(transcript, system=fix)
         response = claude(transcript, system=preprocess)
         distorted = claude(transcript, system=distortedThoughts)
+        print ('response',response)
         emotions, valences, arousals, themes = response.split("\n")
         emotions, valences, arousals, themes = eval(emotions), eval(valences), eval(arousals), eval(themes)
 

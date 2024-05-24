@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import EmotionTag from './EmotionTag';
-import ThemeTag from './ThemeTag';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import History from './History';
 
 
 
-function Result({updateAnalysisReady }) {
+function Result({updateshowResult}) {
     const API_URL = process.env.REACT_APP_SERVERR_DOMAIN;
+    
+    const getArrayFromSessionStorage = (key) => {
+        const storedValue = sessionStorage.getItem(key);
+        return storedValue ? storedValue.split(',') : [];
+    };
 
-    const [history, setHistory] = useState([]);
+    const [history, setHistory] = useState(() => sessionStorage.getItem('history') || '');
+    
     console.log('history',history)
 
     const fetchData = async () => {
@@ -34,17 +38,17 @@ function Result({updateAnalysisReady }) {
     };
 
     useEffect(() => {
-        fetchData();
-    }, []);  
-
-
+        if (history.length === 0) { // Fetch data only if history is empty
+            fetchData();
+        }
+    }, [history]);  
 
 
     return (
 
         <div>
             <div >
-                <button className="button-medium-secondary" onClick={updateAnalysisReady} > <FontAwesomeIcon icon={faArrowLeft} /> </button>
+                <button className="button-medium-secondary" onClick={updateshowResult}> <FontAwesomeIcon icon={faArrowLeft} /> </button>
             </div>
             <History history= {history} />
            

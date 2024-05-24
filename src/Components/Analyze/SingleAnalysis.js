@@ -24,12 +24,6 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
         flexWrap: 'wrap',
 
     }
-    const actionCardStyle = {
-        flex: '1 0 48%', 
-        height: '100%'
-
-    };
-    
 
 
 
@@ -105,8 +99,7 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
 
             </div>
 
-
-            <div class="resultSection">
+          {recommendedActions ? <div class="resultSection">
                 <div className="sectionTitle">
                     <h2>Actions</h2>
                 </div>
@@ -121,6 +114,8 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
                 </div>
 
             </div>
+            : null }
+            
 
         </div>
 

@@ -27,7 +27,7 @@ Given a journal entry, do the following:
 3. For each emotions, output an arousal. Search the emotion from {emotion_data} and use the predefined arousal.
 4. Output between 2-3 list of themes from {themes_list}.Do not give any emotions that is not on the {themes_list}. 
 
-Output no other text, other than these three valid python lists.
+Do not ouput anything other than the 4 requested lists. 
 </instruction>
 
 <output-format>

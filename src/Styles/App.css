@@ -272,6 +272,8 @@ body.main {
   display: flex;
   flex-direction: row;
   gap: 24px;
+  width:200px;
+  position:relative;
 }
 
 .resultSection {
