@@ -63,15 +63,15 @@ def create_app():
             valence = valences[i]
             arousal = arousals[i]
 
-            if arousal >= 6 and valence >= 6:
+            if arousal >= 5 and valence >= 5:
                 add_action_if_not_added("Name one thing you are grateful", "Expanding")
                 add_action_if_not_added("Share with a friend", "Expanding")
-            elif arousal <= -2 and valence >= 6:
+            elif arousal <= -1 and valence >= 5:
                 add_action_if_not_added("Write a goal", "Exploring")
-            elif arousal >= 6 and valence <= -2:
+            elif arousal >= 5 and valence <= -1:
                 add_action_if_not_added("Down regulating breath work", "Grounding")
                 add_action_if_not_added("Listen to a calming song", "Grounding")
-            elif arousal <= -2 and valence <= -2:
+            elif arousal <= -1 and valence <= -1:
                 add_action_if_not_added("Up regulating breath work", "Elevating")
                 add_action_if_not_added("Listen to upbeat music", "Elevating")
 
