@@ -32,7 +32,6 @@ function Result({ updateshowResult }) {
             const jsonData = await response.json();
             setHistory(jsonData);
             setFetchSuccess(true)
-            console.log('jsonData', jsonData);
         } catch (error) {
             console.error('Failed to fetch data:', error);
         }

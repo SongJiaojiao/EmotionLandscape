@@ -7,10 +7,6 @@ function History({ history}) {
 
     const [selectedDate, setSelectedDate] = useState(() => sessionStorage.getItem('selectedDate') || 'Today');
 
-    if (!history || history.length === 0) {
-        return <div>No history available.</div>; 
-    }
-
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());  
     const yesterday = new Date(today);
