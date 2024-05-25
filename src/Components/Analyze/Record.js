@@ -70,7 +70,7 @@ function Record({ handleScriptsSubmit }) {
         }
     };
 
-    const toggleWriteInput = () => {
+    const submitTypeInput = () => {
         handleSubmit();
     };
 
@@ -105,7 +105,7 @@ function Record({ handleScriptsSubmit }) {
             </div>
 
             <div style={RecordFooter}>
-                {inputMethod !== 'type' && (
+                {(inputMethod !== 'type' || userInput === '') && (
                     <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
                         <button className='button-large' onClick={toggleRecording} disabled={isLoading}>
                             {recording ? (
@@ -120,7 +120,7 @@ function Record({ handleScriptsSubmit }) {
                 )}
 
                 {userInput && inputMethod === 'type' && (
-                    <button className='button-large' onClick={toggleWriteInput} style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
+                    <button className='button-large' onClick={submitTypeInput} style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
                         {isLoading ? (
                             <img src={loadingGif} alt="Loading" style={{ width: '24px', height: '24px' }} />
                         ) : (
