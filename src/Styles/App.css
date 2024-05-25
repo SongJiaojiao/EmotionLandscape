@@ -267,9 +267,6 @@ body.main {
 }
 
 
-
-
-
 .resultSection {
 
   max-width: 600px;
@@ -296,4 +293,19 @@ body.main {
   width: 100px;
   padding: 16px 0;
   color: var(--brown-080);
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -40rem 0;
+  }
+  100% {
+    background-position: 40rem 0;
+  }
+}
+
+.shimmer {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(to right, var(--brown-020), var(--brown-030), var(--brown-020) 33%);
+  background-size: 80rem 100%;
 }

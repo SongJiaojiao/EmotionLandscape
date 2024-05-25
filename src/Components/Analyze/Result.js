@@ -5,21 +5,21 @@ import History from './History';
 
 
 
-function Result({updateshowResult}) {
+function Result({ updateshowResult }) {
     const API_URL = process.env.REACT_APP_SERVERR_DOMAIN;
-    
+    const [fetchSuccess, setFetchSuccess] = useState(false)
+
     const getArrayFromSessionStorage = (key) => {
         const storedValue = sessionStorage.getItem(key);
         return storedValue ? storedValue.split(',') : [];
     };
 
     const [history, setHistory] = useState(() => sessionStorage.getItem('history') || '');
-    
-    console.log('history',history)
+
 
     const fetchData = async () => {
         try {
-            
+
             const response = await fetch(`${API_URL}/get_transcripts`, {
                 method: 'GET',
                 headers: {
@@ -31,6 +31,7 @@ function Result({updateshowResult}) {
             }
             const jsonData = await response.json();
             setHistory(jsonData);
+            setFetchSuccess(true)
             console.log('jsonData', jsonData);
         } catch (error) {
             console.error('Failed to fetch data:', error);
@@ -41,7 +42,7 @@ function Result({updateshowResult}) {
         if (history.length === 0) { // Fetch data only if history is empty
             fetchData();
         }
-    }, [history]);  
+    }, [history]);
 
 
     return (
@@ -50,8 +51,11 @@ function Result({updateshowResult}) {
             <div >
                 <button className="button-medium-secondary" onClick={updateshowResult}> <FontAwesomeIcon icon={faArrowLeft} /> </button>
             </div>
-            <History history= {history} />
-           
+            {fetchSuccess ? (
+                <History history={history} />
+            ) : (
+                <div className='shimmer'></div>
+            )}
         </div>
 
 
