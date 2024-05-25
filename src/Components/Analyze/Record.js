@@ -5,16 +5,14 @@ import { useTheme } from '../../Contexts/ThemeContext';
 import Toggle from '../Toggle';
 import loadingGif from '../../Img/loading.gif';
 
+// Handle user's recording and typing behavior
 function Record({ handleScriptsSubmit }) {
     const { theme, toggleTheme } = useTheme();
     const [userInput, setUserInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [recording, setRecording] = useState(false);
-    const [recordInput, setRecordInput] = useState(false)
-    const [writeInput, setWriteInput] = useState(false)
-    const [inputMethod, setInputMethod] = useState(null)
+    const [inputMethod, setInputMethod] = useState(null);
     const recognition = useRef(new window.webkitSpeechRecognition());
-
 
     recognition.current.continuous = true; // Enable continuous recognition
     recognition.current.interimResults = true; // Enable interim results
@@ -60,19 +58,21 @@ function Record({ handleScriptsSubmit }) {
 
     const toggleRecording = () => {
         if (!recording) {
+            console.log('start recording');
             recognition.current.start();
             setRecording(true);
-            setRecordInput(true)
         } else {
+            console.log('stop recording');
+            handleSubmit();
+            setIsLoading(true)
             recognition.current.stop();
             setRecording(false);
-            handleSubmit()
         }
     };
 
     const toggleWriteInput = () => {
-        handleSubmit()
-    }
+        handleSubmit();
+    };
 
     recognition.current.onresult = (event) => {
         const transcript = Array.from(event.results)
@@ -80,7 +80,6 @@ function Record({ handleScriptsSubmit }) {
             .map(result => result.transcript)
             .join('');
         handleTranscription(transcript);
-        setIsLoading(false); // Hide loading icon after transcription
     };
 
     recognition.current.onend = () => {
@@ -96,28 +95,17 @@ function Record({ handleScriptsSubmit }) {
         <div className="recordPage">
             <Toggle options={options} selectedValue={theme} setSelectedValue={handleThemeChange} storageKey={"theme"} />
             <div className='interactionArea'>
-                {theme === 'light' ?
-                    (
-                        <textarea
-                            autoFocus
-                            className="textArea"
-                            placeholder="What's on your mind today?"
-                            value={userInput}
-                            onChange={handleInputChange}
-                        />
-                    )
-                    : (
-                        <textarea
-                            autoFocus
-                            className="textArea"
-                            placeholder="What did you dream?"
-                        />
-                    )
-                }
+                <textarea
+                    autoFocus
+                    className="textArea"
+                    placeholder={theme === 'light' ? "What's on your mind today?" : "What did you dream?"}
+                    value={userInput}
+                    onChange={handleInputChange}
+                />
             </div>
 
             <div style={RecordFooter}>
-                {inputMethod !== 'type' &&
+                {inputMethod !== 'type' && (
                     <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
                         <button className='button-large' onClick={toggleRecording} disabled={isLoading}>
                             {recording ? (
@@ -128,10 +116,10 @@ function Record({ handleScriptsSubmit }) {
                                 <FontAwesomeIcon icon={faMicrophone} />
                             )}
                         </button>
-                    </div>}
+                    </div>
+                )}
 
-
-                {userInput && !recordInput && (
+                {userInput && inputMethod === 'type' && (
                     <button className='button-large' onClick={toggleWriteInput} style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
                         {isLoading ? (
                             <img src={loadingGif} alt="Loading" style={{ width: '24px', height: '24px' }} />
