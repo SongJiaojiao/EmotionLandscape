@@ -6,7 +6,8 @@ import { height, width } from '@fortawesome/free-brands-svg-icons/fa42Group';
 import '../../Styles/App.css'
 
 
-function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousalList, formattedTime,recommendedActions,userTranscript }) {
+function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousalList, formattedTime, recommendedActions, userTranscript }) {
+    console.log('actions')
     const tagListStyle = {
         display: 'flex',
         flexDirection: 'row', // Note: 'flex-direction' becomes 'flexDirection'
@@ -17,7 +18,7 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
     };
 
     const actionPairStyle = {
-        width:'100%',
+        width: '100%',
         display: 'flex',
         justifyContent: 'space-between',
         gap: '12px',
@@ -99,23 +100,23 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
 
             </div>
 
-          {recommendedActions ? <div class="resultSection">
+            {recommendedActions.length > 0 ? (<div class="resultSection">
                 <div className="sectionTitle">
                     <h2>Actions</h2>
                 </div>
                 <div style={actionPairStyle}>
                     {recommendedActions.map((action, index) => (
-                        <div key={index} style={{ flex: '0 0 calc(50% - 6px)' }}> 
+                        <div key={index} style={{ flex: '0 0 calc(50% - 6px)' }}>
                             <Actions action={action.name} tag={action.tag} />
                         </div>
-                       
+
                     ))
                     }
                 </div>
 
-            </div>
-            : null }
-            
+            </div>)
+                : null}
+
 
         </div>
 
