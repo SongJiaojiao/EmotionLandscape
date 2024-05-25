@@ -50,11 +50,9 @@ function Result({ updateshowResult }) {
             <div >
                 <button className="button-medium-secondary" onClick={updateshowResult}> <FontAwesomeIcon icon={faArrowLeft} /> </button>
             </div>
-            {fetchSuccess ? (
-                <History history={history} />
-            ) : (
-                <div className='shimmer'></div>
-            )}
+
+            <History history={history} fetchSuccess={fetchSuccess} />
+
         </div>
 
 

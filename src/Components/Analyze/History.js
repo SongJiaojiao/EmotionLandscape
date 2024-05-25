@@ -3,14 +3,24 @@ import SingleAnalysis from './SingleAnalysis';
 import Toggle from '../Toggle';
 import { width } from '@fortawesome/free-brands-svg-icons/fa42Group';
 
-function History({ history}) {
+function History({ history }) {
 
     const [selectedDate, setSelectedDate] = useState(() => sessionStorage.getItem('selectedDate') || 'Today');
 
+    if (!history || history.length === 0) {
+        return
+        <div style={{ width: '100%', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div className="shimmer" style={{ width: '100%', height: '120px', borderRadius: '16px' }}></div>
+            <div className="shimmer" style={{ width: '100%', height: '120px', borderRadius: '16px' }}></div>
+            <div className="shimmer" style={{ width: '100%', height: '240px', borderRadius: '16px' }}></div>
+
+        </div>
+    }
+
     const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());  
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - 1); 
+    yesterday.setDate(today.getDate() - 1);
 
     // Sort and then group history by dates
     const groupedByDate = history
@@ -36,7 +46,7 @@ function History({ history}) {
                 hour: '2-digit',
                 minute: '2-digit',
                 hour12: true
-            }).toUpperCase(); 
+            }).toUpperCase();
 
             if (!acc[formattedDate]) {
                 acc[formattedDate] = [];
@@ -55,21 +65,21 @@ function History({ history}) {
     });
 
     const reversedOptions = [...options].reverse();
-    
+
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
-        sessionStorage.setItem('selectedDate',date)
+        sessionStorage.setItem('selectedDate', date)
     };
- 
-    const dateSelector = {
-        display:'flex',
-        justifyContent:'center',
-        alignItems:'center',
-        width:'100%',
-        marginTop:'24px'
 
-    
+    const dateSelector = {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        marginTop: '24px'
+
+
     }
 
 
@@ -84,10 +94,12 @@ function History({ history}) {
                     setSelectedValue={handleDateChange}
                 /> */}
             </div>
+
+
             <div className='analysisList'>
-                {groupedByDate[selectedDate] &&  (
+                {groupedByDate[selectedDate] && (
                     <div key={selectedDate}>
-                       {/* Display the date as a section header */}
+                        {/* Display the date as a section header */}
                         {groupedByDate[selectedDate].map((singleHistory, index) => (
                             <SingleAnalysis
                                 key={index}
@@ -99,13 +111,14 @@ function History({ history}) {
                                 arousalList={singleHistory.arousal}
                                 timestamp={singleHistory.timestamp}
                                 formattedTime={singleHistory.formattedTime} // Passing formatted time
-                                recommendedActions = {singleHistory.recommendedActions}
-   
+                                recommendedActions={singleHistory.recommendedActions}
+
                             />
                         ))}
                     </div>
                 )}
             </div>
+
         </div>
     );
 }
