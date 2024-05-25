@@ -2,15 +2,39 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import json
 from utils import claude
-from prompt import preprocess, fix, distortedThoughts
+from prompt import preprocess, analyze, distortedThoughts
 from dotenv import load_dotenv
 import pathlib
 import os
 from reframe import help_identify
 import logging
 
-load_dotenv()  # Load environment variables from a .env file if present
+load_dotenv()  
 
+
+def process_emotions_and_actions(emotions, valences, arousals, recommended_actions, added_actions):
+    def add_action_if_not_added(name, tag):
+        if name not in added_actions:
+            recommended_actions.append({"name": name, "tag": tag})
+            added_actions.append(name)
+
+    for i in range(len(emotions)):
+        valence = valences[i]
+        arousal = arousals[i]
+
+        if arousal >= 5 and valence >= 5:
+            add_action_if_not_added("Name one thing you are grateful", "Expanding")
+            add_action_if_not_added("Share with a friend", "Expanding")
+        elif arousal <= -1 and valence >= 5:
+            add_action_if_not_added("Write a goal", "Exploring")
+        elif arousal >= 5 and valence <= -1:
+            add_action_if_not_added("Down regulating breath work", "Grounding")
+            add_action_if_not_added("Listen to a calming song", "Grounding")
+        elif arousal <= -1 and valence <= -1:
+            add_action_if_not_added("Up regulating breath work", "Elevating")
+            add_action_if_not_added("Listen to upbeat music", "Elevating")
+            
+            
 def create_app():
     web_app = Flask(__name__)
     CORS(web_app)
@@ -38,7 +62,7 @@ def create_app():
         data = request.get_json()
         transcript = data["transcript"]
         timestamp = data["timestamp"]
-        analysis = claude(transcript, system=fix)
+        analysis = claude(transcript, system=analyze)
         response = claude(transcript, system=preprocess)
         distorted = claude(transcript, system=distortedThoughts)
         print ('response',response)
@@ -56,27 +80,7 @@ def create_app():
         else:
             identifiedDistortions = None
 
-        def add_action_if_not_added(name, tag):
-            nonlocal recommended_actions, added_actions
-            if name not in added_actions:
-                recommended_actions.append({"name": name, "tag": tag})
-                added_actions.append(name)
-
-        for i in range(len(emotions)):
-            valence = valences[i]
-            arousal = arousals[i]
-
-            if arousal >= 5 and valence >= 5:
-                add_action_if_not_added("Name one thing you are grateful", "Expanding")
-                add_action_if_not_added("Share with a friend", "Expanding")
-            elif arousal <= -1 and valence >= 5:
-                add_action_if_not_added("Write a goal", "Exploring")
-            elif arousal >= 5 and valence <= -1:
-                add_action_if_not_added("Down regulating breath work", "Grounding")
-                add_action_if_not_added("Listen to a calming song", "Grounding")
-            elif arousal <= -1 and valence <= -1:
-                add_action_if_not_added("Up regulating breath work", "Elevating")
-                add_action_if_not_added("Listen to upbeat music", "Elevating")
+        process_emotions_and_actions(emotions, valences, arousals, recommended_actions, added_actions)
 
         with open(volume_mount_path / "transcripts.jsonl", "a") as file:
             response_out = {
