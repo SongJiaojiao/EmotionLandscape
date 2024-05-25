@@ -8,13 +8,14 @@ function History({ history }) {
     const [selectedDate, setSelectedDate] = useState(() => sessionStorage.getItem('selectedDate') || 'Today');
 
     if (!history || history.length === 0) {
-        return
-        <div style={{ width: '100%', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <div className="shimmer" style={{ width: '100%', height: '120px', borderRadius: '16px' }}></div>
-            <div className="shimmer" style={{ width: '100%', height: '120px', borderRadius: '16px' }}></div>
-            <div className="shimmer" style={{ width: '100%', height: '240px', borderRadius: '16px' }}></div>
+        return (
+            <div style={{ width: '100%', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div className="shimmer" style={{ width: '100%', height: '120px', borderRadius: '16px' }}></div>
+                <div className="shimmer" style={{ width: '100%', height: '120px', borderRadius: '16px' }}></div>
+                <div className="shimmer" style={{ width: '100%', height: '240px', borderRadius: '16px' }}></div>
 
-        </div>
+            </div>
+        );
     }
 
     const now = new Date();
