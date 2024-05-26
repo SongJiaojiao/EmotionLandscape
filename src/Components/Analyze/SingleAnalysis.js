@@ -17,10 +17,9 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
         flexWrap: 'wrap' // Note: 'flex-wrap' becomes 'flexWrap'
     };
 
-    const actionPairStyle = {
+    const actionContainer = {
         width: '100%',
         display: 'flex',
-        justifyContent: 'space-between',
         gap: '12px',
         flexWrap: 'wrap',
 
@@ -38,6 +37,8 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
     const analysisText = {
         display: 'flex',
         alignItems: 'center', // Vertically center align
+        marginTop:'16px',
+        marginBottom:'16px'
 
 
     }
@@ -51,8 +52,8 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
         <div style={result}>
             {/* <div style={timeStampStyle}>{formattedTime}</div> */}
 
-            <div class="resultSection">
-                <div className="sectionTitle">
+            <div className="resultCard">
+                <div className="resultTitle">
                     <h2>Emotions</h2>
                 </div>
 
@@ -70,8 +71,8 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
 
             </div>
 
-            <div class="resultSection">
-                <div className="sectionTitle">
+            <div className="resultCard">
+                <div className="resultTitle">
                     <h2>Themes</h2>
                 </div>
 
@@ -85,8 +86,8 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
 
             </div>
 
-            <div class="resultSection">
-                <div className="sectionTitle">
+            <div className="resultCard">
+                <div className="resultTitle">
                     <h2>Analysis</h2>
                 </div>
 
@@ -97,13 +98,13 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
 
             </div>
 
-            {recommendedActions.length > 0 ? (<div class="resultSection">
-                <div className="sectionTitle">
+            {recommendedActions.length > 0 ? (<div className="resultCard">
+                <div className="resultTitle">
                     <h2>Actions</h2>
                 </div>
-                <div style={actionPairStyle}>
+                <div style={actionContainer}>
                     {recommendedActions.map((action, index) => (
-                        <div key={index} style={{ flex: '0 0 calc(50% - 6px)' }}>
+                        <div key={index} style={{flex: '0 0 calc(50% - 6px)'}}>
                             <Actions action={action.name} tag={action.tag} />
                         </div>
 

@@ -270,8 +270,7 @@ body.main, #root{
 }
 
 
-.resultSection {
-
+.resultCard {
   max-width: 600px;
   background-color: #FFFDF8;
   display: flex;
@@ -282,21 +281,29 @@ body.main, #root{
   justify-content: flex-start;
 
 }
-
-@media (max-width: 768px) {
-  .resultSection {
-    gap:0px;
-    flex-direction: column;
-  }
-}
-
-
-
-.sectionTitle{
+.resultTitle{
   width: 100px;
   padding: 16px 0;
   color: var(--brown-080);
 }
+
+@media (max-width: 768px) {
+  .resultCard {
+    gap:0px;
+    padding: 16px 24px;
+    flex-direction: column;
+  }
+  .resultTitle{
+    width: 100px;
+    padding: 0px 0px 12px 0px;
+    color: var(--brown-080);
+  }
+
+
+}
+
+
+
 
 @keyframes shimmer {
   0% {
@@ -312,4 +319,30 @@ body.main, #root{
   background: linear-gradient(to right, var(--brown-020), var(--brown-030), var(--brown-020) 33%);
   background-size: 80rem 100%;
   width: 100%; 
+}
+
+.actionBox {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 28px;
+  background-color: var(--brown-010);
+  border-radius: 16px;
+  text-align: left;
+  color: var(--brown-080);
+  height: 140px;
+  border: 1px solid var(--brown-030);
+  max-width: 240px;
+  
+}
+
+.actionTop {
+  display: flex;
+  flex-direction: column;
+  /* gap: 12px; */
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 100%;
 }

@@ -10,6 +10,7 @@ import brightheart from '../../Img/brightheart.png'
 import mirror from '../../Img/mirror.png'
 import { useNavigate, } from 'react-router-dom';
 
+//This component renders icon, title, and an arrow icon. 
 function Actions({ action, tag, userTranscript }) {
   const navigate = useNavigate();
   const getBackgroundColor = (tag) => {
@@ -77,40 +78,13 @@ function Actions({ action, tag, userTranscript }) {
 
   };
 
-  const actionBox = {
-    padding: '16px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    gap: '28px',
-    backgroundColor: 'var(--brown-010)',
-    borderRadius: '16px',
-    textAlign: 'left',
-    color: 'var(--brown-080)',
-    height: '140px',
-    border: '1px solid var(--brown-030)'
-
-
-  };
-  const actionTop = {
-    display: 'flex',
-    flexDirection: 'column',
-    // gap: '12px',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    height: '100%'
-
-
-
-  };
-
+ 
 
 
 
   return (
-    <div style={actionBox} onClick={handleClick} >
-      <div style={actionTop}>
+    <div className="actionBox" onClick={handleClick} >
+      <div className="actionTop">
         <img src={actionIcons.find(icon => icon.name === action).iconLink} style={{ width: 40, height: 40 }} />
         <h3>{action}</h3>
       </div>
