@@ -14,8 +14,37 @@ function Record({ handleScriptsSubmit }) {
     const [inputMethod, setInputMethod] = useState(null);
     const recognition = useRef(new window.webkitSpeechRecognition());
 
+    const [shouldStop, setShouldStop] = useState(false); // Flag to control manual stop
+
     recognition.current.continuous = true; // Enable continuous recognition
     recognition.current.interimResults = true; // Enable interim results
+
+    useEffect(() => {
+        recognition.current.onresult = (event) => {
+            const transcript = Array.from(event.results)
+                .map(result => result[0])
+                .map(result => result.transcript)
+                .join('');
+            handleTranscription(transcript);
+        };
+
+        recognition.current.onend = () => {
+            if (!shouldStop) {
+                recognition.current.start(); // Restart recognition if not manually stopped
+            } else {
+                handleRecognitionEnd();
+            }
+        };
+
+        recognition.current.onerror = (event) => {
+            console.error('Recognition error:', event.error);
+            if (event.error === 'no-speech' && !shouldStop) {
+                recognition.current.start(); // Restart recognition on no-speech error if not manually stopped
+            } else {
+                setIsLoading(false); // Hide loading icon on other errors
+            }
+        };
+    }, [shouldStop]);
 
     useEffect(() => {
         if (recording && inputMethod !== 'record') {
@@ -51,6 +80,10 @@ function Record({ handleScriptsSubmit }) {
         setUserInput(transcription);
     };
 
+    const handleRecognitionEnd = () => {
+        handleScriptsSubmit(userInput);
+    };
+
     const handleSubmit = () => {
         setIsLoading(true);
         handleScriptsSubmit(userInput);
@@ -58,37 +91,19 @@ function Record({ handleScriptsSubmit }) {
 
     const toggleRecording = () => {
         if (!recording) {
-            console.log('start recording');
+            setShouldStop(false);
             recognition.current.start();
             setRecording(true);
         } else {
-            console.log('stop recording');
-            handleSubmit();
-            setIsLoading(true)
+            setShouldStop(true);
             recognition.current.stop();
             setRecording(false);
+            handleSubmit();
         }
     };
 
     const submitTypeInput = () => {
         handleSubmit();
-    };
-
-    recognition.current.onresult = (event) => {
-        const transcript = Array.from(event.results)
-            .map(result => result[0])
-            .map(result => result.transcript)
-            .join('');
-        handleTranscription(transcript);
-    };
-
-    recognition.current.onend = () => {
-        console.log('Recognition ended');
-    };
-
-    recognition.current.onerror = (event) => {
-        console.error('Recognition error:', event.error);
-        setIsLoading(false); // Hide loading icon on error
     };
 
     return (
@@ -140,6 +155,6 @@ const RecordFooter = {
     flexDirection: "row",
     gap: "24px",
     width: "100%",
-    maxWidth: '480px',
+    maxWidth: "480px",
     position: "relative",
 };

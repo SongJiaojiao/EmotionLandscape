@@ -26,9 +26,10 @@
 }
 
 html,
-body.main {
+body.main, #root{
   height: 100%;
   padding: 0;
+  width: 100%;
   background-color: var(--brown-010);
   font-family: "Averia Serif Libre", serif !important;
   transition: all 0.3s;
@@ -39,6 +40,8 @@ body.main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width:100%;
+
 }
 
 .interactionArea {
@@ -297,10 +300,10 @@ body.main {
 
 @keyframes shimmer {
   0% {
-    background-position: -40rem 0;
+    background-position: -80rem 0;
   }
   100% {
-    background-position: 40rem 0;
+    background-position: 80rem 0;
   }
 }
 
@@ -308,4 +311,5 @@ body.main {
   animation: shimmer 2s infinite linear;
   background: linear-gradient(to right, var(--brown-020), var(--brown-030), var(--brown-020) 33%);
   background-size: 80rem 100%;
+  width: 100%; 
 }

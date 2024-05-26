@@ -9,10 +9,10 @@ function History({ history }) {
 
     if (!history || history.length === 0) {
         return (
-            <div style={{ width: '100%', borderRadius: '16px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <div className="shimmer" style={{ width: '100%', height: '120px', borderRadius: '16px' }}></div>
-                <div className="shimmer" style={{ width: '100%', height: '120px', borderRadius: '16px' }}></div>
-                <div className="shimmer" style={{ width: '100%', height: '240px', borderRadius: '16px' }}></div>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'start', gap: '16px', borderRadius: '16px',  }}>
+                <div className="shimmer" style={{ height: '120px', borderRadius: '16px' }}>   <span></span>   </div>
+                <div className="shimmer" style={{ height: '120px', borderRadius: '16px' }}></div>
+                <div className="shimmer" style={{ height: '240px', borderRadius: '16px' }}></div>
 
             </div>
         );
@@ -87,6 +87,8 @@ function History({ history }) {
 
 
     return (
+
+
         <div>
             <div style={dateSelector}>
                 {/* <Toggle
@@ -95,9 +97,7 @@ function History({ history }) {
                     setSelectedValue={handleDateChange}
                 /> */}
             </div>
-
-
-            <div className='analysisList'>
+            <div>
                 {groupedByDate[selectedDate] && (
                     <div key={selectedDate}>
                         {/* Display the date as a section header */}
@@ -113,7 +113,6 @@ function History({ history }) {
                                 timestamp={singleHistory.timestamp}
                                 formattedTime={singleHistory.formattedTime} // Passing formatted time
                                 recommendedActions={singleHistory.recommendedActions}
-
                             />
                         ))}
                     </div>

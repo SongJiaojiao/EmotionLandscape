@@ -46,7 +46,7 @@ function Result({ updateshowResult }) {
 
     return (
 
-        <div>
+        <div style={{width:"100%",maxWidth:'600px'}}>
             <div >
                 <button className="button-medium-secondary" onClick={updateshowResult}> <FontAwesomeIcon icon={faArrowLeft} /> </button>
             </div>
