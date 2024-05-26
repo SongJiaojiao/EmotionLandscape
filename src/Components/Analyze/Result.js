@@ -39,12 +39,14 @@ function Result({ updateshowResult }) {
     };
 
     useEffect(() => {
-
+        if (!fetchSuccess && history.length === 0) {
+            console.log('Fetching data for the first time');
             fetchData();
-    
-            setFetchSuccess(true);
-        
-    }, [history]);
+        } else {
+            console.log('Data already fetched or history is not empty');
+        }
+    }, []); // Empty dependency array ensures fetchData is called only once on mount
+
 
 
     return (

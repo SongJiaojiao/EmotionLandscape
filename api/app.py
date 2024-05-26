@@ -38,14 +38,7 @@ def process_emotions_and_actions(emotions, valences, arousals, recommended_actio
 def create_app():
     web_app = Flask(__name__)
     CORS(web_app)
-    
-    # logging.basicConfig(level=logging.DEBUG)
-    # logger = logging.getLogger(__name__)
-    
-    # openai_api_key = os.getenv("OPENAI_API_KEY")
-    # anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
-    # logger.debug(f"OPENAI_API_KEY: {openai_api_key}")
-    # logger.debug(f"ANTHROPIC_API_KEY: {anthropic_api_key}")
+
 
     volume_mount_path = pathlib.Path(os.getenv("VOLUME_PATH", "vol"))
 
