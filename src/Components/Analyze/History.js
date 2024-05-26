@@ -9,13 +9,13 @@ function History({ history }) {
 
     if (!history || history.length === 0) {
         return (
-            <div>no history available</div>
-            // <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'start', gap: '16px', borderRadius: '16px',  }}>
-            //     <div className="shimmer" style={{ height: '120px', borderRadius: '16px' }}>   <span></span>   </div>
-            //     <div className="shimmer" style={{ height: '120px', borderRadius: '16px' }}></div>
-            //     <div className="shimmer" style={{ height: '240px', borderRadius: '16px' }}></div>
+   
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'start', gap: '16px', borderRadius: '16px',  }}>
+                <div className="shimmer" style={{ height: '120px', borderRadius: '16px' }}>   <span></span>   </div>
+                <div className="shimmer" style={{ height: '120px', borderRadius: '16px' }}></div>
+                <div className="shimmer" style={{ height: '240px', borderRadius: '16px' }}></div>
 
-            // </div>
+            </div>
         );
     }
 
