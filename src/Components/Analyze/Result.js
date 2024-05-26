@@ -39,16 +39,11 @@ function Result({ updateshowResult }) {
     };
 
     useEffect(() => {
-        
-        if (history.length === 0) {
-            console.log('history from history length == 0',history)
-            console.log('front end fetching data 1st time')
+
             fetchData();
-        } else {
-            console.log('history from history not 0',history)
-            console.log('fetchsuccess state changed')
+    
             setFetchSuccess(true);
-        }
+        
     }, [history]);
 
 
