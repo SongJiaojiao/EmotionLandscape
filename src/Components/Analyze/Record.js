@@ -111,7 +111,6 @@ function Record({ handleScriptsSubmit }) {
             <Toggle options={options} selectedValue={theme} setSelectedValue={handleThemeChange} storageKey={"theme"} />
             <div className='interactionArea'>
                 <textarea
-                    autoFocus
                     className="textArea"
                     placeholder={theme === 'light' ? "What's on your mind today?" : "What did you dream?"}
                     value={userInput}
