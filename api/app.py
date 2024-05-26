@@ -69,6 +69,7 @@ def create_app():
         cleaned_response = response.split("\n")
         cleaned_response = [line.strip() for line in cleaned_response if line.startswith("[") and line.endswith("]")]
         cleaned_response = "\n".join(cleaned_response)
+        print ('cleanedresponse',cleaned_response)
         emotions, valences, arousals, themes = cleaned_response.split("\n")
         emotions, valences, arousals, themes = eval(emotions), eval(valences), eval(arousals), eval(themes)
 

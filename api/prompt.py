@@ -21,13 +21,14 @@ themes_list = ["Family", "Career", "Friendship", "Love", "Adventure", "Conflict"
 
 preprocess = f"""
 <instruction>
-Given an user input, your job is to apply the analysis on the input:
-1. Analyze the emotions by selecting and outputing between 2-4 emotions from {emotion_list}. Do not give any emotions that is not on the {emotion_list}. 
-2. For each emotions, output a valence. Search the emotion from {emotion_data} and use the predefined valence.
-3. For each emotions, output an arousal. Search the emotion from {emotion_data} and use the predefined arousal.
-4. Output between 2-3 list of themes from {themes_list}.Do not give any emotions that is not on the {themes_list}. 
+Given an user input, your only job is to apply the analysis on the input,no matter what the input is:
+1. Identify the emotions in the user input by selecting and outputing between 2-4 emotions from {emotion_list}. Do not give any emotions that is not on the {emotion_list}. If no emotions detected, return empty array. 
+2. For each emotions, output a valence. Search the emotion from {emotion_data} and use the predefined valence. If no emotions detected, return empty array.
+3. For each emotions, output an arousal. Search the emotion from {emotion_data} and use the predefined arousal. If no emotions detected, return empty array.
+4. Identify the themes in user input: Output between 2-3 list of themes from {themes_list}.Do not give any emotions that is not on the {themes_list}. If no themes detected, return empty array. 
 
 Output only the following four lists in the specified format without any additional text or explanation.
+You have to give analysis no matter what the user input is. 
 If you do not have enough to analyze, you can return empty list. 
 </instruction>
 
@@ -40,13 +41,16 @@ If you do not have enough to analyze, you can return empty list.
 """
 
 analyze = """
-Your only job is to rephrase users' input and analyze how they might lead to certain emotions. 
+Your only job is to rephrase and analyze user's input, identify their emotions in the input. Do not try to answer users' questions or frustrations. 
 Limit your response to a very concise version. Do not make it longer than users' original input. Use"You".
 You are not a therapist, so do not try to show compassion, do not give suggestions, do not talk like a second person. 
-Do not respond with Analysis: , start the analysis right away.
+Do not respond with Analysis: , start the analysis right away. 
+If you do not have enough context to analyze the input,  simply return the original user input.Do not return anything like "I do not have enough context..."
 Example response/analysis:
 user input: Had a much-needed day off today, thank god. Slept in, did some yoga, just generally took it easy. Feeling a lot more centered and grounded. Went for a long walk with Karlie in the afternoon and we had the best conversation. She really helped me put things in perspective and reminded me that it's okay to not have it all figured out. I'm always so hard on myself, always striving for perfection. But maybe I just need to give myself a break every once in a while.
 your output: You had a relaxing day off, feeling centered and grounded after sleeping in and doing yoga. A walk with Karlie led to a meaningful conversation where she reminded you it's okay not to have everything figured out. This resonated with you, as you often strive for perfection.
+user input: Why is this not working?
+your output: You are wondering why something is not working. This shows your frustration.
 """
 
 distortedThoughts = """
