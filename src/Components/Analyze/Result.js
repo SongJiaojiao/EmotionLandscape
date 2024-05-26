@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import History from './History';
 
 
@@ -46,12 +46,12 @@ function Result({ updateshowResult }) {
 
     return (
 
-        <div style={{width:"100%",maxWidth:'600px'}}>
-            <div >
-                <button className="button-medium-secondary" onClick={updateshowResult}> <FontAwesomeIcon icon={faArrowLeft} /> </button>
-            </div>
+        <div style={{ width: "100%", maxWidth: '600px',paddingTop:'0'}}>
 
             <History history={history} fetchSuccess={fetchSuccess} />
+            <div >
+                <button className="button-large" style={{width:'100%'}}onClick={updateshowResult}>Add Another Thought <FontAwesomeIcon icon={faArrowRight} />  </button>
+            </div>
 
         </div>
 

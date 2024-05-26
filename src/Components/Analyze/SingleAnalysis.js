@@ -7,7 +7,7 @@ import '../../Styles/App.css'
 
 
 function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousalList, formattedTime, recommendedActions, userTranscript }) {
-    console.log('actions')
+
     const tagListStyle = {
         display: 'flex',
         flexDirection: 'row', // Note: 'flex-direction' becomes 'flexDirection'
@@ -26,14 +26,11 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
 
     }
 
-
-
     const result = {
         display: 'flex',
         flexDirection: 'column',
         gap: '16px',
         marginBottom: '24px',
-        marginTop: '24px',
 
     }
 
@@ -52,7 +49,7 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
     return (
 
         <div style={result}>
-            <div style={timeStampStyle}>{formattedTime}</div>
+            {/* <div style={timeStampStyle}>{formattedTime}</div> */}
 
             <div class="resultSection">
                 <div className="sectionTitle">

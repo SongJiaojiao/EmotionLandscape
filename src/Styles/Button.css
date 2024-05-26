@@ -5,6 +5,7 @@
     display: flex;
     direction: row;
     align-items: center;
+    justify-content: center;
     background-color: var(--brown-030);
     font-family: "Averia Serif Libre", serif;
     font-size: 24px;

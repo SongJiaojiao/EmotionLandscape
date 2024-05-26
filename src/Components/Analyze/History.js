@@ -89,15 +89,15 @@ function History({ history }) {
     return (
 
 
-        <div>
-            <div style={dateSelector}>
-                {/* <Toggle
+        <div style ={{paddingTop:'0'}}>
+            {/* <div style={dateSelector}>
+                <Toggle
                     options={reversedOptions}
                     selectedValue={selectedDate}
                     setSelectedValue={handleDateChange}
-                /> */}
-            </div>
-            <div>
+                />
+            </div> */}
+           
                 {groupedByDate[selectedDate] && (
                     <div key={selectedDate}>
                         {/* Display the date as a section header */}
@@ -117,7 +117,7 @@ function History({ history }) {
                         ))}
                     </div>
                 )}
-            </div>
+            
 
         </div>
     );
