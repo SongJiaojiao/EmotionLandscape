@@ -31,6 +31,7 @@ function Result({ updateshowResult }) {
             }
             const jsonData = await response.json();
             setHistory(jsonData);
+            console.log('data fetched success',jsonData)
             setFetchSuccess(true)
         } catch (error) {
             console.error('Failed to fetch data:', error);
@@ -50,7 +51,7 @@ function Result({ updateshowResult }) {
 
         <div style={{ width: "100%", maxWidth: '600px',paddingTop:'0'}}>
 
-            <History history={history} fetchSuccess={fetchSuccess} />
+            <History history={history}  />
             <div >
                 <button className="button-large" style={{width:'100%'}}onClick={updateshowResult}>Add Another Thought <FontAwesomeIcon icon={faArrowRight} />  </button>
             </div>

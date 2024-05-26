@@ -81,11 +81,13 @@ function Record({ handleScriptsSubmit }) {
     };
 
     const handleRecognitionEnd = () => {
-        handleScriptsSubmit(userInput);
+        console.log('recognition end and api called')
+        // handleScriptsSubmit(userInput);
     };
 
     const handleSubmit = () => {
         setIsLoading(true);
+        console.log('type end and api called')
         handleScriptsSubmit(userInput);
     };
 
