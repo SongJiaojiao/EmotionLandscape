@@ -14,7 +14,7 @@ function Result({ updateshowResult }) {
         return storedValue ? storedValue.split(',') : [];
     };
 
-    const [history, setHistory] = useState(() => sessionStorage.getItem('history') || '');
+    const [history, setHistory] = useState(() => getArrayFromSessionStorage('history'));
 
 
     const fetchData = async () => {
@@ -38,8 +38,10 @@ function Result({ updateshowResult }) {
     };
 
     useEffect(() => {
-        if (history.length === 0) { // Fetch data only if history is empty
+        if (history.length === 0) {
             fetchData();
+        } else {
+            setFetchSuccess(true);
         }
     }, [history]);
 
