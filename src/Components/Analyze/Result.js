@@ -39,9 +39,12 @@ function Result({ updateshowResult }) {
     };
 
     useEffect(() => {
+        
         if (history.length === 0) {
+            console.log('front end fetching data 1st time')
             fetchData();
         } else {
+            console.log('fetchsuccess state changed')
             setFetchSuccess(true);
         }
     }, [history]);
