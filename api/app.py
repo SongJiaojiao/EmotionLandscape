@@ -6,11 +6,25 @@ from prompt import preprocess, analyze, distortedThoughts
 from dotenv import load_dotenv
 import pathlib
 import os
-from reframe import help_identify
 import logging
+from supabase import create_client, Client
 
 load_dotenv()  
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
+def write_to_supabase(response_out):
+    try:
+        response = supabase.table('Unlogged Data').insert(response_out).execute()
+        if response.data:
+            logging.info("Data successfully inserted into Supabase")
+            return True
+        else:
+            logging.error(f"Error inserting into Supabase: {response}")
+            return False
+    except Exception as e:
+        logging.exception("Exception occurred while inserting into Supabase")
 
 def process_emotions_and_actions(emotions, valences, arousals, recommended_actions, added_actions):
     def add_action_if_not_added(name, tag):
@@ -39,13 +53,6 @@ def create_app():
     web_app = Flask(__name__)
     CORS(web_app)
 
-
-    volume_mount_path = pathlib.Path(os.getenv("VOLUME_PATH", "vol"))
-
-    if not volume_mount_path.exists():
-        print(f"Creating directory: {volume_mount_path}")
-        volume_mount_path.mkdir(parents=True, exist_ok=True)
-
     @web_app.route('/')
     def home():
         return 'Hello, World!'
@@ -69,15 +76,11 @@ def create_app():
         recommended_actions = []
         added_actions = []
         if distorted == 'True':
-            identifiedDistortions = help_identify(transcript)
             recommended_actions = [{"name": "Reframe your thoughts", "tag": "Grounding"}]
-        else:
-            identifiedDistortions = None
+
 
         process_emotions_and_actions(emotions, valences, arousals, recommended_actions, added_actions)
-
-        with open(volume_mount_path / "transcripts.jsonl", "a") as file:
-            response_out = {
+        response_out = {
                 "transcript": transcript,
                 "analysis": analysis,
                 "emotions": emotions,
@@ -87,26 +90,32 @@ def create_app():
                 "timestamp": timestamp,
                 "recommendedActions": recommended_actions,
                 "distorted": distorted,
-                "identifiedDistortions": identifiedDistortions
             }
-            json.dump(response_out, file)
-            file.write("\n")
+        
+        if write_to_supabase(response_out):
+            return jsonify(response_out), 201
+        else:
+            return jsonify({"error": "Failed to insert data into Supabase"}), 500
 
-        return jsonify(response_out)
 
     @web_app.route("/get_transcripts")
     def get_transcripts():
-        with open(volume_mount_path / "transcripts.jsonl", "r") as file:
-            last_line = None
-            for line in file:
-                if line.strip():
-                    last_line = json.loads(line)
-            transcripts = [last_line] if last_line else []
-        return jsonify(transcripts)
+        try:
+            response = supabase.table('Unlogged Data').select('*').order('timestamp', desc=True).limit(1).execute()
+            if response.data:
+                transcripts = response.data
+                return jsonify(transcripts)
+            else:
+                logging.error(f"Error fetching transcripts from Supabase: {response}")
+                return jsonify({"error": "Failed to fetch transcripts from Supabase"}), 500
+        except Exception as e:
+            logging.exception("Exception occurred while fetching transcripts from Supabase")
+            return jsonify({"error": "An error occurred while fetching transcripts"}), 500
+
 
     return web_app
 
 if __name__ == "__main__":
     app = create_app()
-    port = int(os.getenv("PORT", 5001))  # Default to port 5001 if PORT is not set
+    port = int(os.getenv("PORT", 5001)) 
     app.run(host="0.0.0.0", port=port)

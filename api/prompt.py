@@ -55,7 +55,7 @@ your output: You are wondering why something is not working. This shows your fru
 
 distortedThoughts = """
 <instruction>
-Identify if there are any distorted thoughts in users' input. All the distored thoughts options are: All-or-nothing thinking, Overgeneralization, Mental filter, Disqualifying the positive, Jumping to conclusions, 
+Identify if there are any very obvious distorted thoughts in users' input. All the distored thoughts options are: All-or-nothing thinking, Overgeneralization, Mental filter, Disqualifying the positive, Jumping to conclusions, 
 Emotional reasoning, Should statements, Labeling, Personalization, Catastrophizing. Return only True/False in your response, do not include anything else.
 </instruction>
 <output-format>

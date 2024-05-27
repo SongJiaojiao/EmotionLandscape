@@ -3,13 +3,14 @@ from app import create_app
 import pathlib
 
 app = App("emotion-detection-api")  # Note: prior to April 2024, "app" was called "stub"
-image = Image.debian_slim().pip_install("flask", "anthropic", "flask-cors", "openai", "python-dotenv")
+image = Image.debian_slim().pip_install("flask", "anthropic", "flask-cors", "openai", "python-dotenv","supabase")
 volume = Volume.from_name("transcript-volume")
 volume_mount_path = pathlib.Path("/vol")
 
 @app.function(image=image, volumes={"/vol": volume}, secrets=[
     Secret.from_name("my-openai-secret"),
-    Secret.from_name("my-anthropic-secret")
+    Secret.from_name("my-anthropic-secret"),
+    Secret.from_name("supabase")
 ])
 @wsgi_app()
 def flask_app():

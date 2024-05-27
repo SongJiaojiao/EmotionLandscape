@@ -2,6 +2,7 @@ import { useContext, useState } from 'react'
 import Record from './Record';
 import Result from './Result';
 import SingleAnalysis from './SingleAnalysis';
+import Hume from './Hume';
 
 export default function AnalyzeMood() {
 
@@ -95,6 +96,8 @@ export default function AnalyzeMood() {
 
                 />
             )}
+
+            {/* <Hume /> */}
         </div>
 
 

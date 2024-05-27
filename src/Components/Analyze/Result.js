@@ -30,8 +30,8 @@ function Result({ updateshowResult }) {
                 throw new Error('Network response was not ok');
             }
             const jsonData = await response.json();
+            console.log('API called and data:', history);
             setHistory(jsonData);
-            console.log('data fetched success from API',jsonData)
             setFetchSuccess(true)
         } catch (error) {
             console.error('Failed to fetch data:', error);
@@ -45,17 +45,20 @@ function Result({ updateshowResult }) {
         } else {
             console.log('Data already fetched or history is not empty');
         }
-    }, []); // Empty dependency array ensures fetchData is called only once on mount
+    }, []); 
 
+    useEffect(() => {
+        console.log('history on refresh:', history);
+    }, [history]); 
 
 
     return (
 
-        <div style={{ width: "100%", maxWidth: '600px',paddingTop:'0'}}>
+        <div style={{ width: "100%", maxWidth: '600px', paddingTop: '0' }}>
 
-            <History history={history}  />
+            <History history={history} />
             <div >
-                <button className="button-large" style={{width:'100%'}}onClick={updateshowResult}>Add Another Thought <FontAwesomeIcon icon={faArrowRight} />  </button>
+                <button className="button-large" style={{ width: '100%' }} onClick={updateshowResult}>Add Another Thought <FontAwesomeIcon icon={faArrowRight} />  </button>
             </div>
 
         </div>
