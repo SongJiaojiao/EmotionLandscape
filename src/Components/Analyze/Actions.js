@@ -78,8 +78,6 @@ function Actions({ action, tag, userTranscript }) {
 
   };
 
- 
-
 
 
   return (
@@ -88,7 +86,6 @@ function Actions({ action, tag, userTranscript }) {
         <img src={actionIcons.find(icon => icon.name === action).iconLink} style={{ width: 40, height: 40 }} />
         <h3>{action}</h3>
       </div>
-      {/* <FontAwesomeIcon icon={faArrowRight} /> */}
 
     </div>
   );

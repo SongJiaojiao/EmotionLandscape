@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun, faCloudMoon, faCheck, faMicrophone, faStop } from '@fortawesome/free-solid-svg-icons';
-import { useTheme } from '../../Contexts/ThemeContext';
-import Toggle from '../Toggle';
+import { useTheme } from '../../Contexts/Context';
+import Toggle from '../Tabs';
 import loadingGif from '../../Img/loading.gif';
 
 // Handle user's recording and typing behavior
@@ -109,20 +109,22 @@ function Record({ handleScriptsSubmit }) {
     };
 
     return (
-        <div className="recordPage">
-            <Toggle options={options} selectedValue={theme} setSelectedValue={handleThemeChange} storageKey={"theme"} />
-            <div className='interactionArea'>
+        <div className="journalBox">
+            {/* <Toggle options={options} selectedValue={theme} setSelectedValue={handleThemeChange} storageKey={"theme"} /> */}
+           
                 <textarea
                     className="textArea"
                     placeholder={theme === 'light' ? "What's on your mind today?" : "What did you dream?"}
                     value={userInput}
                     onChange={handleInputChange}
+                    autoFocus
+                    
                 />
-            </div>
+          
 
-            <div style={RecordFooter}>
+            <div className='recordFooter'>
                 {(inputMethod !== 'type' || userInput === '') && (
-                    <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
+                    <div>
                         <button className='button-large' onClick={toggleRecording} disabled={isLoading}>
                             {recording ? (
                                 <FontAwesomeIcon icon={faStop} />
@@ -151,11 +153,3 @@ function Record({ handleScriptsSubmit }) {
 
 export default Record;
 
-const RecordFooter = {
-    display: "flex",
-    flexDirection: "row",
-    gap: "24px",
-    width: "100%",
-    maxWidth: "480px",
-    position: "relative",
-};

@@ -8,106 +8,79 @@
 }
 
 
-.App {
-  margin: 80px;
-  font-family: "Averia Serif Libre", serif;
-}
-
-@media (max-width: 768px) {
-  .App {
-    margin: 24px;
-  }
-}
-
-@media (max-width: 430px) {
-  .App {
-    margin: 16px;
-  }
-}
-
-html,
-body.main, #root{
+html, body{
+  width:100%;
   height: 100%;
+  margin: 0;
   padding: 0;
-  width: 100%;
   background-color: var(--brown-010);
-  font-family: "Averia Serif Libre", serif !important;
   transition: all 0.3s;
+  font-family: "Averia Serif Libre", serif !important;
 }
-
-
-.container {
+/*this is the global padding, intended to use for responsive */
+.App{
+  padding:24px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100%;
+  font-family: "Averia Serif Libre", serif;
+
+}
+/*this is a container that specifeis the middle align behavior */
+.container{
   width:100%;
-
-}
-
-.interactionArea {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+  display:flex;
+  flex-direction: column;
   align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-  height: 400px;
+  height: 100%;
 }
 
-
-
-
-.button-iconOnly {
+/*navigation bar */
+.navBar{
   display: flex;
-  direction: row;
+  flex-direction: row;
   align-items: center;
-  background-color: var(--brown-030);
-  font-family: "Averia Serif Libre", serif;
-  font-size: 20px;
-  padding-left: 24px;
-  padding-right: 24px;
-  height: 64px;
-  border-radius: 32px;
-  color: var(--primary-color);
-  box-shadow: none;
-  border: none;
-  transition: background-color 0.3s ease;
-  gap: 16px;
-
+  margin-bottom: 24px;
 }
 
-.back-button {
+/* record section */
+.journalBox{
+  width:100%;
+  max-width: 644px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap:16px;
+}
 
-  background-color: var(--brown-030);
-  font-family: "Averia Serif Libre", serif;
-  font-size: 20px;
-  width: 112px;
-  height: 64px;
+.textArea {
+  display: block;
+  background-color: var( --brown-000);
   border-radius: 16px;
-  color: var(--primary-color);
-  box-shadow: none;
+  height: 16em;
   border: none;
-  transition: background-color 0.3s ease;
-}
-
-.back-button:hover {
-  background-color: var(--primary-color);
-  /* Darken primary button color on hover */
-  color: white;
-  cursor: pointer;
-}
-
-.button-iconOnly:disabled {
-  background-color: var(--brown-010);
+  resize: none;
+  font-size: 24px;
+  font-family: "Averia Serif Libre", serif;
+  /* width: 100%; */
+  caret-color: var(--primary-color);
+  outline: none;
+  text-align: center;
+  transition: opacity 0.5s ease-in-out;
+  padding: 16px
 
 }
 
-.button-iconOnly:hover {
-  background-color: var(--primary-color);
-  /* Darken primary button color on hover */
-  color: white;
-  cursor: pointer;
-}
+.recordFooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 24px;
+  width: 100%;
+
+};
+
 
 .moveSteps {
   margin-top: 16px;
@@ -117,25 +90,7 @@ body.main, #root{
   /* Aligns items to each end of the container */
 }
 
-.textArea {
-  --textarea-height: 6em;
-  width: 30em;
-  height: var(--textarea-height);
-  padding: calc(var(--textarea-height) / 2) 0;
-  position: relative;
-  border: none;
-  background-color: transparent;
-  resize: none;
-  font-size: 24px;
-  font-family: "Averia Serif Libre", serif;
-  width: 100%;
-  caret-color: var(--primary-color);
-  outline: none;
-  text-align: center;
-  vertical-align: center;
-  max-width: 480px;
-  transition: opacity 0.5s ease-in-out;
-}
+
 
 .distortedGroup {
 
@@ -211,6 +166,7 @@ body.main, #root{
 }
 
 
+
 @keyframes shimmer {
   0% {
     background-position: -40rem 0;
@@ -250,7 +206,7 @@ body.main, #root{
 
 .toggle-container {
   display: inline-flex;
-  gap: 8px;
+  gap: 16px;
   /* Adds 8px gap between each child element */
   padding: 8px;
   background-color: var(--brown-020);
@@ -260,13 +216,6 @@ body.main, #root{
   align-items: center;
   /* Aligns items vertically */
 
-}
-
-.recordPage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
 }
 
 
@@ -281,7 +230,8 @@ body.main, #root{
   justify-content: flex-start;
 
 }
-.resultTitle{
+
+.resultTitle {
   width: 100px;
   padding: 16px 0;
   color: var(--brown-080);
@@ -289,11 +239,12 @@ body.main, #root{
 
 @media (max-width: 768px) {
   .resultCard {
-    gap:0px;
+    gap: 0px;
     padding: 16px 24px;
     flex-direction: column;
   }
-  .resultTitle{
+
+  .resultTitle {
     width: 100px;
     padding: 0px 0px 12px 0px;
     color: var(--brown-080);
@@ -309,6 +260,7 @@ body.main, #root{
   0% {
     background-position: -80rem 0;
   }
+
   100% {
     background-position: 80rem 0;
   }
@@ -318,7 +270,7 @@ body.main, #root{
   animation: shimmer 2s infinite linear;
   background: linear-gradient(to right, var(--brown-020), var(--brown-030), var(--brown-020) 33%);
   background-size: 80rem 100%;
-  width: 100%; 
+  width: 100%;
 }
 
 .actionBox {
@@ -335,7 +287,7 @@ body.main, #root{
   height: 140px;
   border: 1px solid var(--brown-030);
   max-width: 240px;
-  
+
 }
 
 .actionTop {
@@ -345,4 +297,47 @@ body.main, #root{
   align-items: flex-start;
   justify-content: space-between;
   height: 100%;
+}
+
+.navBar {
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 56px;
+
+}
+
+.tabs-container {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.signout-container {
+  position:absolute;
+  right: 0
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -40rem 0;
+  }
+
+  100% {
+    background-position: 40rem 0;
+  }
+}
+
+.shimmer {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(to right, var(--brown-020), var(--brown-030), var(--brown-020) 33%);
+  background-size: 80rem 100%;
+}
+
+
+.signIn{
+  background-color: #000;
+  width:600px;
 }

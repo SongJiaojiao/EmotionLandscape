@@ -3,10 +3,12 @@
 
     --primary-color: #4F3D2C; /* DarkBrown */
     --primary-color-hover:#6F5944;
+    --brown-000:#FFFDF8;
     --brown-010:#F9F5EC;
     --brown-020:#F4EEE1;
     --brown-030:#EDE5D4;
     --brown-040:#e0d8c7;
+    --brown-070:#7b6b58;
     --brown-080:#37291C;
     --text-primary: #222222; /* Gray */
     /* Other Colors */
@@ -20,5 +22,9 @@
     --emotionTag-red:#FFEBEB;
     --emotionTag-green:#D7F4D3;
     --emotionTag-blue:#DCEBF2;
+    --red-040:#E37373;
+    --green-040:#83CC77;
+    --blue-040:#84BDD5;
+    --orange-040:#DD8A28;
 
   }

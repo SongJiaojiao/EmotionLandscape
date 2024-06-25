@@ -22,7 +22,7 @@ themes_list = ["Family", "Career", "Friendship", "Love", "Adventure", "Conflict"
 preprocess = f"""
 <instruction>
 Given an user input, your only job is to apply the analysis on the input,no matter what the input is:
-1. Identify the emotions in the user input by selecting and outputing between 2-4 emotions from {emotion_list}. Do not give any emotions that is not on the {emotion_list}. If no emotions detected, return empty array. 
+1. Identify the emotions in the user input by selecting and outputing between 2-4 emotions that are most relevant from {emotion_list}. Do not give any emotions that is not on the {emotion_list}. If no emotions detected, return empty array. 
 2. For each emotions, output a valence. Search the emotion from {emotion_data} and use the predefined valence. If no emotions detected, return empty array.
 3. For each emotions, output an arousal. Search the emotion from {emotion_data} and use the predefined arousal. If no emotions detected, return empty array.
 4. Identify the themes in user input: Output between 2-3 list of themes from {themes_list}.Do not give any emotions that is not on the {themes_list}. If no themes detected, return empty array. 

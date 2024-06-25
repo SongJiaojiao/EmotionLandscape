@@ -1,73 +1,130 @@
 @import url("./font.css");
 @import url("./color.css");
 
+
 .button-large {
-    display: flex;
-    direction: row;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--brown-030);
-    font-family: "Averia Serif Libre", serif;
-    font-size: 24px;
-    padding-left: 27px;
-    padding-right: 27px;
-    height: 72px;
-    border-radius: 36px;
-    color: var(--primary-color);
-    box-shadow: none;
-    border: none;
-    transition: 0.2s ease;
-    gap: 16px;
-  }
-  
-  .button-large:hover {
-    box-shadow: var(--box-shadow-primary), var(--box-shadow-secondary);
-    cursor: pointer;
-  }
+  display: flex;
+  direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--brown-030);
+  font-family: "Averia Serif Libre", serif;
+  font-size: 24px;
+  padding-left: 27px;
+  padding-right: 27px;
+  height: 72px;
+  border-radius: 36px;
+  color: var(--primary-color);
+  box-shadow: none;
+  border: none;
+  transition: 0.2s ease;
+  gap: 16px;
+}
 
-  .button-large:disabled {
-    background-color: transparent;
-    cursor: pointer;
-    color:var(--brown-040)
-  }
+.button-large:hover {
+  box-shadow: var(--box-shadow-primary), var(--box-shadow-secondary);
+  cursor: pointer;
+}
 
-  .button-large:disabled:hover {
-    box-shadow: none;
-  }
+.button-large:disabled {
+  background-color: transparent;
+  cursor: pointer;
+  color: var(--brown-040)
+}
+
+.button-large:disabled:hover {
+  box-shadow: none;
+}
 
 
 
 .button-medium-secondary {
-    display: flex;
-    direction: row;
-    align-items: center;
-    justify-content: center;
-    gap:6px;
-    background-color: transparent;
-    font-family: "Averia Serif Libre", serif;
-    font-size: 20px;
-    color: var(--primary-color);
-    border: none;
-    padding: 8px 12px 8px 12px;
-    cursor: pointer;
-  
-  }
-  
-  .button-medium-secondary.selected {
-    background-color: white;
-    border-radius: 8px;
-  }
-  
-  
-  
-  .button-medium-secondary:hover {
-    background-color: var(--brown-030);
-    color: var(--primary-color);
-    border: none;
-    border-radius: 8px;
-  
-  }
-  .button-medium-secondary.selected:hover {
-    background-color: var(--brown-010)
-    
-  }
+  display: flex;
+  direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background-color: transparent;
+  font-family: "Averia Serif Libre", serif;
+  font-size: 20px;
+  color: var(--primary-color);
+  border: none;
+  padding: 8px 12px 8px 12px;
+  cursor: pointer;
+
+}
+
+.button-medium-secondary.selected {
+  background-color: white;
+  border-radius: 8px;
+}
+
+
+
+.button-medium-secondary:hover {
+  background-color: var(--brown-030);
+  color: var(--primary-color);
+  border: none;
+  border-radius: 8px;
+
+}
+
+.button-medium-secondary.selected:hover {
+  background-color: var(--brown-010)
+}
+
+
+.button-small-subtle {
+  font-family: "Averia Serif Libre", serif;
+  font-size: 16px;
+  background-color: transparent;
+  border: 1px solid var(--brown-010);
+  border-radius: 8px;
+  padding: 4px 8px 4px 8px;
+
+}
+.button-small-subtle:hover{
+  background-color: var(--brown-020);
+  cursor: pointer;
+
+
+}
+
+.button-small-subtle.selected {
+  background-color: white;
+  border:none
+}
+
+
+.back-button {
+
+  background-color: var(--brown-030);
+  font-family: "Averia Serif Libre", serif;
+  font-size: 20px;
+  width: 112px;
+  height: 64px;
+  border-radius: 16px;
+  color: var(--primary-color);
+  box-shadow: none;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: var(--primary-color);
+  /* Darken primary button color on hover */
+  color: white;
+  cursor: pointer;
+}
+
+.button-iconOnly:disabled {
+  background-color: var(--brown-010);
+
+}
+
+.button-iconOnly:hover {
+  background-color: var(--primary-color);
+  /* Darken primary button color on hover */
+  color: white;
+  cursor: pointer;
+}

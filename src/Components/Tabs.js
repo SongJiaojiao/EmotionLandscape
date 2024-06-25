@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
-import { ThemeProvider, AuthUser } from '../Contexts/ThemeContext';
+import { ThemeProvider, AuthUser } from '../Contexts/Context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const Toggle = ({ options, selectedValue, setSelectedValue, storageKey}) => {
-    const handleClick = (value) =>{
-        setSelectedValue(value); 
+const Tabs = ({ options, selectedValue, setSelectedValue, storageKey }) => {
+    const handleClick = (value) => {
+        setSelectedValue(value);
     }
 
 
@@ -14,9 +14,9 @@ const Toggle = ({ options, selectedValue, setSelectedValue, storageKey}) => {
                 <button
                     key={index}
                     className={`button-medium-secondary ${option.value === selectedValue ? 'selected' : ''}`}
-                    onClick = {()=>handleClick(option.value)}
-                    
-                >  <FontAwesomeIcon icon={option.icon}/>
+                    onClick={() => handleClick(option.value)}
+
+                >  {option.icon && <FontAwesomeIcon icon={option.icon} />}
                     {option.text}
                 </button>
             ))}
@@ -24,4 +24,4 @@ const Toggle = ({ options, selectedValue, setSelectedValue, storageKey}) => {
     );
 };
 
-export default Toggle;
+export default Tabs;

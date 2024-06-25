@@ -1,26 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect,useRef } from 'react';
 import SingleAnalysis from './SingleAnalysis';
-import Toggle from '../Toggle';
-import { AuthUser } from '../../Contexts/ThemeContext';
+import Calendar from '../Calendar';
+import { AuthUser } from '../../Contexts/Context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretLeft,faCaretRight} from '@fortawesome/free-solid-svg-icons';
 
 function History({ history }) {
-
-    const [selectedDate, setSelectedDate] = useState(() => sessionStorage.getItem('selectedDate') || 'Today');
-    const { authUser, setAuthUser } = useContext(AuthUser);
-    const [currentDateIndex, setCurrentDateIndex] = useState(() => sessionStorage.getItem('currentDateIndex') || 0);
-
-    if (!history || history.length === 0) {
-        return (
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'start', gap: '16px', borderRadius: '16px', }}>
-                <div className="shimmer" style={{ height: '120px', borderRadius: '16px' }}>   <span></span>   </div>
-                <div className="shimmer" style={{ height: '120px', borderRadius: '16px' }}></div>
-                <div className="shimmer" style={{ height: '240px', borderRadius: '16px' }}></div>
-
-            </div>
-        );
-    }
+    const { authUser } = useContext(AuthUser);
+    const [currentDateIndex, setCurrentDateIndex] = useState(() => parseInt(sessionStorage.getItem('currentDateIndex'), 10) || 0);
+    const [selectedDate, setSelectedDate] = useState(() => sessionStorage.getItem('selectedDate') || '');
+    const prevHistoryRef = useRef(history);
 
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -60,42 +48,56 @@ function History({ history }) {
             return acc;
         }, {});
 
-
     const uniqueDates = Object.keys(groupedByDate);
+    
+
+    const getLastAvailableDate = () => {
+        if (uniqueDates.length > 0) {
+            return uniqueDates[0]; // Last date available after sorting
+        }
+    };
+
+
+    useEffect(() => {
+        if (prevHistoryRef.current !== history) {
+
+            const lastDate = getLastAvailableDate();
+            setSelectedDate(lastDate);
+            sessionStorage.setItem('selectedDate', lastDate);
+            prevHistoryRef.current = history; // Update the ref to the latest history
+        }
+    }, [history]); // Dependency on `history`
+
+    useEffect(() => {
+        // Ensure the currentDateIndex is updated in sessionStorage
+        sessionStorage.setItem('currentDateIndex', currentDateIndex);
+    }, [currentDateIndex]);
 
     const maxDisplayedDates = 5;
-    //date options are reversed list from today at index 0
-    const options = uniqueDates.map(date => {
-        return {
-            value: date,
-            text: date
-        };
-    });
+    const options = uniqueDates.map(date => ({
+        value: date,
+        text: date
+    }));
 
-    //show only last 5/maxDisplayedDates at a time
-    const reverseddisplayedOptions = options.slice(currentDateIndex, currentDateIndex + maxDisplayedDates);
-    //reverse it to make the latest on the right, older on the left
-    const displayedOptions = [...reverseddisplayedOptions].reverse();
+    const reversedDisplayedOptions = options.slice(currentDateIndex, currentDateIndex + maxDisplayedDates);
+    const displayedOptions = [...reversedDisplayedOptions].reverse();
 
     const handleLeftArrowClick = () => {
-        if (currentDateIndex < options.length - maxDisplayedDates) {
-            setCurrentDateIndex(currentDateIndex + 5);
+        if (currentDateIndex + maxDisplayedDates < options.length) {
+            setCurrentDateIndex(currentDateIndex + maxDisplayedDates);
         }
-        console.log(currentDateIndex)
     };
 
     const handleRightArrowClick = () => {
         if (currentDateIndex > 0) {
-            setCurrentDateIndex(currentDateIndex - 5);
+            setCurrentDateIndex(currentDateIndex - maxDisplayedDates);
         }
-        console.log(currentDateIndex)
     };
-
-
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
-        sessionStorage.setItem('selectedDate', date)
+        sessionStorage.setItem('selectedDate', date);
+        console.log('date changes',date)
     };
 
     const dateSelector = {
@@ -103,47 +105,46 @@ function History({ history }) {
         justifyContent: 'space-between',
         alignItems: 'center',
         width: '100%',
-        marginBottom: '16px',
+        marginBottom: '8px',
+    };
 
-
-
+    if (!history || history.length === 0) {
+        return (
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'start', gap: '16px', borderRadius: '16px' }}>
+                <div className="shimmer" style={{ height: '120px', borderRadius: '16px' }}>   <span></span>   </div>
+                <div className="shimmer" style={{ height: '120px', borderRadius: '16px' }}></div>
+                <div className="shimmer" style={{ height: '240px', borderRadius: '16px' }}></div>
+            </div>
+        );
     }
 
-
     return (
-
         <div style={{ paddingTop: '0' }}>
             {authUser &&
                 <div style={dateSelector}>
                     <div style={{ width: '40px' }}>
-                    {currentDateIndex < options.length - maxDisplayedDates &&
-                        <button className='button-medium-secondary' onClick={handleLeftArrowClick}>
-                            <FontAwesomeIcon icon={faCaretLeft} />
-                        </button>
-
-                    }
+                        {currentDateIndex < options.length - maxDisplayedDates &&
+                            <button className='button-medium-secondary' onClick={handleLeftArrowClick}>
+                                <FontAwesomeIcon icon="caret-left" />
+                            </button>
+                        }
                     </div>
-
-                    <Toggle
+                    <Calendar
                         options={displayedOptions}
                         selectedValue={selectedDate}
                         setSelectedValue={handleDateChange}
-
                     />
                     <div style={{ width: '40px' }}>
                         {currentDateIndex > 0 &&
                             <button className='button-medium-secondary' onClick={handleRightArrowClick}>
-                                <FontAwesomeIcon icon={faCaretRight} />
+                                <FontAwesomeIcon icon="caret-right" />
                             </button>
                         }
                     </div>
-
                 </div>
             }
-
             {groupedByDate[selectedDate] && (
                 <div key={selectedDate}>
-                    {/* Display the date as a section header */}
                     {groupedByDate[selectedDate].map((singleHistory, index) => (
                         <SingleAnalysis
                             key={index}
@@ -154,14 +155,12 @@ function History({ history }) {
                             valenceList={singleHistory.valence}
                             arousalList={singleHistory.arousal}
                             timestamp={singleHistory.timestamp}
-                            formattedTime={singleHistory.formattedTime} // Passing formatted time
+                            formattedTime={singleHistory.formattedTime}
                             recommendedActions={singleHistory.recommendedActions}
                         />
                     ))}
                 </div>
             )}
-
-
         </div>
     );
 }

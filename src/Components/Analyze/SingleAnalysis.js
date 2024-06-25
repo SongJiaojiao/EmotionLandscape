@@ -50,7 +50,7 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
     return (
 
         <div style={result}>
-            {/* <div style={timeStampStyle}>{formattedTime}</div> */}
+            <div style={timeStampStyle}>{formattedTime}</div>
 
             <div className="resultCard">
                 <div className="resultTitle">

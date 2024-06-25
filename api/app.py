@@ -36,15 +36,15 @@ def process_emotions_and_actions(emotions, valences, arousals, recommended_actio
         valence = valences[i]
         arousal = arousals[i]
 
-        if arousal >= 5 and valence >= 5:
+        if arousal >= 1 and valence >= 1 and len(added_actions) < 4:
             add_action_if_not_added("Name one thing you are grateful", "Expanding")
             add_action_if_not_added("Share with a friend", "Expanding")
-        elif arousal <= -1 and valence >= 5:
+        elif arousal <= -1 and valence >= 1 and len(added_actions) < 4:
             add_action_if_not_added("Write a goal", "Exploring")
-        elif arousal >= 5 and valence <= -1:
+        elif arousal >= 1 and valence <= -1 and len(added_actions) < 4:
             add_action_if_not_added("Down regulating breath work", "Grounding")
             add_action_if_not_added("Listen to a calming song", "Grounding")
-        elif arousal <= -1 and valence <= -1:
+        elif arousal <= -1 and valence <= -1 and len(added_actions) < 4:
             add_action_if_not_added("Up regulating breath work", "Elevating")
             add_action_if_not_added("Listen to upbeat music", "Elevating")
             
@@ -62,10 +62,10 @@ def create_app():
         data = request.get_json()
         transcript = data["transcript"]
         timestamp = data["timestamp"]
+        email = data["email"]
         analysis = claude(transcript, system=analyze)
         response = claude(transcript, system=preprocess)
         distorted = claude(transcript, system=distortedThoughts)
-        print ('response',response)
         cleaned_response = response.split("\n")
         cleaned_response = [line.strip() for line in cleaned_response if line.startswith("[") and line.endswith("]")]
         cleaned_response = "\n".join(cleaned_response)
@@ -89,6 +89,7 @@ def create_app():
                 "themes": themes,
                 "timestamp": timestamp,
                 "recommendedActions": recommended_actions,
+                "user_email": email, 
                 "distorted": distorted,
             }
         
@@ -98,10 +99,15 @@ def create_app():
             return jsonify({"error": "Failed to insert data into Supabase"}), 500
 
 
-    @web_app.route("/get_transcripts")
+    @web_app.route("/get_transcripts", methods=["POST"])
     def get_transcripts():
+        
+        data = request.get_json()
+        print ('data',data)
+        email = data["email"]
+
         try:
-            response = supabase.table('Unlogged Data').select('*').order('timestamp', desc=True).limit(1).execute()
+            response = supabase.table('Unlogged Data').select('*').eq('user_email', email).order('timestamp', desc=True).execute()
             if response.data:
                 transcripts = response.data
                 return jsonify(transcripts)

@@ -1,31 +1,39 @@
 import { useContext, useState } from 'react'
 import Record from './Record';
 import Result from './Result';
-import SingleAnalysis from './SingleAnalysis';
-import Hume from './Hume';
+import Tabs from '../Tabs';
+import EmotionChart from './EmotionChart';
+import { AuthUser } from '../../Contexts/Context';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { SignOutButton } from "@clerk/clerk-react";
 
 export default function AnalyzeMood() {
 
     const API_URL = process.env.REACT_APP_SERVERR_DOMAIN;
-
-
-    const getArrayFromSessionStorage = (key) => {
-        const storedValue = sessionStorage.getItem(key);
-        return storedValue ? storedValue.split(',') : [];
-    };
-
+    const { authUser } = useContext(AuthUser);
     const [userTranscript, setuserTranscript] = useState(() => sessionStorage.getItem('userTranscript') || '');
-    const [emotions, setEmotions] = useState(() => getArrayFromSessionStorage('emotions'));
-
-    const [themes, setThemes] = useState(() => getArrayFromSessionStorage('themes'));
-    const [valenceList, setValenceList] = useState(() => getArrayFromSessionStorage('valenceList'));
-    const [arousalList, setArousalList] = useState(() => getArrayFromSessionStorage('arousalList'));
+    const [currentTab, setCurrentTab] = useState(() => sessionStorage.getItem('currentTab') || 'Journal');
     const timestamp = new Date().toISOString();
-    const [showResult, setshowResult] = useState(() => sessionStorage.getItem('showResult') || false);
+    const navOptions = [
+        {
+            text: 'Journal',
+            value: 'Journal'
+        },
+        {
+            text: 'Memories',
+            value: 'Memories'
+        },
+        {
+            text: 'Analysis',
+            value: "Analysis"
+        }
+    ]
+
+    const [showHistory, setshowHistory] = useState(() => sessionStorage.getItem('showHistory') || false);
 
     const save_transcript = async (userInput) => {
         try {
-            console.log('userTranscript in api', userInput);
+            // console.log('userTranscript in api', userInput, 'usermail from save scripts', authUser.email);
 
             const response = await fetch(`${API_URL}/save_transcript`, {
                 method: 'POST',
@@ -33,71 +41,88 @@ export default function AnalyzeMood() {
                     'Content-Type': 'application/json'
                 },
 
-                body: JSON.stringify({ transcript: userInput, timestamp })
+                body: JSON.stringify({
+                    transcript: userInput,
+                    timestamp,
+                    email: authUser.email
+                })
             });
-            console.log('responseUI ', response);
 
             if (!response.ok) {
                 throw new Error('Failed to request help from the backend');
             }
             const data = await response.json();
-            setEmotions(data.emotions)
-            setThemes(data.themes)
-            setArousalList(data.arousal)
-            setValenceList(data.valence)
-            setshowResult(true);
-            sessionStorage.setItem('showResult', true)
-            sessionStorage.setItem('emotions', data.emotions)
-            sessionStorage.setItem('themes', data.themes)
-            sessionStorage.setItem('arousalList', data.arousal)
-            sessionStorage.setItem('valenceList', data.valence)
+            setshowHistory(true);
+            sessionStorage.setItem('showHistory', true)
+
 
         } catch (error) {
             console.error('An error occurred:', error);
         }
 
     };
-    
-    
+
+
 
     const handleScriptsSubmit = async (userInput) => {
         sessionStorage.setItem('userTranscript', userInput);
         setuserTranscript(userInput);
         await save_transcript(userInput);
-       
+        setCurrentTab('Memories')
+        sessionStorage.setItem('currentTab', 'Memories')
+
 
     };
 
 
-    const updateshowResult = () => {
-        if (showResult) {
-            setshowResult('');
-            sessionStorage.setItem('showResult', '');
+    const updateshowHistory = () => {
+        if (showHistory) {
+            setshowHistory('');
+            sessionStorage.setItem('showHistory', '');
+        }
+        else {
+            setshowHistory(true)
         }
 
     }
 
+    const updateCurrentTab = (selectedValue) => {
+        setCurrentTab(selectedValue)
+        sessionStorage.setItem('currentTab', selectedValue)
 
+    }
 
 
     return (
 
-        <div className='container' >
+        <div className='container'>
+            <div className='navBar'>
+                <div >
+                    <Tabs options={navOptions} selectedValue={currentTab} setSelectedValue={updateCurrentTab} />
+                </div>
+                <div className='signout-container'>
+                    <SignOutButton className="button-small-subtle" />
+                </div>
 
-            {!showResult ? (
+            </div>
 
-                <Record handleScriptsSubmit={handleScriptsSubmit} />
-            ) : (
+            {currentTab === 'Journal' && <Record handleScriptsSubmit={handleScriptsSubmit} />}
+            {currentTab === 'Memories' && <Result />}
+            {currentTab === 'Analysis' && <EmotionChart />}
 
-                <Result
+            {
+                !authUser && <> {!showHistory ? (
+                    <Record handleScriptsSubmit={handleScriptsSubmit} />
+                ) : (
 
-                    updateshowResult={updateshowResult}
+                    <Result
+                        updateshowHistory={updateshowHistory}
+                    />
+                )}
+                </>
+            }
 
 
-                />
-            )}
-
-            {/* <Hume /> */}
         </div>
 
 
