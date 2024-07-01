@@ -16,7 +16,7 @@ export default function AnalyzeMood() {
     const { authUser } = useContext(AuthUser);
     console.log(authUser)
     const [userTranscript, setuserTranscript] = useState(() => sessionStorage.getItem('userTranscript') || '');
-    const [currentTab, setCurrentTab] = useState(() => sessionStorage.getItem('currentTab') || 'Journal');
+    const [currentTab, setCurrentTab] = useState(() => sessionStorage.getItem('currentTab') || 'Home');
     const timestamp = new Date().toISOString();
     const navOptions = [
         {
