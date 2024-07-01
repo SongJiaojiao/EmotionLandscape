@@ -16,9 +16,7 @@ export default function Aquarium() {
     const { history } = useContext(HistoryContext);
     const [averageCoordinate, setAverageCoordinate] = useState(() => sessionStorage.getItem('averageCoordinate') || null);
     const [imageLoaded, setImageLoaded] = useState(false);
-
-
-
+    console.log('averageCoordinate', averageCoordinate)
 
     const fetchData = async () => {
         try {
@@ -60,17 +58,21 @@ export default function Aquarium() {
     };
 
     const determineQuote = (coordinate) => {
-        if (coordinate.valence > 0 && coordinate.arousal > 0) {
+        if (coordinate) {
+            if (coordinate.valence > 0 && coordinate.arousal > 0) {
 
-            return "Your little buddy is full of energy and joy!";
-        } else if (coordinate.valence < 0 && coordinate.arousal > 0) {
-            return "Your little buddy's seems restless lately.";
-        } else if (coordinate.valence > 0 && coordinate.arousal < 0) {
-            return "Your little buddy's swimming calmly, just like your cool, and collected vibes.";
-        } else if (coordinate.valence < 0 && coordinate.arousal < 0) {
-            return "Your little buddy seems a bit down.";
+                return "Your little buddy is full of energy and joy!";
+            } else if (coordinate.valence < 0 && coordinate.arousal > 0) {
+                return "Your little buddy's seems restless lately.";
+            } else if (coordinate.valence > 0 && coordinate.arousal < 0) {
+                return "Your little buddy's swimming calmly, just like your cool, and collected vibes.";
+            } else if (coordinate.valence < 0 && coordinate.arousal < 0) {
+                return "Your little buddy seems a bit down.";
+            }
+            
         }
         return null;
+
 
     };
 
@@ -98,7 +100,7 @@ export default function Aquarium() {
                 onLoad={() => setImageLoaded(true)}
                 src={determineImageSrc(averageCoordinate) === joy ? joyGif : determineImageSrc(averageCoordinate) === anger ? angerGif : determineImageSrc(averageCoordinate) === calm ? calmGif : determineImageSrc(averageCoordinate) === down ? downGif : null}
             />
-            {!imageLoaded && <div className="shimmer" style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 , borderRadius:'16px'}} />} {/* Placeholder shimmer */}
+            {!imageLoaded && <div className="shimmer" style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, borderRadius: '16px' }} />} {/* Placeholder shimmer */}
         </div>
     )
 }
