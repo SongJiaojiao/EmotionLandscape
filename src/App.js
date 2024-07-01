@@ -4,14 +4,11 @@ import { BrowserRouter as Router, Route, Routes, } from 'react-router-dom';
 import { useEffect, useContext } from 'react'
 import AnalyzeMood from './Components/Analyze/AnalyzeMood';
 import CBTFlow from './Components/Reframe Exercise/CBTFlow';
-import { dark, neobrutalism } from '@clerk/themes';
 import { ClerkProvider, useUser } from '@clerk/clerk-react'
 import { SignedIn, SignedOut, SignInButton, UserButton, SignIn, SignOutButton } from "@clerk/clerk-react";
-
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCaretLeft, faCaretRight, faSignOut } from '@fortawesome/free-solid-svg-icons';
 library.add(faCaretLeft, faCaretRight, faSignOut);
-
 
 
 const PUBLISHABLE_KEY = process.env.REACT_APP_VITE_CLERK_PUBLISHABLE_KEY

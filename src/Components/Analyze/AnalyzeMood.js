@@ -1,23 +1,25 @@
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import Record from './Record';
-import Result from './Result';
+import History from './History';
 import Tabs from '../Tabs';
 import EmotionChart from './EmotionChart';
 import { AuthUser } from '../../Contexts/Context';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { HistoryContext } from '../../Contexts/Context';
 import { SignOutButton } from "@clerk/clerk-react";
+import Aquarium from './Aquarium';
 
 export default function AnalyzeMood() {
 
     const API_URL = process.env.REACT_APP_SERVERR_DOMAIN;
+    const { history, updateHistory } = useContext(HistoryContext);
     const { authUser } = useContext(AuthUser);
     const [userTranscript, setuserTranscript] = useState(() => sessionStorage.getItem('userTranscript') || '');
     const [currentTab, setCurrentTab] = useState(() => sessionStorage.getItem('currentTab') || 'Journal');
     const timestamp = new Date().toISOString();
     const navOptions = [
         {
-            text: 'Journal',
-            value: 'Journal'
+            text: 'Home',
+            value: 'Home'
         },
         {
             text: 'Memories',
@@ -29,11 +31,10 @@ export default function AnalyzeMood() {
         }
     ]
 
-    const [showHistory, setshowHistory] = useState(() => sessionStorage.getItem('showHistory') || false);
 
     const save_transcript = async (userInput) => {
         try {
-            // console.log('userTranscript in api', userInput, 'usermail from save scripts', authUser.email);
+            console.log('userTranscript in api', userInput, 'usermail from save scripts', authUser.email);
 
             const response = await fetch(`${API_URL}/save_transcript`, {
                 method: 'POST',
@@ -52,14 +53,35 @@ export default function AnalyzeMood() {
                 throw new Error('Failed to request help from the backend');
             }
             const data = await response.json();
-            setshowHistory(true);
-            sessionStorage.setItem('showHistory', true)
+            fetchData();
 
 
         } catch (error) {
             console.error('An error occurred:', error);
         }
 
+    };
+
+    const fetchData = async () => {
+        try {
+            console.log('call fetch data api');
+            const response = await fetch(`${API_URL}/get_transcripts`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: authUser.email })
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const jsonData = await response.json();
+            updateHistory(jsonData)
+        } catch (error) {
+            console.error('Failed to fetch data:', error);
+        }
     };
 
 
@@ -74,23 +96,17 @@ export default function AnalyzeMood() {
 
     };
 
-
-    const updateshowHistory = () => {
-        if (showHistory) {
-            setshowHistory('');
-            sessionStorage.setItem('showHistory', '');
-        }
-        else {
-            setshowHistory(true)
-        }
-
-    }
-
     const updateCurrentTab = (selectedValue) => {
         setCurrentTab(selectedValue)
         sessionStorage.setItem('currentTab', selectedValue)
 
     }
+    //Initial data load
+    useEffect(() => {
+        if (history.length === 0) {
+            fetchData();
+        }
+    }, []);
 
 
     return (
@@ -106,21 +122,12 @@ export default function AnalyzeMood() {
 
             </div>
 
-            {currentTab === 'Journal' && <Record handleScriptsSubmit={handleScriptsSubmit} />}
-            {currentTab === 'Memories' && <Result />}
+            {currentTab === 'Home' && <>
+                <Aquarium />
+                <Record handleScriptsSubmit={handleScriptsSubmit} />
+            </>}
+            {currentTab === 'Memories' && <History history={history} />}
             {currentTab === 'Analysis' && <EmotionChart />}
-
-            {
-                !authUser && <> {!showHistory ? (
-                    <Record handleScriptsSubmit={handleScriptsSubmit} />
-                ) : (
-
-                    <Result
-                        updateshowHistory={updateshowHistory}
-                    />
-                )}
-                </>
-            }
 
 
         </div>

@@ -29,11 +29,12 @@ const labelStyle = {
 
 
 function transformData(history) {
-    return history.flatMap((item) => {
-        return item.emotions.map((emotion, idx) => {
-            const x = item.valence[idx];
-            const y = item.arousal[idx];
 
+    return history.flatMap((item) => {
+        
+        return item.coordinates.map((coordinate, idx) => {
+            const x = coordinate.valence
+            const y = coordinate.arousal
             let color;
 
             if (x > 0 && y > 0) {
@@ -53,7 +54,7 @@ function transformData(history) {
                 color: color,
                 timestamp: item.timestamp,
                 transcript: item.transcript,
-                emotion: emotion
+                emotion: item.emotions[idx]
             };
         });
     });
@@ -67,7 +68,7 @@ function EmotionChart() {
 
     return (
         <div className='container'>
-            <h3 style={{marginBottom:'16px'}}>You in a nutshell</h3>
+            <h3 style={{ marginBottom: '16px' }}>You in a nutshell</h3>
             <div style={chartContainer}>
                 <FontAwesomeIcon icon={faChevronLeft} style={{ width: '14px', position: 'absolute', color: 'var(--brown-070)', left: '16' }} />
                 <FontAwesomeIcon icon={faChevronRight} style={{ width: '14px', position: 'absolute', color: 'var(--brown-070)', right: '16' }} />

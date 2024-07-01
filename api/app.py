@@ -1,13 +1,13 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import json
 from utils import claude
-from prompt import preprocess, analyze, distortedThoughts
+from data.prompt import preprocess, analyze, distortedThoughts
 from dotenv import load_dotenv
 import pathlib
 import os
 import logging
 from supabase import create_client, Client
+import numpy as np
 
 load_dotenv()  
 SUPABASE_URL = os.getenv("SUPABASE_URL")
@@ -16,7 +16,7 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 def write_to_supabase(response_out):
     try:
-        response = supabase.table('Unlogged Data').insert(response_out).execute()
+        response = supabase.table('journal_data').insert(response_out).execute()
         if response.data:
             logging.info("Data successfully inserted into Supabase")
             return True
@@ -48,7 +48,10 @@ def process_emotions_and_actions(emotions, valences, arousals, recommended_actio
             add_action_if_not_added("Up regulating breath work", "Elevating")
             add_action_if_not_added("Listen to upbeat music", "Elevating")
             
-            
+
+
+
+         
 def create_app():
     web_app = Flask(__name__)
     CORS(web_app)
@@ -70,8 +73,10 @@ def create_app():
         cleaned_response = [line.strip() for line in cleaned_response if line.startswith("[") and line.endswith("]")]
         cleaned_response = "\n".join(cleaned_response)
         print ('cleanedresponse',cleaned_response)
-        emotions, valences, arousals, themes = cleaned_response.split("\n")
-        emotions, valences, arousals, themes = eval(emotions), eval(valences), eval(arousals), eval(themes)
+        emotions, valences, arousals, themes= cleaned_response.split("\n")
+        emotions, valences, arousals, themes= eval(emotions), eval(valences), eval(arousals),eval(themes)
+        coordinates = [{"valence": v, "arousal": a} for v, a in zip(valences, arousals)]
+        
 
         recommended_actions = []
         added_actions = []
@@ -86,6 +91,7 @@ def create_app():
                 "emotions": emotions,
                 "valence": valences,
                 "arousal": arousals,
+                "coordinates":coordinates,
                 "themes": themes,
                 "timestamp": timestamp,
                 "recommendedActions": recommended_actions,
@@ -107,7 +113,7 @@ def create_app():
         email = data["email"]
 
         try:
-            response = supabase.table('Unlogged Data').select('*').eq('user_email', email).order('timestamp', desc=True).execute()
+            response = supabase.table('journal_data').select('*').eq('user_email', email).order('timestamp', desc=True).execute()
             if response.data:
                 transcripts = response.data
                 return jsonify(transcripts)
@@ -117,6 +123,26 @@ def create_app():
         except Exception as e:
             logging.exception("Exception occurred while fetching transcripts from Supabase")
             return jsonify({"error": "An error occurred while fetching transcripts"}), 500
+    
+    
+    @web_app.route("/get_average_emotion", methods=["POST"])
+    def get_average_emotion():
+        data = request.get_json()
+        email = data["email"]
+
+        try:
+            response = supabase.table('average_emotion').select('average_emotion').eq('user_email', email).execute()
+            if response.data:
+                average_emotion = response.data
+                return jsonify(average_emotion)
+            else:
+                logging.error(f"Error fetching average emotion from Supabase: {response}")
+                return jsonify({"error": "Failed to fetch average emotion from Supabase"}), 500
+        except Exception as e:
+            logging.exception("Exception occurred while fetching average emotion from Supabase")
+            return jsonify({"error": "An error occurred while fetching average emotion"}), 500
+
+
 
 
     return web_app

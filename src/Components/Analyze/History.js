@@ -3,12 +3,15 @@ import SingleAnalysis from './SingleAnalysis';
 import Calendar from '../Calendar';
 import { AuthUser } from '../../Contexts/Context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { HistoryContext } from '../../Contexts/Context';
 
-function History({ history }) {
+function History() {
     const { authUser } = useContext(AuthUser);
     const [currentDateIndex, setCurrentDateIndex] = useState(() => parseInt(sessionStorage.getItem('currentDateIndex'), 10) || 0);
     const [selectedDate, setSelectedDate] = useState(() => sessionStorage.getItem('selectedDate') || '');
+    const { history, updateHistory } = useContext(HistoryContext);
     const prevHistoryRef = useRef(history);
+    
 
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -151,11 +154,9 @@ function History({ history }) {
                             emotionList={singleHistory.emotions}
                             themeList={singleHistory.themes}
                             analysis={singleHistory.analysis}
-                            actionList={singleHistory.arousal}
-                            valenceList={singleHistory.valence}
-                            arousalList={singleHistory.arousal}
                             timestamp={singleHistory.timestamp}
                             formattedTime={singleHistory.formattedTime}
+                            coordinates = {singleHistory.coordinates}
                             recommendedActions={singleHistory.recommendedActions}
                         />
                     ))}

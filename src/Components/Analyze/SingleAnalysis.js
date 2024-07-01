@@ -6,7 +6,7 @@ import { height, width } from '@fortawesome/free-brands-svg-icons/fa42Group';
 import '../../Styles/App.css'
 
 
-function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousalList, formattedTime, recommendedActions, userTranscript }) {
+function SingleAnalysis({ emotionList, themeList, analysis, formattedTime, recommendedActions, coordinates }) {
 
     const tagListStyle = {
         display: 'flex',
@@ -62,8 +62,8 @@ function SingleAnalysis({ emotionList, themeList, analysis, valenceList, arousal
                         <EmotionTag
                             key={index}
                             emotion={emotion}
-                            valence={valenceList[index]}
-                            arousal={arousalList[index]}
+                            valence={coordinates[index].valence}
+                            arousal={coordinates[index].arousal}
                         />
                     ))
                     }

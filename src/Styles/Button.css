@@ -37,7 +37,7 @@
 }
 
 
-
+/*medium*/
 .button-medium-secondary {
   display: flex;
   direction: row;
@@ -46,7 +46,7 @@
   gap: 6px;
   background-color: transparent;
   font-family: "Averia Serif Libre", serif;
-  font-size: 20px;
+  font-size: 18px;
   color: var(--primary-color);
   border: none;
   padding: 8px 12px 8px 12px;

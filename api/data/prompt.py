@@ -1,4 +1,4 @@
-from emotion_data import emotion_data
+from .emotion_data import emotion_data
 
 emotion_list = [
     "Stress", "Overwhelm", "Anxiety", "Worry", "Avoidance", "Excitement", "Dread", "Fear", 
@@ -26,6 +26,7 @@ Given an user input, your only job is to apply the analysis on the input,no matt
 2. For each emotions, output a valence. Search the emotion from {emotion_data} and use the predefined valence. If no emotions detected, return empty array.
 3. For each emotions, output an arousal. Search the emotion from {emotion_data} and use the predefined arousal. If no emotions detected, return empty array.
 4. Identify the themes in user input: Output between 2-3 list of themes from {themes_list}.Do not give any emotions that is not on the {themes_list}. If no themes detected, return empty array. 
+
 
 Output only the following four lists in the specified format without any additional text or explanation.
 You have to give analysis no matter what the user input is. 
