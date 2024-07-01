@@ -100,7 +100,6 @@ function History() {
     const handleDateChange = (date) => {
         setSelectedDate(date);
         sessionStorage.setItem('selectedDate', date);
-        console.log('date changes',date)
     };
 
     const dateSelector = {

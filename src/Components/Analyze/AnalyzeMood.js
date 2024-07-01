@@ -12,6 +12,7 @@ export default function AnalyzeMood() {
 
     const API_URL = process.env.REACT_APP_SERVERR_DOMAIN;
     const { history, updateHistory } = useContext(HistoryContext);
+    console.log('history',history)
     const { authUser } = useContext(AuthUser);
     const [userTranscript, setuserTranscript] = useState(() => sessionStorage.getItem('userTranscript') || '');
     const [currentTab, setCurrentTab] = useState(() => sessionStorage.getItem('currentTab') || 'Journal');
@@ -64,7 +65,7 @@ export default function AnalyzeMood() {
 
     const fetchData = async () => {
         try {
-            console.log('call fetch data api');
+            console.log('call fetch data api','email', authUser.email);
             const response = await fetch(`${API_URL}/get_transcripts`, {
                 method: 'POST',
                 headers: {
@@ -106,6 +107,7 @@ export default function AnalyzeMood() {
         if (history.length === 0) {
             fetchData();
         }
+
     }, []);
 
 
