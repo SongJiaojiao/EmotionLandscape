@@ -12,8 +12,9 @@ export default function AnalyzeMood() {
 
     const API_URL = process.env.REACT_APP_SERVERR_DOMAIN;
     const { history, updateHistory } = useContext(HistoryContext);
-    console.log('history',history)
+    console.log('history',history,history.length)
     const { authUser } = useContext(AuthUser);
+    console.log(authUser)
     const [userTranscript, setuserTranscript] = useState(() => sessionStorage.getItem('userTranscript') || '');
     const [currentTab, setCurrentTab] = useState(() => sessionStorage.getItem('currentTab') || 'Journal');
     const timestamp = new Date().toISOString();
@@ -105,6 +106,7 @@ export default function AnalyzeMood() {
     //Initial data load
     useEffect(() => {
         if (history.length === 0) {
+            console.log('fetch data triggered')
             fetchData();
         }
 
