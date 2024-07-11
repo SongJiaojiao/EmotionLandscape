@@ -10,9 +10,10 @@ body,html{
 
 h1{
     font-family: "Averia Serif Libre", serif ;
-    font-weight: 500;
+    font-weight: 600;
     font-style: normal;
     size: 24px;
+    margin:0
 }
 
 h2{

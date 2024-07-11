@@ -1,17 +1,16 @@
 import React, { useState, useContext, useEffect,useRef } from 'react';
 import SingleAnalysis from './SingleAnalysis';
-import Calendar from '../Calendar';
+import Calendar from '../SharedComponents/Calendar';
 import { AuthUser } from '../../Contexts/Context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { HistoryContext } from '../../Contexts/Context';
 
-function History() {
+function Memories() {
     const { authUser } = useContext(AuthUser);
     const [currentDateIndex, setCurrentDateIndex] = useState(() => parseInt(sessionStorage.getItem('currentDateIndex'), 10) || 0);
     const [selectedDate, setSelectedDate] = useState(() => sessionStorage.getItem('selectedDate') || '');
     const { history, updateHistory } = useContext(HistoryContext);
-    const prevHistoryRef = useRef(history);
-    
+
 
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -62,19 +61,19 @@ function History() {
 
 
     useEffect(() => {
-        if (prevHistoryRef.current !== history) {
 
-            const lastDate = getLastAvailableDate();
-            setSelectedDate(lastDate);
-            sessionStorage.setItem('selectedDate', lastDate);
-            prevHistoryRef.current = history; // Update the ref to the latest history
-        }
-    }, [history]); // Dependency on `history`
+        const lastDate = getLastAvailableDate();
+        setSelectedDate(lastDate);
+        sessionStorage.setItem('selectedDate', lastDate);
+
+    }, [history]); 
 
     useEffect(() => {
-        // Ensure the currentDateIndex is updated in sessionStorage
         sessionStorage.setItem('currentDateIndex', currentDateIndex);
     }, [currentDateIndex]);
+
+
+
 
     const maxDisplayedDates = 5;
     const options = uniqueDates.map(date => ({
@@ -165,4 +164,4 @@ function History() {
     );
 }
 
-export default History;
+export default Memories;

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, ReferenceLine, Cell, Label, ResponsiveContainer, Tooltip } from 'recharts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { HistoryContext } from '../../Contexts/Context';
+import { HistoryContext } from '../Contexts/Context';
 
 
 const chartContainer = {

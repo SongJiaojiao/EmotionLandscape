@@ -1,13 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun, faCloudMoon, faCheck, faMicrophone, faStop } from '@fortawesome/free-solid-svg-icons';
-import { useTheme } from '../../Contexts/Context';
-import Toggle from '../Tabs';
 import loadingGif from '../../Img/loading.gif';
 
 // Handle user's recording and typing behavior
 function Record({ handleScriptsSubmit }) {
-    const { theme, toggleTheme } = useTheme();
     const [userInput, setUserInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [recording, setRecording] = useState(false);
@@ -65,9 +62,7 @@ function Record({ handleScriptsSubmit }) {
         }
     ];
 
-    const handleThemeChange = (newTheme) => {
-        toggleTheme(newTheme);
-    };
+
 
     const handleInputChange = (e) => {
         setUserInput(e.target.value);
@@ -114,7 +109,7 @@ function Record({ handleScriptsSubmit }) {
            
                 <textarea
                     className="textArea"
-                    placeholder={theme === 'light' ? "What's on your mind today?" : "What did you dream?"}
+                    placeholder="What's on your mind today?"
                     value={userInput}
                     onChange={handleInputChange}
                     autoFocus

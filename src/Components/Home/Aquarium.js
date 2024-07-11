@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect,useRef } from 'react';
 import { AuthUser } from '../../Contexts/Context';
 import { HistoryContext } from '../../Contexts/Context';
 import anger from '../../Img/Aquarium/Anger.png';
@@ -16,6 +16,8 @@ export default function Aquarium() {
     const { history } = useContext(HistoryContext);
 
     const [averageCoordinate, setAverageCoordinate] = useState(() => sessionStorage.getItem('averageCoordinate') || null);
+    // console.log('averageCooridinate',averageCoordinate.valence)
+    const prevHistoryRef = useRef(history);
 
 
     const fetchData = async () => {
@@ -73,9 +75,8 @@ export default function Aquarium() {
     };
 
     useEffect(() => {
-       
             fetchData();
-        
+    
     },[history]);
 
     return (

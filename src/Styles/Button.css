@@ -1,6 +1,35 @@
 @import url("./font.css");
 @import url("./color.css");
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.button-large-primary {
+  display: flex;
+  direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--brown-080);
+  font-family: "Averia Serif Libre", serif;
+  font-size: 20px;
+  padding-left: 24px;
+  padding-right: 24px;
+  height: 60px;
+  border-radius: 36px;
+  color: white;
+  box-shadow: none;
+  border: none;
+  transition: 0.2s ease;
+  gap: 16px;
+}
+
+.button-large-primary:hover{
+  cursor: pointer;
+  background-color: var(--brown-070);
+}
+
 
 .button-large {
   display: flex;
@@ -10,9 +39,9 @@
   background-color: var(--brown-030);
   font-family: "Averia Serif Libre", serif;
   font-size: 24px;
-  padding-left: 27px;
-  padding-right: 27px;
-  height: 72px;
+  padding-left: 24px;
+  padding-right: 24px;
+  height: 60px;
   border-radius: 36px;
   color: var(--primary-color);
   box-shadow: none;
@@ -38,6 +67,26 @@
 
 
 /*medium*/
+.button-medium-primary {
+  color:white;
+  display: flex;
+  direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background-color: var(--brown-080);
+  font-family: "Averia Serif Libre", serif;
+  font-size: 18px;
+  border-radius: 24px;
+  border: none;
+  padding: 8px 20px 8px 20px;
+  cursor: pointer;
+}
+
+.button-medium-primary:hover{
+  background-color: var(--brown-070);
+}
+
 .button-medium-secondary {
   display: flex;
   direction: row;
@@ -69,9 +118,7 @@
 
 }
 
-.button-medium-secondary.selected:hover {
-  background-color: var(--brown-010)
-}
+
 
 
 .button-small-subtle {
