@@ -52,7 +52,7 @@ export default function App() {
 function AppContent() {
   const { isLoaded, user } = useUser();
   const { authUser, updateAuthUser } = useContext(AuthUser);
-  const { history, updateHistory, fetchData } = useContext(HistoryContext);
+  const { history, updateHistory, fetchData, fetchCoordinate} = useContext(HistoryContext);
 
   useEffect(() => {
     if (isLoaded && user) {
@@ -63,6 +63,7 @@ function AppContent() {
       };
       updateAuthUser(newAuthUser);
       fetchData(newAuthUser.email);
+      fetchCoordinate(newAuthUser.email)
     }
   }, [isLoaded, user, updateAuthUser]);
 

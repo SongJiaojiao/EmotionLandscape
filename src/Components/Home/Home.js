@@ -8,7 +8,7 @@ import Aquarium from './Aquarium';
 export default function Home() {
 
     const API_URL = process.env.REACT_APP_SERVERR_DOMAIN;
-    const { history, updateHistory, fetchData } = useContext(HistoryContext);
+    const { history, updateHistory, fetchData, fetchCoordinate } = useContext(HistoryContext);
     const navigate = useNavigate();
     const { authUser } = useContext(AuthUser);
     const [userTranscript, setuserTranscript] = useState(() => sessionStorage.getItem('userTranscript') || '');

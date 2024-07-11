@@ -106,12 +106,10 @@ def create_app():
 
 
     @web_app.route("/get_transcripts", methods=["POST"])
-    def get_transcripts():
-        
+    def get_transcripts():  
         data = request.get_json()
         print ('data',data)
         email = data["email"]
-
         try:
             response = supabase.table('journal_data').select('*').eq('user_email', email).order('timestamp', desc=True).execute()
             if response.data:
@@ -129,9 +127,9 @@ def create_app():
     def get_average_emotion():
         data = request.get_json()
         email = data["email"]
-
         try:
             response = supabase.table('average_emotion').select('average_emotion').eq('user_email', email).execute()
+            
             if response.data:
                 average_emotion = response.data
                 return jsonify(average_emotion)

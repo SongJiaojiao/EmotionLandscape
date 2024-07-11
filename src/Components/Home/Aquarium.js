@@ -11,37 +11,8 @@ import downGif from '../../Img/Aquarium/down.gif';
 import joyGif from '../../Img/Aquarium/joy.gif';
 
 export default function Aquarium() {
-    const API_URL = process.env.REACT_APP_SERVERR_DOMAIN;
-    const { authUser } = useContext(AuthUser);
-    const { history } = useContext(HistoryContext);
-
-    const [averageCoordinate, setAverageCoordinate] = useState(() => sessionStorage.getItem('averageCoordinate') || null);
-    // console.log('averageCooridinate',averageCoordinate.valence)
+    const { history,averageCoordinate } = useContext(HistoryContext);
     const prevHistoryRef = useRef(history);
-
-
-    const fetchData = async () => {
-        try {
-            console.log('call avg emotion api');
-            const response = await fetch(`${API_URL}/get_average_emotion`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email: authUser.email })
-            });
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const jsonData = await response.json();
-            sessionStorage.setItem('averageCoordinate', jsonData[0].average_emotion);
-            setAverageCoordinate(jsonData[0].average_emotion);
-        } catch (error) {
-            console.error('Failed to fetch data:', error);
-        } 
-    };
 
     const determineImageSrc = (coordinate) => {
         if (!coordinate) return null;
@@ -73,11 +44,6 @@ export default function Aquarium() {
 
         return "Your little buddy is here with you.";
     };
-
-    useEffect(() => {
-            fetchData();
-    
-    },[history]);
 
     return (
         <div className='aquarium' style={{ backgroundImage: `url(${determineImageSrc(averageCoordinate)})` }}>
