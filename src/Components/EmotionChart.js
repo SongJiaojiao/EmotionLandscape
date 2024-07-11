@@ -64,8 +64,14 @@ function transformData(history) {
 
 function EmotionChart() {
     const { history, updateHistory } = useContext(HistoryContext);
-    const data = transformData(history);
-
+    const data = history ? transformData(history) : [];
+    if (!history || history.length === 0) {
+        return (
+            <div >
+                Create your analysis by entering your first journal. 
+            </div>
+        );
+    }
     return (
         <div className='container'>
             <h3 style={{ marginBottom: '16px' }}>You in a nutshell</h3>

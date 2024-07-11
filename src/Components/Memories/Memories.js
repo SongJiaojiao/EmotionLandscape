@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect,useRef } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import SingleAnalysis from './SingleAnalysis';
 import Calendar from '../SharedComponents/Calendar';
 import { AuthUser } from '../../Contexts/Context';
@@ -10,6 +10,7 @@ function Memories() {
     const [currentDateIndex, setCurrentDateIndex] = useState(() => parseInt(sessionStorage.getItem('currentDateIndex'), 10) || 0);
     const [selectedDate, setSelectedDate] = useState(() => sessionStorage.getItem('selectedDate') || '');
     const { history, updateHistory } = useContext(HistoryContext);
+
 
 
     const now = new Date();
@@ -51,7 +52,7 @@ function Memories() {
         }, {});
 
     const uniqueDates = Object.keys(groupedByDate);
-    
+
 
     const getLastAvailableDate = () => {
         if (uniqueDates.length > 0) {
@@ -66,7 +67,7 @@ function Memories() {
         setSelectedDate(lastDate);
         sessionStorage.setItem('selectedDate', lastDate);
 
-    }, [history]); 
+    }, [history]);
 
     useEffect(() => {
         sessionStorage.setItem('currentDateIndex', currentDateIndex);
@@ -111,39 +112,37 @@ function Memories() {
 
     if (!history || history.length === 0) {
         return (
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'start', gap: '16px', borderRadius: '16px' }}>
-                <div className="shimmer" style={{ height: '120px', borderRadius: '16px' }}>   <span></span>   </div>
-                <div className="shimmer" style={{ height: '120px', borderRadius: '16px' }}></div>
-                <div className="shimmer" style={{ height: '240px', borderRadius: '16px' }}></div>
+            <div >
+                Create your first memory by entering a journal. 
             </div>
         );
     }
 
     return (
         <div style={{ paddingTop: '0' }}>
-            {authUser &&
-                <div style={dateSelector}>
-                    <div style={{ width: '40px' }}>
-                        {currentDateIndex < options.length - maxDisplayedDates &&
-                            <button className='button-medium-secondary' onClick={handleLeftArrowClick}>
-                                <FontAwesomeIcon icon="caret-left" />
-                            </button>
-                        }
-                    </div>
-                    <Calendar
-                        options={displayedOptions}
-                        selectedValue={selectedDate}
-                        setSelectedValue={handleDateChange}
-                    />
-                    <div style={{ width: '40px' }}>
-                        {currentDateIndex > 0 &&
-                            <button className='button-medium-secondary' onClick={handleRightArrowClick}>
-                                <FontAwesomeIcon icon="caret-right" />
-                            </button>
-                        }
-                    </div>
+
+            <div style={dateSelector}>
+                <div style={{ width: '40px' }}>
+                    {currentDateIndex < options.length - maxDisplayedDates &&
+                        <button className='button-medium-secondary' onClick={handleLeftArrowClick}>
+                            <FontAwesomeIcon icon="caret-left" />
+                        </button>
+                    }
                 </div>
-            }
+                <Calendar
+                    options={displayedOptions}
+                    selectedValue={selectedDate}
+                    setSelectedValue={handleDateChange}
+                />
+                <div style={{ width: '40px' }}>
+                    {currentDateIndex > 0 &&
+                        <button className='button-medium-secondary' onClick={handleRightArrowClick}>
+                            <FontAwesomeIcon icon="caret-right" />
+                        </button>
+                    }
+                </div>
+            </div>
+
             {groupedByDate[selectedDate] && (
                 <div key={selectedDate}>
                     {groupedByDate[selectedDate].map((singleHistory, index) => (
@@ -154,7 +153,7 @@ function Memories() {
                             analysis={singleHistory.analysis}
                             timestamp={singleHistory.timestamp}
                             formattedTime={singleHistory.formattedTime}
-                            coordinates = {singleHistory.coordinates}
+                            coordinates={singleHistory.coordinates}
                             recommendedActions={singleHistory.recommendedActions}
                         />
                     ))}
