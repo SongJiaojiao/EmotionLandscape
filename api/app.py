@@ -119,8 +119,12 @@ def create_app():
                 logging.info(f"No record found for email: {email}. User has not used the product before.")
                 return '', 204  # No Content
         except Exception as e:
-            logging.exception("Exception occurred while fetching transcripts from Supabase")
-            return jsonify({"error": "An error occurred while fetching transcripts"}), 500
+            error_message = str(e)
+            # Check if response contains an error message
+            if hasattr(response, 'error') and response.error:
+                error_message = response.error.message
+            logging.exception(f"Exception occurred while fetching average emotion from Supabase: {error_message}")
+            return jsonify({"error": "An error occurred while fetching average emotion", "details": error_message}), 500  # Internal Server Error
     
     
     @web_app.route("/get_average_emotion", methods=["POST"])
@@ -139,8 +143,12 @@ def create_app():
                 logging.info(f"No record found for email: {email}. User has not used the product before.")
                 return '', 204  # No Content
         except Exception as e:
-            logging.exception("Exception occurred while fetching average emotion from Supabase")
-            return jsonify({"error": "An error occurred while fetching average emotion"}), 500
+            error_message = str(e)
+            # Check if response contains an error message
+            if hasattr(response, 'error') and response.error:
+                error_message = response.error.message
+            logging.exception(f"Exception occurred while fetching average emotion from Supabase: {error_message}")
+            return jsonify({"error": "An error occurred while fetching average emotion", "details": error_message}), 500  # Internal Server Error
 
 
 

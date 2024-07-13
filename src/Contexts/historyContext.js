@@ -1,4 +1,3 @@
-import { logDOM } from '@testing-library/react';
 import React, { createContext, useState, useCallback } from 'react';
 
 const LoadingState = {

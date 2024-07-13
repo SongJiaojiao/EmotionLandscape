@@ -7,7 +7,7 @@ import Aquarium from './Aquarium';
 
 export default function Home() {
     const API_URL = process.env.REACT_APP_SERVERR_DOMAIN;
-    const { fetchData } = useContext(HistoryContext);
+    const { fetchData,fetchCoordinate} = useContext(HistoryContext);
     const navigate = useNavigate();
     const { authUser } = useContext(AuthUser);
     const [userTranscript, setuserTranscript] = useState(() => sessionStorage.getItem('userTranscript') || '');
@@ -34,6 +34,8 @@ export default function Home() {
             }
             const data = await response.json();
             await fetchData(authUser.email);
+            fetchCoordinate(authUser.email)
+
             navigate('/memories'); // Navigate to Memories after fetching data
 
 
