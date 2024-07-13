@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import EmotionTag from '../SharedComponents/EmotionTag';
 import ThemeTag from '../SharedComponents/ThemeTag';
 import Actions from '../SharedComponents/Actions';
-import { height, width } from '@fortawesome/free-brands-svg-icons/fa42Group';
 import '../../Styles/App.css'
 
 

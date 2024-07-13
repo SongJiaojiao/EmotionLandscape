@@ -1,10 +1,11 @@
 import './Styles/App.css';
-import { AuthUser, AuthUserProvider, HistoryProvider, HistoryContext } from './Contexts/Context';
+import { HistoryProvider, HistoryContext } from './Contexts/historyContext';
+import { AuthUser, AuthUserProvider } from './Contexts/userContext';
 import { BrowserRouter as Router, Route, Routes, } from 'react-router-dom';
 import { useEffect, useContext } from 'react'
 import Home from './Components/Home/Home'
 import { ClerkProvider, useUser } from '@clerk/clerk-react'
-import { SignedIn, SignedOut, SignInButton, UserButton, SignIn, SignOutButton } from "@clerk/clerk-react";
+import { SignedIn, SignedOut,  SignIn } from "@clerk/clerk-react";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCaretLeft, faCaretRight, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import Landing from './Components/Landing';
@@ -51,8 +52,8 @@ export default function App() {
 
 function AppContent() {
   const { isLoaded, user } = useUser();
-  const { authUser, updateAuthUser } = useContext(AuthUser);
-  const { history, updateHistory, fetchData, fetchCoordinate} = useContext(HistoryContext);
+  const { updateAuthUser } = useContext(AuthUser);
+  const { fetchData, fetchCoordinate } = useContext(HistoryContext);
 
   useEffect(() => {
     if (isLoaded && user) {
@@ -68,8 +69,8 @@ function AppContent() {
   }, [isLoaded, user, updateAuthUser]);
 
   return (
-    <HistoryProvider >
-      <NavigationTab/>
+    <div className='container'>
+      <NavigationTab />
       <Routes>
         <Route >
           <Route path="/" element={<Home />} />
@@ -77,6 +78,6 @@ function AppContent() {
           <Route path="/analysis" element={<EmotionChart />} />
         </Route>
       </Routes>
-    </HistoryProvider>
+    </div>
   );
 }

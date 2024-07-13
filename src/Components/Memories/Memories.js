@@ -1,17 +1,16 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import SingleAnalysis from './SingleAnalysis';
 import Calendar from '../SharedComponents/Calendar';
-import { AuthUser } from '../../Contexts/Context';
+import { AuthUser } from '../../Contexts/userContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { HistoryContext } from '../../Contexts/Context';
+import { HistoryContext } from '../../Contexts/historyContext';
+import EmptyBox from '../EmptyBox';
 
 function Memories() {
     const { authUser } = useContext(AuthUser);
     const [currentDateIndex, setCurrentDateIndex] = useState(() => parseInt(sessionStorage.getItem('currentDateIndex'), 10) || 0);
     const [selectedDate, setSelectedDate] = useState(() => sessionStorage.getItem('selectedDate') || '');
-    const { history, updateHistory } = useContext(HistoryContext);
-
-
+    const { history, fetchData, fetchCoordinate, loadingState } = useContext(HistoryContext);
 
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -62,17 +61,14 @@ function Memories() {
 
 
     useEffect(() => {
-
         const lastDate = getLastAvailableDate();
         setSelectedDate(lastDate);
         sessionStorage.setItem('selectedDate', lastDate);
-
     }, [history]);
 
     useEffect(() => {
         sessionStorage.setItem('currentDateIndex', currentDateIndex);
     }, [currentDateIndex]);
-
 
 
 
@@ -110,11 +106,21 @@ function Memories() {
         marginBottom: '8px',
     };
 
-    if (!history || history.length === 0) {
+    if (loadingState === 'loading') {
         return (
-            <div >
-                Create your first memory by entering a journal. 
+            <div className='container'>
+                <div className="shimmer" style={{width:'100%',maxWidth:'644px',height:'100px'}}/>
+                <div className="shimmer" style={{width:'100%',maxWidth:'644px',height:'100px'}}/>
+                <div className="shimmer" style={{width:'100%',maxWidth:'644px',height:'100px'}}/>
+
             </div>
+        )
+    }
+
+
+    if (history.length==0 && loadingState == "loaded") {
+        return (
+           <EmptyBox type="memory" tooltip="It's empty here. Create your first journal."/>
         );
     }
 

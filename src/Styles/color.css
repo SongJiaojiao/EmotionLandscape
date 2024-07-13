@@ -4,11 +4,14 @@
     --primary-color: #4F3D2C; /* DarkBrown */
     --primary-color-hover:#6F5944;
     --brown-000:#FFFDF8;
-    --brown-010:#F9F5EC;
-    --brown-020:#F4EEE1;
-    --brown-030:#EDE5D4;
-    --brown-040:#e0d8c7;
-    --brown-070:#7b6b58;
+    --brown-010:#F6F3EC;
+    --brown-020:#EFE9DB;
+    --brown-030:#DDD4C1;
+    --brown-040:#C4B8A6;
+    --brown-050:#9F917C;
+    --brown-060:#8B7D70;
+    --brown-070:#6C5541;
+    --brown-080:#59432F;
     --brown-080:#503E2E;
     --text-primary: #222222; /* Gray */
     /* Other Colors */

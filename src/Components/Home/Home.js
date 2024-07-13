@@ -1,14 +1,13 @@
 import { useContext, useState, useEffect } from 'react'
 import Record from './Record';
-import { AuthUser } from '../../Contexts/Context';
-import { HistoryContext } from '../../Contexts/Context';
+import { HistoryContext } from '../../Contexts/historyContext';
+import { AuthUser} from '../../Contexts/userContext';
 import { useNavigate } from 'react-router-dom';
 import Aquarium from './Aquarium';
 
 export default function Home() {
-
     const API_URL = process.env.REACT_APP_SERVERR_DOMAIN;
-    const { history, updateHistory, fetchData, fetchCoordinate } = useContext(HistoryContext);
+    const { fetchData, fetchCoordinate } = useContext(HistoryContext);
     const navigate = useNavigate();
     const { authUser } = useContext(AuthUser);
     const [userTranscript, setuserTranscript] = useState(() => sessionStorage.getItem('userTranscript') || '');
@@ -16,7 +15,6 @@ export default function Home() {
 
     const save_transcript = async (userInput) => {
         try {
-            // console.log('userTranscript in api', userInput, 'usermail from save scripts', authUser.email);
 
             const response = await fetch(`${API_URL}/save_transcript`, {
                 method: 'POST',
@@ -52,6 +50,10 @@ export default function Home() {
         await save_transcript(userInput);
 
     };
+
+    
+
+
 
 
     return (

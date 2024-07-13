@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import React, { useState, useEffect} from 'react';
+import { Link,useLocation } from 'react-router-dom';
 import { SignOutButton } from '@clerk/clerk-react';
 
 const navOptions = [
@@ -53,7 +53,7 @@ export default function NavigationTab() {
           ))}
 
         </div>
-        <div className='signout-container'>
+        <div className='signout-container' >
           <SignOutButton className="button-small-subtle" />
         </div>
       </div>

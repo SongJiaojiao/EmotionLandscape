@@ -116,8 +116,8 @@ def create_app():
                 transcripts = response.data
                 return jsonify(transcripts)
             else:
-                logging.error(f"Error fetching transcripts from Supabase: {response}")
-                return jsonify({"error": "Failed to fetch transcripts from Supabase"}), 500
+                logging.info(f"No record found for email: {email}. User has not used the product before.")
+                return '', 204  # No Content
         except Exception as e:
             logging.exception("Exception occurred while fetching transcripts from Supabase")
             return jsonify({"error": "An error occurred while fetching transcripts"}), 500
@@ -127,15 +127,17 @@ def create_app():
     def get_average_emotion():
         data = request.get_json()
         email = data["email"]
+        
         try:
             response = supabase.table('average_emotion').select('average_emotion').eq('user_email', email).execute()
+            print ('user email from get avg emotion',email)
             
             if response.data:
                 average_emotion = response.data
                 return jsonify(average_emotion)
             else:
-                logging.error(f"Error fetching average emotion from Supabase: {response}")
-                return jsonify({"error": "Failed to fetch average emotion from Supabase"}), 500
+                logging.info(f"No record found for email: {email}. User has not used the product before.")
+                return '', 204  # No Content
         except Exception as e:
             logging.exception("Exception occurred while fetching average emotion from Supabase")
             return jsonify({"error": "An error occurred while fetching average emotion"}), 500

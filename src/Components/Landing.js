@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
-import { SignedIn, SignedOut, SignInButton, UserButton, SignIn, SignOutButton } from "@clerk/clerk-react";
+import React from 'react';
 import { BrowserRouter as Router, Route, Switch, useNavigate } from 'react-router-dom';
 import homeImage from '../Img/home.png';  // Import the image
-import joyGif from '../Img/Aquarium/joy.gif';
 
 export default function Landing() {
     const navigate = useNavigate();

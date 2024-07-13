@@ -73,6 +73,10 @@ body {
   flex-direction: column;
   gap: 16px;
 }
+.maxWidthSpacer{
+  width: 100%;
+  max-width: 644px;
+}
 
 .textArea {
   display: block;
@@ -352,6 +356,7 @@ body {
   animation: shimmer 2s infinite linear;
   background: linear-gradient(to right, var(--brown-020), var(--brown-030), var(--brown-020) 33%);
   background-size: 80rem 100%;
+  border-radius: 8px;
 }
 
 

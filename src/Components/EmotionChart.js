@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, ReferenceLine, Cell, Label, ResponsiveContainer, Tooltip } from 'recharts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { HistoryContext } from '../Contexts/Context';
+import { HistoryContext } from '../Contexts/historyContext';
+import EmptyBox from './EmptyBox';
 
 
 const chartContainer = {
@@ -63,15 +64,17 @@ function transformData(history) {
 
 
 function EmotionChart() {
-    const { history, updateHistory } = useContext(HistoryContext);
-    const data = history ? transformData(history) : [];
-    if (!history || history.length === 0) {
+    const { history, loadingState } = useContext(HistoryContext);
+    const data = history ? transformData(history) : null;
+    if (loadingState === 'loading') return <div className="shimmer maxWidthSpacer"  />;
+    
+    if (history.length === 0 && loadingState=='loaded') {
         return (
-            <div >
-                Create your analysis by entering your first journal. 
-            </div>
+
+            <EmptyBox type="analysis" tooltip="It's empty here. Create your first journal."/>
         );
     }
+
     return (
         <div className='container'>
             <h3 style={{ marginBottom: '16px' }}>You in a nutshell</h3>

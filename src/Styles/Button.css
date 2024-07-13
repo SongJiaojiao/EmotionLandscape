@@ -68,6 +68,7 @@ a {
 
 /*medium*/
 .button-medium-primary {
+  display: inline-block;
   color:white;
   display: flex;
   direction: row;
