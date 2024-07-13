@@ -75,6 +75,15 @@ function EmotionChart() {
         );
     }
 
+    if (loadingState === 'loading') {
+        return (
+            <div className='container'>
+                <div className="shimmer" style={{width:'100%',maxWidth:'644px',height:'160px'}}/>
+
+            </div>
+        )
+    }
+
     return (
         <div className='container'>
             <h3 style={{ marginBottom: '16px' }}>You in a nutshell</h3>

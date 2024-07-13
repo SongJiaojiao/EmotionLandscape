@@ -84,7 +84,7 @@ function Actions({ action, tag, userTranscript }) {
     <div className="actionBox" onClick={handleClick} >
       <div className="actionTop">
         <img src={actionIcons.find(icon => icon.name === action).iconLink} style={{ width: 40, height: 40 }} />
-        <h3>{action}</h3>
+        <h4>{action}</h4>
       </div>
 
     </div>

@@ -1,13 +1,13 @@
 import { useContext, useState, useEffect } from 'react'
 import Record from './Record';
 import { HistoryContext } from '../../Contexts/historyContext';
-import { AuthUser} from '../../Contexts/userContext';
+import { AuthUser } from '../../Contexts/userContext';
 import { useNavigate } from 'react-router-dom';
 import Aquarium from './Aquarium';
 
 export default function Home() {
     const API_URL = process.env.REACT_APP_SERVERR_DOMAIN;
-    const { fetchData, fetchCoordinate } = useContext(HistoryContext);
+    const { fetchData } = useContext(HistoryContext);
     const navigate = useNavigate();
     const { authUser } = useContext(AuthUser);
     const [userTranscript, setuserTranscript] = useState(() => sessionStorage.getItem('userTranscript') || '');
@@ -51,16 +51,12 @@ export default function Home() {
 
     };
 
-    
-
-
 
 
     return (
         <div className='container'>
             <Aquarium />
             <Record handleScriptsSubmit={handleScriptsSubmit} />
-
         </div>
     );
 }

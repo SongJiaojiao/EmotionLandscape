@@ -9,11 +9,11 @@ function SingleAnalysis({ emotionList, themeList, analysis, formattedTime, recom
 
     const tagListStyle = {
         display: 'flex',
-        flexDirection: 'row', // Note: 'flex-direction' becomes 'flexDirection'
+        flexDirection: 'row', 
         gap: '8px',
-        alignItems: 'center', // Note: 'align-items' becomes 'alignItems'
-        justifyContent: 'flex-start', // Note: 'justify-content' becomes 'justifyContent'
-        flexWrap: 'wrap' // Note: 'flex-wrap' becomes 'flexWrap'
+        alignItems: 'center', 
+        justifyContent: 'flex-start', 
+        flexWrap: 'wrap' 
     };
 
     const actionContainer = {

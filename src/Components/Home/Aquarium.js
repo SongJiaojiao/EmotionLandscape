@@ -1,15 +1,15 @@
 import { useContext } from 'react';
 import { HistoryContext } from '../../Contexts/historyContext';
-import { AuthUser } from '../../Contexts/userContext';
 import anger from '../../Img/Aquarium/Anger.png';
 import calm from '../../Img/Aquarium/calm.png';
 import down from '../../Img/Aquarium/down.png';
 import joy from '../../Img/Aquarium/Joy.png';
+import empty from '../../Img/Aquarium/Empty.png'
 import angerGif from '../../Img/Aquarium/anger.gif';
 import calmGif from '../../Img/Aquarium/calm.gif';
 import downGif from '../../Img/Aquarium/down.gif';
 import joyGif from '../../Img/Aquarium/joy.gif';
-import empty from '../../Img/Aquarium/Empty.png'
+
 
 export default function Aquarium() {
     const { averageCoordinate, loadingState } = useContext(HistoryContext);
@@ -47,19 +47,17 @@ export default function Aquarium() {
         }
 
 
-
         return "Your little buddy is here with you.";
     };
 
 
-    if (loadingState === 'loading') return <div className="shimmer maxWidthSpacer" />;
+    if (loadingState === 'loading') return <div className="shimmer maxWidthSpacer" style={{height:'200px'}} />;
 
     return (
         <div className='aquarium' style={{ backgroundImage: `url(${determineImageSrc(averageCoordinate)})` }}>
             <div className='tag' style={{ position: 'absolute', right: '8px', bottom: '8px', objectFit: 'cover', zIndex: 1 }}>
                 {determineQuote(averageCoordinate)}
             </div>
-
             {averageCoordinate &&
                 <img
                     style={{
@@ -68,15 +66,13 @@ export default function Aquarium() {
                         width: '100%',
                         height: '100%', objectFit: 'cover',
                         zIndex: 1,
-                        border: 'none'
+                        border: 'none',
+                        borderWidth:'0'
 
                     }}
-
-
                     src={determineImageSrc(averageCoordinate) === joy ? joyGif : determineImageSrc(averageCoordinate) === anger ? angerGif : determineImageSrc(averageCoordinate) === calm ? calmGif : determineImageSrc(averageCoordinate) === down ? downGif : null}
                 />}
 
-            {/* {loading && <div className="shimmer" style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, borderRadius: '16px' }} />} Placeholder shimmer */}
         </div>
     );
 }
