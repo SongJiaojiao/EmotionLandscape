@@ -12,7 +12,7 @@ import joyGif from '../../Img/Aquarium/joy.gif';
 
 
 export default function Aquarium() {
-    const { averageCoordinate, loadingState } = useContext(HistoryContext);
+    const { averageCoordinate, loadingState ,highestQuadrant } = useContext(HistoryContext);
 
     const determineImageSrc = (coordinate) => {
         if (coordinate == 'No Data' && loadingState == 'loaded') return empty;
@@ -30,6 +30,41 @@ export default function Aquarium() {
         }
 
         return null;
+    };
+    const determineImageSrcQuadrant = (quadrant_score) => {
+        if (quadrant_score == 'No Data' && loadingState == 'loaded') return empty;
+
+        if (quadrant_score && loadingState == 'loaded') {
+            if (quadrant_score.highest_quadrant =='Q1') {
+                return joy;
+            } else if (quadrant_score.highest_quadrant =='Q2') {
+                return anger;
+            } else if (quadrant_score.highest_quadrant =='Q3') {
+                return calm;
+            } else if (quadrant_score.highest_quadrant =='Q4') {
+                return down;
+            }
+        }
+
+        return null;
+    };
+
+    const determineQuoteQuadrant = (quadrant) => {
+        if (quadrant == 'No Data' && loadingState == 'loaded') return "It's empty here. Start your first journal.";
+        if (quadrant && loadingState == 'loaded') {
+            if (quadrant.highest_quadrant =='Q1') {
+                return "Your little buddy is full of energy and joy!";
+            } else if (quadrant.highest_quadrant =='Q2') {
+                return "Your little buddy's seems restless lately.";
+            } else if (quadrant.highest_quadrant =='Q3') {
+                return "Your little buddy's swimming calmly, just like your cool, and collected vibes.";
+            } else if (quadrant.highest_quadrant =='Q4') {
+                return "Your little buddy seems a bit down.";
+            }
+        }
+
+
+        return "Your little buddy is here with you.";
     };
 
     const determineQuote = (coordinate) => {
@@ -54,11 +89,11 @@ export default function Aquarium() {
     if (loadingState === 'loading') return <div className="shimmer maxWidthSpacer" style={{height:'200px'}} />;
 
     return (
-        <div className='aquarium' style={{ backgroundImage: `url(${determineImageSrc(averageCoordinate)})` }}>
+        <div className='aquarium' style={{ backgroundImage: `url(${determineImageSrcQuadrant(highestQuadrant)})` }}>
             <div className='tag' style={{ position: 'absolute', right: '8px', bottom: '8px', objectFit: 'cover', zIndex: 1 }}>
-                {determineQuote(averageCoordinate)}
+                {determineQuoteQuadrant(highestQuadrant)}
             </div>
-            {averageCoordinate &&
+            {highestQuadrant &&
                 <img
                     style={{
                         position: 'absolute',
@@ -70,7 +105,7 @@ export default function Aquarium() {
                         borderWidth:'0'
 
                     }}
-                    src={determineImageSrc(averageCoordinate) === joy ? joyGif : determineImageSrc(averageCoordinate) === anger ? angerGif : determineImageSrc(averageCoordinate) === calm ? calmGif : determineImageSrc(averageCoordinate) === down ? downGif : null}
+                    src={determineImageSrcQuadrant(highestQuadrant) === joy ? joyGif : determineImageSrcQuadrant(highestQuadrant) === anger ? angerGif : determineImageSrcQuadrant(highestQuadrant) === calm ? calmGif : determineImageSrcQuadrant(highestQuadrant) === down ? downGif : null}
                 />}
 
         </div>

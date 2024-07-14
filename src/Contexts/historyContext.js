@@ -1,4 +1,5 @@
 import React, { createContext, useState, useCallback } from 'react';
+import { json } from 'react-router-dom';
 
 const LoadingState = {
   IDLE: 'idle',
@@ -16,6 +17,7 @@ export const HistoryProvider = ({ children }) => {
   const [history, setHistory] = useState([]);
 
   const [averageCoordinate, setAverageCoordinate] = useState(null);
+  const [highestQuadrant, setHighestQuadrant] = useState(null);
   const [loadingState, setLoadingState] = useState(LoadingState.IDLE);
   console.log('state from context', history, averageCoordinate, loadingState)
 
@@ -62,6 +64,8 @@ export const HistoryProvider = ({ children }) => {
     }
   }, [API_URL, updateHistory]);
 
+
+
   const fetchCoordinate = useCallback(async (email) => {
 
     try {
@@ -76,6 +80,7 @@ export const HistoryProvider = ({ children }) => {
       });
       if (response.status === 204) {
         updateCoordinate('No Data'); // Set averageCoordinate to null if no data
+        setHighestQuadrant('No Data')
         setLoadingState(LoadingState.LOADED); // Set loading state to LOADED after fetching
         return;
       }
@@ -84,7 +89,8 @@ export const HistoryProvider = ({ children }) => {
       }
 
       const jsonData = await response.json();
-      updateCoordinate(jsonData[0].average_emotion);
+      setHighestQuadrant(jsonData.quadrant_score)
+      updateCoordinate(jsonData.average_emotion);
       setLoadingState(LoadingState.LOADED);
     } catch (error) {
       console.error('Failed to fetch data:', error);
@@ -96,7 +102,7 @@ export const HistoryProvider = ({ children }) => {
 
 
   return (
-    <HistoryContext.Provider value={{ history, averageCoordinate, fetchData, fetchCoordinate, loadingState }}>
+    <HistoryContext.Provider value={{ history, averageCoordinate, fetchData, fetchCoordinate, loadingState, highestQuadrant }}>
       {children}
     </HistoryContext.Provider>
   );

@@ -8,6 +8,7 @@ import os
 import logging
 from supabase import create_client, Client
 import numpy as np
+from quadrantCal import get_highest_quadrant
 
 load_dotenv()  
 SUPABASE_URL = os.getenv("SUPABASE_URL")
@@ -133,12 +134,18 @@ def create_app():
         email = data["email"]
         
         try:
-            response = supabase.table('average_emotion').select('average_emotion').eq('user_email', email).execute()
+            response = supabase.table('average_emotion').select('average_emotion,quadrant_score').eq('user_email', email).execute()
             print ('user email from get avg emotion',email)
             
             if response.data:
-                average_emotion = response.data
-                return jsonify(average_emotion)
+                average_emotion = response.data[0]['average_emotion']
+                quadrant_score = get_highest_quadrant(response.data[0]['quadrant_score'])
+                response_data = {
+                    "average_emotion": average_emotion,
+                    "quadrant_score": quadrant_score
+                }
+                print ('response_data',response_data)
+                return jsonify(response_data)
             else:
                 logging.info(f"No record found for email: {email}. User has not used the product before.")
                 return '', 204  # No Content
