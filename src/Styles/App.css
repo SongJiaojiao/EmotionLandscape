@@ -364,3 +364,62 @@ body {
   background-color: #000;
   width: 600px;
 }
+
+
+.container.landing {
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+}
+
+.heading {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 200px;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  justify-content: center;
+}
+
+.text-content {
+  display: flex;
+  flex-direction: column;
+  max-width: 420px;
+  gap:24px
+}
+
+.image-content img {
+  width: 100%;
+  max-width: 400px;
+  align-content: center;
+}
+
+@media (max-width: 768px) {
+  .heading {
+      margin-bottom: 80px;
+  }
+
+  .content {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .text-content {
+      max-width: 100%;
+  }
+
+  .image-content {
+      order: -1; /* Places the image on top */
+  }
+
+  .image-content img {
+      width: 100%;
+      max-width: 80%;
+  }
+}

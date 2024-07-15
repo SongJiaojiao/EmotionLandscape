@@ -11,28 +11,18 @@ export default function Landing() {
 
     return (
 
-        <div>
-            <div style={{
-                fontSize: '32px',
-                fontWeight: '600',
-                marginBottom: '240px'
-
-            }}>
+        <div className="container landing">
+            <div className="heading">
                 Nuggets
             </div>
-            <div style={{
-                display: 'flex',
-                flexDirection: 'row',
-                gap:'40px',
-                justifyContent:'center'
-            }}>
-                <div style={{maxWidth:'420px'}}>
-                    <h1 style={{marginBottom:'16px'}}>Learn and cope with <br></br>your emotion in a fun way!</h1>
-                    <h3 style={{marginBottom:'24px'}}>The digital aquarium for your emotions</h3>
+            <div className="content">
+                <div className="text-content">
+                    <h1 >Learn and cope with <br></br>your emotion in a fun way!</h1>
+                    <h3 >The digital aquarium for your emotions</h3>
                     <button className='button-large-primary' onClick={handleSignInClick}>Start today</button>
                 </div>
-                <div>
-                    <img width='400px' src={homeImage}/>
+                <div className='image-content'>
+                    <img width='400px' src={homeImage} />
                 </div>
             </div>
 
