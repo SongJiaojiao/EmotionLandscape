@@ -7,9 +7,9 @@ a {
 }
 
 .button-large-primary {
-  display: flex;
+  display: inline-block;
   direction: row;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
   background-color: var(--brown-080);
   font-family: "Averia Serif Libre", serif;
@@ -23,6 +23,7 @@ a {
   border: none;
   transition: 0.2s ease;
   gap: 16px;
+  align-self: flex-start
 }
 
 .button-large-primary:hover{
@@ -124,12 +125,14 @@ a {
 
 
 .button-small-subtle {
+  display:inline-block;
   font-family: "Averia Serif Libre", serif;
   font-size: 16px;
   background-color: transparent;
-  border: 1px solid var(--brown-010);
+  border: none;
   border-radius: 8px;
   padding: 4px 8px 4px 8px;
+  height:32px
 
 }
 .button-small-subtle:hover{

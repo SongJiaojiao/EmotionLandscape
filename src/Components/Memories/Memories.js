@@ -1,16 +1,15 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import SingleAnalysis from './SingleAnalysis';
 import Calendar from '../SharedComponents/Calendar';
-import { AuthUser } from '../../Contexts/userContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { HistoryContext } from '../../Contexts/historyContext';
+import FeedbackPopup from '../FeedbackPopup';
 import EmptyBox from '../EmptyBox';
 
 function Memories() {
-    const { authUser } = useContext(AuthUser);
     const [currentDateIndex, setCurrentDateIndex] = useState(() => parseInt(sessionStorage.getItem('currentDateIndex'), 10) || 0);
     const [selectedDate, setSelectedDate] = useState(() => sessionStorage.getItem('selectedDate') || '');
-    const { history, fetchData, fetchCoordinate, loadingState } = useContext(HistoryContext);
+    const { history, loadingState } = useContext(HistoryContext);
 
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -109,20 +108,21 @@ function Memories() {
     if (loadingState === 'loading') {
         return (
             <div className='container'>
-                <div className="shimmer" style={{width:'100%',maxWidth:'644px',height:'100px'}}/>
-                <div className="shimmer" style={{width:'100%',maxWidth:'644px',height:'100px'}}/>
-                <div className="shimmer" style={{width:'100%',maxWidth:'644px',height:'100px'}}/>
+                <div className="shimmer" style={{ width: '100%', maxWidth: '644px', height: '100px' }} />
+                <div className="shimmer" style={{ width: '100%', maxWidth: '644px', height: '100px' }} />
+                <div className="shimmer" style={{ width: '100%', maxWidth: '644px', height: '100px' }} />
 
             </div>
         )
     }
 
 
-    if (history.length==0 && loadingState == "loaded") {
+    if (history.length == 0 && loadingState == "loaded") {
         return (
-           <EmptyBox type="memory" tooltip="It's empty here. Create your first journal."/>
+            <EmptyBox type="memory" tooltip="It's empty here. Create your first journal." />
         );
     }
+    const lastAvailableDate = getLastAvailableDate();
 
     return (
         <div style={{ paddingTop: '0' }}>
@@ -163,6 +163,12 @@ function Memories() {
                             recommendedActions={singleHistory.recommendedActions}
                         />
                     ))}
+                </div>
+            )}
+
+            {selectedDate === lastAvailableDate && (
+                <div className="bottom-card">
+                    <FeedbackPopup />
                 </div>
             )}
         </div>

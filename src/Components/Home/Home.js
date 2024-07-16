@@ -4,13 +4,13 @@ import { HistoryContext } from '../../Contexts/historyContext';
 import { AuthUser } from '../../Contexts/userContext';
 import { useNavigate } from 'react-router-dom';
 import Aquarium from './Aquarium';
+import FeedbackPopup from '../FeedbackPopup';
 
 export default function Home() {
     const API_URL = process.env.REACT_APP_SERVERR_DOMAIN;
     const { fetchData,fetchCoordinate} = useContext(HistoryContext);
     const navigate = useNavigate();
     const { authUser } = useContext(AuthUser);
-    const [userTranscript, setuserTranscript] = useState(() => sessionStorage.getItem('userTranscript') || '');
     const timestamp = new Date().toISOString();
 
     const save_transcript = async (userInput) => {
@@ -48,7 +48,6 @@ export default function Home() {
 
     const handleScriptsSubmit = async (userInput) => {
         sessionStorage.setItem('userTranscript', userInput);
-        setuserTranscript(userInput);
         await save_transcript(userInput);
 
     };

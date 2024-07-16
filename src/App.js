@@ -2,17 +2,20 @@ import './Styles/App.css';
 import { HistoryProvider, HistoryContext } from './Contexts/historyContext';
 import { AuthUser, AuthUserProvider } from './Contexts/userContext';
 import { BrowserRouter as Router, Route, Routes, } from 'react-router-dom';
-import { useEffect, useContext } from 'react'
+import { useEffect, useContext, useState } from 'react'
+import ReactModal from 'react-modal';
 import Home from './Components/Home/Home'
 import { ClerkProvider, useUser } from '@clerk/clerk-react'
-import { SignedIn, SignedOut,  SignIn } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, SignIn } from "@clerk/clerk-react";
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCaretLeft, faCaretRight, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faCaretLeft, faCaretRight, faSignOut, faClose } from '@fortawesome/free-solid-svg-icons';
 import Landing from './Components/Landing';
 import NavigationTab from './Components/NavigationTab';
 import Memories from './Components/Memories/Memories'
 import EmotionChart from './Components/EmotionChart';
-library.add(faCaretLeft, faCaretRight, faSignOut);
+import FeedbackPopup from './Components/FeedbackPopup';
+
+library.add(faCaretLeft, faCaretRight, faSignOut, faClose);
 
 
 const PUBLISHABLE_KEY = process.env.REACT_APP_VITE_CLERK_PUBLISHABLE_KEY
@@ -24,8 +27,17 @@ function SignInPage() {
     </div>
   );
 }
-
+ReactModal.setAppElement('#root');
 export default function App() {
+  const [isPopupVisible, setPopupVisible] = useState(false);
+  const handleOpenPopup = () => {
+    setPopupVisible(true);
+  };
+
+  const handleClosePopup = () => {
+    setPopupVisible(false);
+  };
+
   return (
     <div className='App'>
       <Router>
@@ -55,6 +67,7 @@ function AppContent() {
   const { updateAuthUser } = useContext(AuthUser);
   const { fetchData, fetchCoordinate } = useContext(HistoryContext);
 
+
   useEffect(() => {
     if (isLoaded && user) {
       const newAuthUser = {
@@ -73,6 +86,7 @@ function AppContent() {
       <NavigationTab />
       <Routes>
         <Route >
+
           <Route path="/" element={<Home />} />
           <Route path="/memories" element={<Memories />} />
           <Route path="/analysis" element={<EmotionChart />} />
