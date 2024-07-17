@@ -1,8 +1,6 @@
 // Components/FeedbackPopup.js
 import React, { useState } from 'react';
 import lovehand from '../Img/lovehand.gif'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClose } from '@fortawesome/free-solid-svg-icons';
 
 export default function FeedbackPopup({ onClose, onSubmit }) {
 

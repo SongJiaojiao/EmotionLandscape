@@ -1,6 +1,7 @@
 @import url("./font.css");
 @import url("./color.css");
 @import url('./Button.css');
+@import url('./Elevation.css');
 
 :root {
   --box-shadow-primary: 0px 0px 2px var(--brown-040);
@@ -440,4 +441,47 @@ body {
   display:flex;
   justify-content: space-between;
   gap:16px
+}
+
+.menuOverlayContainer {
+  position: relative;
+  display: inline-block;
+
+}
+
+
+
+.settings-dropdown {
+  display: block;
+  position: absolute;
+  border-radius: 4px;
+  top: 8px;
+  right: 0;
+  z-index: 1;
+  background-color: white;
+  min-width: 120px;
+  align-items:flex-start;
+  box-shadow: var(--elevation-01)
+}
+.settings-dropdown:hover{
+  cursor:pointer;
+
+}
+
+
+
+.menu-item-small{
+  padding:8px 12px
+}
+
+.menu-item-small:hover{
+  background-color: var(--brown-010);
+  cursor:pointer
+}
+
+.removeClerkStyling{
+  background-color: transparent;
+  border:none;
+  font-size: 16px;
+  font-family: "Averia Serif Libre", serif;
 }

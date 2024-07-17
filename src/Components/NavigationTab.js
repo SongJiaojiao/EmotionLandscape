@@ -1,5 +1,7 @@
-import React, { useState, useEffect} from 'react';
-import { Link,useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { IconFish, IconLogout } from '@tabler/icons-react';
+import SettingsMenu from './SettingsMenu';
 import { SignOutButton } from '@clerk/clerk-react';
 
 const navOptions = [
@@ -17,11 +19,23 @@ const navOptions = [
   }
 ]
 
+const settingsMenu = [
+  {
+    label: 'Sign out',
+    icon: <IconLogout />,
+  }
+];
+
+
 export default function NavigationTab() {
   const location = useLocation();
   const [currentTab, setCurrentTab] = useState(() => sessionStorage.getItem('currentTab') || 'Home');
-
-
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  console.log('isMenuOpen', isMenuOpen)
+  const toggleMenu = () => {
+    console.log('clicked')
+    setIsMenuOpen(prevState => !prevState);
+  };
   useEffect(() => {
     const path = location.pathname;
     const currentNavOption = navOptions.find(option => option.value === path);
@@ -53,9 +67,17 @@ export default function NavigationTab() {
           ))}
 
         </div>
-        <div className='signout-container' >
-          <SignOutButton className="button-small-subtle" />
+
+        <div className='signout-container'>
+          <button className='button-small-subtle' onClick={toggleMenu} >
+            <IconFish />
+          </button>
+
+          {isMenuOpen && <SettingsMenu actions={settingsMenu} toggleMenu={toggleMenu} />}
         </div>
+
+
+
       </div>
 
     </div >

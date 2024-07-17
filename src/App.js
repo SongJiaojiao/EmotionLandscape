@@ -8,7 +8,7 @@ import Home from './Components/Home/Home'
 import { ClerkProvider, useUser } from '@clerk/clerk-react'
 import { SignedIn, SignedOut, SignIn } from "@clerk/clerk-react";
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCaretLeft, faCaretRight, faSignOut, faClose } from '@fortawesome/free-solid-svg-icons';
+import { faCaretLeft, faCaretRight, faSignOut, faClose,faFish } from '@fortawesome/free-solid-svg-icons';
 import Landing from './Components/Landing';
 import NavigationTab from './Components/NavigationTab';
 import Memories from './Components/Memories/Memories'
