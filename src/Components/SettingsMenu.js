@@ -1,21 +1,21 @@
 import React, { useRef, useEffect } from 'react';
 import { SignOutButton } from '@clerk/clerk-react';
 
-const SettingsMenu = ({ actions, toggleMenu }) => {
+const SettingsMenu = ({ actions, closeMenu }) => {
     const menuRef = useRef(null);
 
-    // useEffect(() => {
-    //     const handleClickOutside = (event) => {
-    //       if (menuRef.current && !menuRef.current.contains(event.target)) {
-    //         toggleMenu(false);
-    //       }
-    //     };
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+          if (menuRef.current && !menuRef.current.contains(event.target)) {
+            closeMenu();
+          }
+        };
     
-    //     document.addEventListener('click', handleClickOutside);
-    //     return () => {
-    //       document.removeEventListener('click', handleClickOutside);
-    //     };
-    //   }, [toggleMenu]);
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+          document.removeEventListener('click', handleClickOutside);
+        };
+      }, [closeMenu]);
     
 
 

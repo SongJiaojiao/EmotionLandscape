@@ -32,9 +32,15 @@ export default function NavigationTab() {
   const [currentTab, setCurrentTab] = useState(() => sessionStorage.getItem('currentTab') || 'Home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   console.log('isMenuOpen', isMenuOpen)
-  const toggleMenu = () => {
-    console.log('clicked')
-    setIsMenuOpen(prevState => !prevState);
+
+  const openMenu = (event) => {
+    event.stopPropagation(); // Prevent the click from propagating to the document
+    setIsMenuOpen(true);
+
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
   };
   useEffect(() => {
     const path = location.pathname;
@@ -69,11 +75,11 @@ export default function NavigationTab() {
         </div>
 
         <div className='signout-container'>
-          <button className='button-small-subtle' onClick={toggleMenu} >
+          <button className='button-small-subtle' onClick={openMenu} >
             <IconFish />
           </button>
 
-          {isMenuOpen && <SettingsMenu actions={settingsMenu} toggleMenu={toggleMenu} />}
+          {isMenuOpen && <SettingsMenu actions={settingsMenu} closeMenu={closeMenu} />}
         </div>
 
 
