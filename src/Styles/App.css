@@ -1,7 +1,7 @@
 @import url("./font.css");
 @import url("./color.css");
 @import url('./Button.css');
-@import url('./Elevation.css');
+@import url('./shadow.css');
 
 :root {
   --box-shadow-primary: 0px 0px 2px var(--brown-040);
