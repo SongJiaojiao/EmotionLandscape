@@ -12,12 +12,12 @@ import joyGif from '../../Img/Aquarium/joy.gif';
 
 
 export default function Aquarium() {
-    const { averageCoordinate, loadingState ,highestQuadrant } = useContext(HistoryContext);
+    const { loadingFetchAquarium ,highestQuadrant } = useContext(HistoryContext);
 
     const determineImageSrc = (coordinate) => {
-        if (coordinate == 'No Data' && loadingState == 'loaded') return empty;
+        if (coordinate == 'No Data' && loadingFetchAquarium == 'loaded') return empty;
 
-        if (coordinate && loadingState == 'loaded') {
+        if (coordinate && loadingFetchAquarium == 'loaded') {
             if (coordinate.valence > 0 && coordinate.arousal > 0) {
                 return joy;
             } else if (coordinate.valence < 0 && coordinate.arousal > 0) {
@@ -32,17 +32,17 @@ export default function Aquarium() {
         return null;
     };
     const determineImageSrcQuadrant = (quadrant_score) => {
-        if (quadrant_score == 'No Data' && loadingState == 'loaded') return empty;
+        if (quadrant_score == 'No Data' && loadingFetchAquarium == 'loaded') return empty;
 
-        if (quadrant_score && loadingState == 'loaded') {
+        if (quadrant_score && loadingFetchAquarium == 'loaded') {
             if (quadrant_score.highest_quadrant =='Q1') {
                 return joy;
             } else if (quadrant_score.highest_quadrant =='Q2') {
                 return anger;
             } else if (quadrant_score.highest_quadrant =='Q3') {
-                return calm;
-            } else if (quadrant_score.highest_quadrant =='Q4') {
                 return down;
+            } else if (quadrant_score.highest_quadrant =='Q4') {
+                return calm;
             }
         }
 
@@ -50,16 +50,16 @@ export default function Aquarium() {
     };
 
     const determineQuoteQuadrant = (quadrant) => {
-        if (quadrant == 'No Data' && loadingState == 'loaded') return "It's empty here. Start your first journal.";
-        if (quadrant && loadingState == 'loaded') {
+        if (quadrant == 'No Data' && loadingFetchAquarium == 'loaded') return "It's empty here. Start your first journal.";
+        if (quadrant && loadingFetchAquarium == 'loaded') {
             if (quadrant.highest_quadrant =='Q1') {
                 return "Your little buddy is full of energy and joy!";
             } else if (quadrant.highest_quadrant =='Q2') {
                 return "Your little buddy's seems restless lately.";
             } else if (quadrant.highest_quadrant =='Q3') {
-                return "Your little buddy's swimming calmly, just like your cool, and collected vibes.";
-            } else if (quadrant.highest_quadrant =='Q4') {
                 return "Your little buddy seems a bit down.";
+            } else if (quadrant.highest_quadrant =='Q4') {
+                return "Your little buddy's swimming calmly, just like your cool, and collected vibes.";
             }
         }
 
@@ -68,8 +68,8 @@ export default function Aquarium() {
     };
 
     const determineQuote = (coordinate) => {
-        if (coordinate == 'No Data' && loadingState == 'loaded') return "It's empty here. Start your first journal.";
-        if (coordinate && loadingState == 'loaded') {
+        if (coordinate == 'No Data' && loadingFetchAquarium == 'loaded') return "It's empty here. Start your first journal.";
+        if (coordinate && loadingFetchAquarium == 'loaded') {
             if (coordinate.valence > 0 && coordinate.arousal > 0) {
                 return "Your little buddy is full of energy and joy!";
             } else if (coordinate.valence < 0 && coordinate.arousal > 0) {
@@ -86,7 +86,7 @@ export default function Aquarium() {
     };
 
 
-    if (loadingState === 'loading') return <div className="shimmer maxWidthSpacer" style={{height:'200px'}} />;
+    if (loadingFetchAquarium === 'loading') return <div className="shimmer maxWidthSpacer" style={{height:'200px'}} />;
 
     return (
         <div className='aquarium' style={{ backgroundImage: `url(${determineImageSrcQuadrant(highestQuadrant)})` }}>

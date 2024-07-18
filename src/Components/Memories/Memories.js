@@ -9,7 +9,7 @@ import EmptyBox from '../EmptyBox';
 function Memories() {
     const [currentDateIndex, setCurrentDateIndex] = useState(() => parseInt(sessionStorage.getItem('currentDateIndex'), 10) || 0);
     const [selectedDate, setSelectedDate] = useState(() => sessionStorage.getItem('selectedDate') || '');
-    const { history, loadingState } = useContext(HistoryContext);
+    const { history, loadingFetchMemories } = useContext(HistoryContext);
 
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -105,7 +105,7 @@ function Memories() {
         marginBottom: '8px',
     };
 
-    if (loadingState === 'loading') {
+    if (loadingFetchMemories === 'loading') {
         return (
             <div className='container'>
                 <div className="shimmer" style={{ width: '100%', maxWidth: '644px', height: '100px' }} />
@@ -117,7 +117,7 @@ function Memories() {
     }
 
 
-    if (history.length == 0 && loadingState == "loaded") {
+    if (history.length == 0 && loadingFetchMemories == "loaded") {
         return (
             <EmptyBox type="memory" tooltip="It's empty here. Create your first journal." />
         );

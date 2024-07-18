@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, ReferenceLine, Cell, Label, ResponsiveContainer, Tooltip } from 'recharts';
+import { ScatterChart, Scatter, XAxis, YAxis, ZAxis, ReferenceLine, Cell, Label, ResponsiveContainer, Tooltip, LineChart, CartesianGrid, Legend, Line } from 'recharts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { HistoryContext } from '../Contexts/historyContext';
@@ -32,7 +32,7 @@ const labelStyle = {
 function transformData(history) {
 
     return history.flatMap((item) => {
-        
+
         return item.coordinates.map((coordinate, idx) => {
             const x = coordinate.valence
             const y = coordinate.arousal
@@ -66,19 +66,19 @@ function transformData(history) {
 function EmotionChart() {
     const { history, loadingState } = useContext(HistoryContext);
     const data = history ? transformData(history) : null;
-    if (loadingState === 'loading') return <div className="shimmer maxWidthSpacer"  />;
-    
-    if (history.length === 0 && loadingState=='loaded') {
+    if (loadingState === 'loading') return <div className="shimmer maxWidthSpacer" />;
+
+    if (history.length === 0 && loadingState == 'loaded') {
         return (
 
-            <EmptyBox type="analysis" tooltip="It's empty here. Create your first journal."/>
+            <EmptyBox type="analysis" tooltip="It's empty here. Create your first journal." />
         );
     }
 
     if (loadingState === 'loading') {
         return (
             <div className='container'>
-                <div className="shimmer" style={{width:'100%',maxWidth:'644px',height:'160px'}}/>
+                <div className="shimmer" style={{ width: '100%', maxWidth: '644px', height: '160px' }} />
 
             </div>
         )
@@ -146,6 +146,18 @@ function EmotionChart() {
                     </ScatterChart>
                 </ResponsiveContainer>
             </div>
+            {/* <div>
+                <LineChart width={730} height={250} data={data}
+                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="pv" stroke="#8884d8" />
+                    <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+                </LineChart>
+            </div> */}
         </div>
 
     )

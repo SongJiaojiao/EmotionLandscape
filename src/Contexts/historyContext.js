@@ -1,7 +1,13 @@
 import React, { createContext, useState, useCallback } from 'react';
 import { json } from 'react-router-dom';
 
-const LoadingState = {
+const LoadingFetchAquarium = {
+  IDLE: 'idle',
+  LOADING: 'loading',
+  LOADED: 'loaded',
+};
+
+const LoadingFetchMemories = {
   IDLE: 'idle',
   LOADING: 'loading',
   LOADED: 'loaded',
@@ -15,11 +21,11 @@ export const HistoryProvider = ({ children }) => {
   const API_URL = process.env.REACT_APP_SERVERR_DOMAIN;
 
   const [history, setHistory] = useState([]);
-
   const [averageCoordinate, setAverageCoordinate] = useState(null);
   const [highestQuadrant, setHighestQuadrant] = useState(null);
-  const [loadingState, setLoadingState] = useState(LoadingState.IDLE);
-  console.log('state from context', history, averageCoordinate, loadingState)
+  const [loadingFetchAquarium, setLoadingFetchAquarium] = useState(LoadingFetchAquarium.IDLE);
+  const [loadingFetchMemories, setLoadingFetchMemories] = useState(LoadingFetchMemories.IDLE);
+  console.log('state from context', history, averageCoordinate)
 
   const updateHistory = useCallback((newHistory) => {
     setHistory(newHistory);
@@ -34,7 +40,7 @@ export const HistoryProvider = ({ children }) => {
 
     try {
       console.log('fetchHistory called')
-      setLoadingState(LoadingState.LOADING);
+      setLoadingFetchMemories(LoadingFetchMemories.LOADING);
       const response = await fetch(`${API_URL}/get_transcripts`, {
         method: 'POST',
         headers: {
@@ -45,7 +51,7 @@ export const HistoryProvider = ({ children }) => {
 
       if (response.status === 204) {
         updateHistory([]);
-        setLoadingState(LoadingState.LOADED);
+        setLoadingFetchMemories(LoadingFetchMemories.LOADED);
         console.log('204 No data available for this user.');
         return;
       }
@@ -56,22 +62,21 @@ export const HistoryProvider = ({ children }) => {
 
       const jsonData = await response.json();
       updateHistory(jsonData);
-      setLoadingState(LoadingState.LOADED);
+      setLoadingFetchMemories(LoadingFetchMemories.LOADED);
 
     } catch (error) {
       console.error('Failed to fetch data:', error);
-      setLoadingState(LoadingState.LOADED);
+      setLoadingFetchMemories(LoadingFetchMemories.LOADED);
     }
   }, [API_URL, updateHistory]);
 
 
 
-  const fetchCoordinate = useCallback(async (email) => {
-
+  const fetchAquariumData = useCallback(async (email) => {
     try {
-      console.log('fetchCoordinate called')
-      setLoadingState(LoadingState.LOADING);
-      const response = await fetch(`${API_URL}/get_average_emotion`, {
+      console.log('fetchAquariumData called')
+      setLoadingFetchAquarium(LoadingFetchMemories.LOADING);
+      const response = await fetch(`${API_URL}/get_aquarium_data`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -81,7 +86,7 @@ export const HistoryProvider = ({ children }) => {
       if (response.status === 204) {
         updateCoordinate('No Data'); // Set averageCoordinate to null if no data
         setHighestQuadrant('No Data')
-        setLoadingState(LoadingState.LOADED); // Set loading state to LOADED after fetching
+        setLoadingFetchAquarium(LoadingFetchMemories.LOADED);
         return;
       }
       if (!response.ok) {
@@ -91,18 +96,43 @@ export const HistoryProvider = ({ children }) => {
       const jsonData = await response.json();
       setHighestQuadrant(jsonData.quadrant_score)
       updateCoordinate(jsonData.average_emotion);
-      setLoadingState(LoadingState.LOADED);
+      setLoadingFetchAquarium(LoadingFetchMemories.LOADED);
     } catch (error) {
       console.error('Failed to fetch data:', error);
-      setLoadingState(LoadingState.LOADED);
+      setLoadingFetchAquarium(LoadingFetchMemories.LOADED);
     }
   }, [API_URL, updateCoordinate]);
 
 
+  const updateAquariumData = useCallback(async (email) => {
+    try {
+      console.log('updateAquariumData called')
+      const response = await fetch(`${API_URL}/update_aquarium_data`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email })
+      });
+      if (response.status === 204) {
+
+        return;
+      }
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const jsonData = await response.json();
+
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
+    }
+  }, [API_URL]);
+
 
 
   return (
-    <HistoryContext.Provider value={{ history, averageCoordinate, fetchData, fetchCoordinate, loadingState, highestQuadrant }}>
+    <HistoryContext.Provider value={{ history, averageCoordinate, fetchData, fetchAquariumData, loadingFetchMemories, loadingFetchAquarium,highestQuadrant ,updateAquariumData}}>
       {children}
     </HistoryContext.Provider>
   );

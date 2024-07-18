@@ -65,7 +65,7 @@ export default function App() {
 function AppContent() {
   const { isLoaded, user } = useUser();
   const { updateAuthUser } = useContext(AuthUser);
-  const { fetchData, fetchCoordinate } = useContext(HistoryContext);
+  const { fetchData, fetchAquariumData } = useContext(HistoryContext);
 
 
   useEffect(() => {
@@ -77,7 +77,7 @@ function AppContent() {
       };
       updateAuthUser(newAuthUser);
       fetchData(newAuthUser.email);
-      fetchCoordinate(newAuthUser.email)
+      fetchAquariumData(newAuthUser.email)
     }
   }, [isLoaded, user, updateAuthUser]);
 

@@ -9,6 +9,7 @@ import logging
 from supabase import create_client, Client
 import numpy as np
 from quadrantCal import get_highest_quadrant
+from update_aquarium import calculate_aquarium_state
 
 load_dotenv()  
 SUPABASE_URL = os.getenv("SUPABASE_URL")
@@ -128,8 +129,8 @@ def create_app():
             return jsonify({"error": "An error occurred while fetching average emotion", "details": error_message}), 500  # Internal Server Error
     
     
-    @web_app.route("/get_average_emotion", methods=["POST"])
-    def get_average_emotion():
+    @web_app.route("/get_aquarium_data", methods=["POST"])
+    def get_aquarium_data():
         data = request.get_json()
         email = data["email"]
         
@@ -156,8 +157,37 @@ def create_app():
                 error_message = response.error.message
             logging.exception(f"Exception occurred while fetching average emotion from Supabase: {error_message}")
             return jsonify({"error": "An error occurred while fetching average emotion", "details": error_message}), 500  # Internal Server Error
-
-
+    
+    
+    @web_app.route("/update_aquarium_data", methods=["POST"])
+    def update_aquarium_data():
+        data = request.get_json()
+        email = data["email"]
+        
+        try:
+            response = supabase.table('journal_data').select('coordinates').eq('user_email', email).execute()
+            if response.data:
+                flat_coordinates = []
+                for entry in response.data:
+                    flat_coordinates.extend(entry['coordinates'])
+                    
+                quadrant_score=calculate_aquarium_state(flat_coordinates)
+                response = supabase.table('average_emotion').update({'quadrant_score': quadrant_score}).eq('user_email', email).execute()
+                if response.data:
+                    return jsonify(response.data[0]['quadrant_score']), 200
+                else:
+                    return jsonify({"error": "Failed to update quadrant_score"}), 500
+                
+            else:
+                insert_response = supabase.table('average_emotion').insert({'user_email': email, 'quadrant_score': quadrant_score}).execute()
+                if insert_response.data:
+                    return jsonify(insert_response.data[0]['quadrant_score']), 201
+                else:
+                    return jsonify({"error": "Failed to insert new record"}), 500
+        except Exception as e:
+            error_message = str(e)
+            logging.exception(f"Exception occurred while fetching data from Supabase: {error_message}")
+            return jsonify({"error": "An error occurred while fetching data", "details": error_message}), 500  # Internal Server Error
 
 
     return web_app

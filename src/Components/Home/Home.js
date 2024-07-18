@@ -1,14 +1,13 @@
-import { useContext, useState, useEffect } from 'react'
+import { useContext } from 'react'
 import Record from './Record';
 import { HistoryContext } from '../../Contexts/historyContext';
 import { AuthUser } from '../../Contexts/userContext';
 import { useNavigate } from 'react-router-dom';
 import Aquarium from './Aquarium';
-import FeedbackPopup from '../FeedbackPopup';
 
 export default function Home() {
     const API_URL = process.env.REACT_APP_SERVERR_DOMAIN;
-    const { fetchData,fetchCoordinate} = useContext(HistoryContext);
+    const { fetchData,fetchAquariumData,updateAquariumData} = useContext(HistoryContext);
     const navigate = useNavigate();
     const { authUser } = useContext(AuthUser);
     const timestamp = new Date().toISOString();
@@ -34,10 +33,9 @@ export default function Home() {
             }
             const data = await response.json();
             await fetchData(authUser.email);
-            fetchCoordinate(authUser.email)
-
             navigate('/memories'); // Navigate to Memories after fetching data
-
+            await updateAquariumData(authUser.email)
+            await fetchAquariumData(authUser.email)
 
         } catch (error) {
             console.error('An error occurred:', error);
@@ -52,10 +50,15 @@ export default function Home() {
 
     };
 
+    const updateTest = () =>{
+        updateAquariumData(authUser.email)
+    }
+
 
 
     return (
         <div className='container'>
+            {/* <button onClick={updateTest}>udoate aquarium data</button> */}
             <Aquarium />
             <Record handleScriptsSubmit={handleScriptsSubmit} />
         </div>
